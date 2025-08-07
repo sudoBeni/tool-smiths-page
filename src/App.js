@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-
+import useSmoothScroll from './hooks/useSmoothScroll';
 // Components
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
@@ -11,7 +11,7 @@ import IntroForge from './components/IntroForge';
 
 // Pages
 // Home kept for legacy route content; not used on root anymore
-// import Home from './pages/Home';
+import Home from './pages/Home';
 import Landing from './pages/Landing';
 import ProjectShowcase from './pages/ProjectShowcase';
 import TechnicalDeepDive from './pages/TechnicalDeepDive';
@@ -19,6 +19,9 @@ import ResultsImpact from './pages/ResultsImpact';
 import DevelopmentProcess from './pages/DevelopmentProcess';
 
 function App() {
+  // Initialize smooth scroll for journey-like experience
+  useSmoothScroll();
+
   return (
     <Router>
       <div className="App">

@@ -1,140 +1,193 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { 
-  MessageSquare, 
-  Send, 
-  Database, 
-  Code, 
-  BarChart3, 
-  Search, 
-  CheckCircle, 
-  RotateCcw,
-  Settings,
-  Zap,
+import {
+  Code,
+  Database,
+  BarChart3,
   Shield,
-  Globe,
+  MessageSquare,
+  Eye,
   FileText,
-  Eye
+  ArrowRight,
+  CheckCircle,
+  Clock,
+  TrendingUp,
+  Cpu,
+  GitBranch,
+  Users,
+  Zap,
+  Lightbulb,
+  Globe,
+  Package,
+  Server,
+  Cloud,
+  Sparkles,
+  Rocket,
+  Settings,
+  RotateCcw,
+  Bot
 } from 'lucide-react';
+import ParticleEffect from '../components/ParticleEffect';
 
 const ProjectShowcase = () => {
-  const [demoMessages, setDemoMessages] = useState([
-    { id: 1, type: 'user', content: 'Show me the sales performance for Q3 2023', timestamp: '10:30 AM' },
-    { id: 2, type: 'agent', content: 'I\'ll analyze the sales data for Q3 2023. Let me query the database and generate a comprehensive report.', timestamp: '10:30 AM' },
-    { id: 3, type: 'system', content: 'Database Manager Agent: Analyzing request and mapping to database entities...', timestamp: '10:30 AM' },
-    { id: 4, type: 'system', content: 'Query Generator Agent: Creating SQLite3-compatible query...', timestamp: '10:30 AM' },
-    { id: 5, type: 'system', content: 'Plot Agent: Generating data visualization...', timestamp: '10:30 AM' },
-    { id: 6, type: 'agent', content: 'Here\'s your Q3 2023 sales performance report with interactive charts and key insights.', timestamp: '10:31 AM' }
-  ]);
-  const [newMessage, setNewMessage] = useState('');
+  const [heroRef, heroInView] = useInView({ threshold: 0.3, triggerOnce: true });
+  const [demoRef, demoInView] = useInView({ threshold: 0.3, triggerOnce: true });
+  const [featuresRef, featuresInView] = useInView({ threshold: 0.3, triggerOnce: true });
+  const [techRef, techInView] = useInView({ threshold: 0.3, triggerOnce: true });
 
-  const [archRef, archInView] = useInView({ triggerOnce: true });
-  const [featuresRef, featuresInView] = useInView({ triggerOnce: true });
+  // Particle effect state
+  const [particleTrigger, setParticleTrigger] = React.useState(false);
+  const [particlePosition, setParticlePosition] = React.useState({ x: 0, y: 0 });
 
-  const agents = [
+  const handleButtonClick = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setParticlePosition({
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2
+    });
+    setParticleTrigger(true);
+    setTimeout(() => setParticleTrigger(false), 100);
+  };
+
+  const projects = [
     {
-      name: 'Database Manager Agent',
-      description: 'Analyzes user requests and maps to database entities',
-      icon: Database,
-      color: '#10a37f'
-    },
-    {
-      name: 'Query Generator Agent',
-      description: 'Creates SQLite3-compatible SQL queries',
-      icon: Code,
-      color: '#61dafb'
-    },
-    {
-      name: 'Plot Agent',
-      description: 'Generates data visualizations and charts',
-      icon: BarChart3,
-      color: '#f7df1e'
-    },
-    {
-      name: 'Report Generator Agent',
-      description: 'Creates comprehensive business reports',
-      icon: FileText,
-      color: '#ff6b6b'
-    },
-    {
-      name: 'Web Search Agent',
-      description: 'Performs focused web searches',
-      icon: Search,
-      color: '#4ecdc4'
-    },
-    {
-      name: 'Response Formatter Agent',
-      description: 'Formats final user responses',
+      title: 'Multi-Agent Chat System',
+      description: 'Intelligent conversation interface with specialized AI agents for database queries, data analysis, and visualization.',
       icon: MessageSquare,
-      color: '#45b7d1'
+      color: 'from-blue-500 to-cyan-500',
+      features: ['Real-time chat', 'Context awareness', 'Multi-agent orchestration'],
+      status: 'Active'
     },
     {
-      name: 'Context Detection Agent',
-      description: 'Detects conversation context',
-      icon: Eye,
-      color: '#96ceb4'
+      title: 'SQL Query Generator',
+      description: 'AI-powered natural language to SQL conversion with validation and optimization.',
+      icon: Database,
+      color: 'from-green-500 to-emerald-500',
+      features: ['Natural language input', 'Query validation', 'Performance optimization'],
+      status: 'Active'
     },
     {
-      name: 'Response Validator Agent',
-      description: 'Validates AI-generated responses',
-      icon: Shield,
-      color: '#feca57'
+      title: 'Data Visualization Engine',
+      description: 'Automated chart generation and interactive dashboards from query results.',
+      icon: BarChart3,
+      color: 'from-purple-500 to-pink-500',
+      features: ['Auto-chart selection', 'Interactive dashboards', 'Export capabilities'],
+      status: 'Active'
     }
   ];
 
-  const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      const userMessage = {
-        id: demoMessages.length + 1,
-        type: 'user',
-        content: newMessage,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-      setDemoMessages([...demoMessages, userMessage]);
-      setNewMessage('');
-      
-      // Simulate agent response
-      setTimeout(() => {
-        const agentMessage = {
-          id: demoMessages.length + 2,
-          type: 'agent',
-          content: 'I\'m processing your request. Let me analyze the data and provide you with insights.',
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        };
-        setDemoMessages(prev => [...prev, agentMessage]);
-      }, 1000);
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSendMessage();
-    }
-  };
+  const technologies = [
+    { name: 'React', icon: Code, color: '#61dafb' },
+    { name: 'FastAPI', icon: Server, color: '#009688' },
+    { name: 'WebSocket', icon: Zap, color: '#ff6b35' },
+    { name: 'SQLite', icon: Database, color: '#003b57' },
+    { name: 'Azure OpenAI', icon: Cloud, color: '#0078d4' },
+    { name: 'Docker', icon: Package, color: '#2496ed' }
+  ];
 
   return (
-    <div className="min-h-screen pt-16">
+    <div className="min-h-screen">
+      <ParticleEffect trigger={particleTrigger} position={particlePosition} />
+      
       {/* Hero Section */}
-      <section className="section">
-        <div className="container mx-auto px-4">
+      <section className="hero">
+        <div className="container">
           <motion.div
+            ref={heroRef}
+            className="hero-content"
             initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
+            animate={heroInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            <h1 className="text-5xl font-bold mb-6">Project Showcase</h1>
-            <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-              Experience our multi-agent data retrieval system in action. See how AI agents work together 
-              to provide intelligent responses and generate comprehensive business insights.
-            </p>
+            <motion.div
+              className="mb-8"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={heroInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <div className="inline-flex items-center space-x-3 forge rounded-full px-6 py-3 mb-6">
+                <Code className="w-5 h-5 text-accent-color" />
+                <span className="text-sm uppercase tracking-wide text-text-secondary">Project Showcase</span>
+                <motion.div
+                  className="w-2 h-2 bg-accent-color rounded-full"
+                  animate={{ scale: [1, 1.5, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+              </div>
+            </motion.div>
+
+            <motion.h1
+              className="hero-title mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 1, delay: 0.3 }}
+            >
+              Forge Your Data Projects
+            </motion.h1>
+
+            <motion.p
+              className="hero-subtitle mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              Explore our intelligent data processing system that transforms raw information into actionable insights.
+            </motion.p>
+
+            <motion.div
+              className="flex flex-col sm:flex-row gap-6 justify-center"
+              initial={{ opacity: 0, y: 30 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <motion.div
+                whileHover={{ 
+                  scale: 1.05,
+                  y: -5,
+                  transition: { duration: 0.2 }
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <a
+                  href="#demo"
+                  className="btn-primary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
+                  onClick={handleButtonClick}
+                >
+                  <span>Try the Demo</span>
+                  <motion.div
+                    className="group-hover:translate-x-1 transition-transform"
+                    whileHover={{ x: 5 }}
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </motion.div>
+                </a>
+              </motion.div>
+              
+              <motion.div
+                whileHover={{ 
+                  scale: 1.05,
+                  y: -5,
+                  transition: { duration: 0.2 }
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <a
+                  href="#features"
+                  className="btn-secondary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
+                  onClick={handleButtonClick}
+                >
+                  <span>View Features</span>
+                  <Eye className="w-5 h-5" />
+                </a>
+              </motion.div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* Interactive Demo */}
-      <section className="section bg-secondary-bg">
+      <section id="demo" className="section bg-secondary-bg">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -147,7 +200,16 @@ const ProjectShowcase = () => {
           </motion.div>
 
           <div className="max-w-4xl mx-auto">
-            <div className="card">
+            <motion.div 
+              className="card"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              whileHover={{ 
+                y: -8,
+                transition: { duration: 0.3 }
+              }}
+            >
               {/* Chat Header */}
               <div className="flex items-center justify-between mb-6 pb-4 border-b border-border-color">
                 <div className="flex items-center space-x-3">
@@ -165,91 +227,114 @@ const ProjectShowcase = () => {
               </div>
 
               {/* Chat Messages */}
-              <div className="h-96 overflow-y-auto mb-4 space-y-4">
-                {demoMessages.map((message) => (
-                  <motion.div
-                    key={message.id}
-                    className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div
-                      className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
-                        message.type === 'user'
-                          ? 'bg-accent-color text-white'
-                          : message.type === 'system'
-                          ? 'bg-interactive-bg text-text-secondary text-sm'
-                          : 'bg-secondary-bg text-text-primary border border-border-color'
-                      }`}
-                    >
-                      <div className="flex items-center space-x-2 mb-1">
-                        {message.type === 'system' && <Zap className="w-3 h-3" />}
-                        {message.type === 'agent' && <CheckCircle className="w-3 h-3 text-green-500" />}
-                        <span className="text-xs opacity-70">{message.timestamp}</span>
-                      </div>
-                      <p>{message.content}</p>
+              <div className="space-y-4 mb-6">
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-accent-color rounded-full flex items-center justify-center">
+                    <Users className="w-4 h-4 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="bg-forge-bg rounded-lg p-3 border border-forge-border">
+                      <p className="text-sm">Show me the top 10 customers by revenue</p>
                     </div>
-                  </motion.div>
-                ))}
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-accent-secondary rounded-full flex items-center justify-center">
+                    <Bot className="w-4 h-4 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="bg-accent-color/10 rounded-lg p-3 border border-accent-color/20">
+                      <p className="text-sm mb-2">I'll help you find the top customers by revenue. Let me query the database...</p>
+                      <div className="text-xs text-text-secondary">
+                        <div className="flex items-center space-x-2 mb-1">
+                          <Database className="w-3 h-3" />
+                          <span>Generated SQL: SELECT customer_name, revenue FROM customers ORDER BY revenue DESC LIMIT 10</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <CheckCircle className="w-3 h-3 text-green-500" />
+                          <span>Query executed successfully</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Chat Input */}
               <div className="flex space-x-3">
                 <input
                   type="text"
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Ask about sales data, generate reports, or explore insights..."
-                  className="flex-1 px-4 py-3 bg-secondary-bg border border-border-color rounded-lg text-text-primary placeholder-text-secondary focus:outline-none focus:border-accent-color"
+                  placeholder="Ask a question about your data..."
+                  className="flex-1 bg-forge-bg border border-forge-border rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-accent-color"
                 />
-                <button
-                  onClick={handleSendMessage}
-                  className="px-6 py-3 bg-accent-color text-white rounded-lg hover:bg-accent-color/90 transition-colors"
+                <motion.button
+                  className="btn-primary px-4 py-2"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleButtonClick}
                 >
-                  <Send className="w-5 h-5" />
-                </button>
+                  <ArrowRight className="w-4 h-4" />
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* System Architecture */}
-      <section className="section">
-        <div className="container mx-auto px-4">
+      {/* Project Features */}
+      <section id="features" className="section">
+        <div className="container">
           <motion.div
-            ref={archRef}
+            ref={featuresRef}
             initial={{ opacity: 0, y: 50 }}
-            animate={archInView ? { opacity: 1, y: 0 } : {}}
+            animate={featuresInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="text-center mb-12"
+            className="text-center mb-16"
           >
-            <h2 className="text-3xl font-bold mb-4">System Architecture</h2>
-            <p className="text-text-secondary max-w-2xl mx-auto">
-              Our multi-agent system orchestrates specialized AI agents that work together to provide 
-              intelligent data retrieval and analysis capabilities.
+            <h2 className="text-5xl font-bold mb-6">Core Projects</h2>
+            <p className="text-text-secondary text-xl max-w-2xl mx-auto">
+              Three interconnected systems working together to transform your data experience.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {agents.map((agent, index) => {
-              const Icon = agent.icon;
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {projects.map((project, i) => {
+              const Icon = project.icon;
               return (
                 <motion.div
-                  key={agent.name}
-                  className="card text-center"
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={archInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  whileHover={{ y: -5, scale: 1.02 }}
+                  key={project.title}
+                  className="card p-8"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={featuresInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: i * 0.1 }}
+                  whileHover={{ 
+                    y: -8,
+                    transition: { duration: 0.3 }
+                  }}
                 >
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ backgroundColor: `${agent.color}20` }}>
-                    <Icon className="w-8 h-8" style={{ color: agent.color }} />
+                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${project.color} flex items-center justify-center mb-6`}>
+                    <Icon className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">{agent.name}</h3>
-                  <p className="text-text-secondary text-sm">{agent.description}</p>
+                  <h3 className="text-2xl font-semibold mb-4">{project.title}</h3>
+                  <p className="text-text-secondary mb-6">{project.description}</p>
+                  <ul className="space-y-2 mb-6">
+                    {project.features.map((feature, index) => (
+                      <li key={index} className="flex items-center space-x-2 text-sm">
+                        <CheckCircle className="w-4 h-4 text-accent-color" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-accent-color font-medium">{project.status}</span>
+                    <motion.button
+                      className="text-accent-color hover:text-accent-secondary transition-colors"
+                      whileHover={{ x: 5 }}
+                    >
+                      <ArrowRight className="w-4 h-4" />
+                    </motion.button>
+                  </div>
                 </motion.div>
               );
             })}
@@ -257,175 +342,106 @@ const ProjectShowcase = () => {
         </div>
       </section>
 
-      {/* Key Features */}
+      {/* Technology Stack */}
       <section className="section bg-secondary-bg">
-        <div className="container mx-auto px-4">
+        <div className="container">
           <motion.div
-            ref={featuresRef}
+            ref={techRef}
             initial={{ opacity: 0, y: 50 }}
-            animate={featuresInView ? { opacity: 1, y: 0 } : {}}
+            animate={techInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="text-center mb-12"
+            className="text-center mb-16"
           >
-            <h2 className="text-3xl font-bold mb-4">Key Features</h2>
-            <p className="text-text-secondary max-w-2xl mx-auto">
-              Discover the powerful capabilities that make our system truly innovative.
+            <h2 className="text-5xl font-bold mb-6">Technology Stack</h2>
+            <p className="text-text-secondary text-xl max-w-2xl mx-auto">
+              Built with modern technologies for maximum performance and reliability.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <motion.div
-              className="card"
-              initial={{ opacity: 0, x: -50 }}
-              animate={featuresInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6 }}
-            >
-              <h3 className="text-xl font-semibold mb-4 flex items-center">
-                <Database className="w-6 h-6 text-accent-color mr-3" />
-                Database Schema Visualization
-              </h3>
-              <p className="text-text-secondary mb-4">
-                Interactive visualization of our complex database schema including business, branch, reviews, 
-                and aggregated statistics tables.
-              </p>
-              <div className="bg-interactive-bg p-4 rounded-lg">
-                <div className="text-sm font-mono text-text-secondary">
-                  <div>business: Business information</div>
-                  <div>branch: Physical locations</div>
-                  <div>reviews: Customer reviews</div>
-                  <div>reviewer: Review author profiles</div>
-                  <div>review_aspect_opinion: LLM-extracted opinions</div>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="card"
-              initial={{ opacity: 0, x: 50 }}
-              animate={featuresInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <h3 className="text-xl font-semibold mb-4 flex items-center">
-                <BarChart3 className="w-6 h-6 text-accent-color mr-3" />
-                Real-time Analytics
-              </h3>
-              <p className="text-text-secondary mb-4">
-                Live data visualization and analytics dashboard with interactive charts and business intelligence reports.
-              </p>
-              <div className="bg-interactive-bg p-4 rounded-lg">
-                <div className="text-sm text-text-secondary">
-                  <div>• Sales Performance Metrics</div>
-                  <div>• Customer Sentiment Analysis</div>
-                  <div>• Geographic Data Visualization</div>
-                  <div>• Trend Analysis & Forecasting</div>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="card"
-              initial={{ opacity: 0, x: -50 }}
-              animate={featuresInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              <h3 className="text-xl font-semibold mb-4 flex items-center">
-                <Shield className="w-6 h-6 text-accent-color mr-3" />
-                Response Validation
-              </h3>
-              <p className="text-text-secondary mb-4">
-                Comprehensive validation system ensuring accuracy and reliability of AI-generated responses 
-                with real-time status indicators.
-              </p>
-              <div className="bg-interactive-bg p-4 rounded-lg">
-                <div className="text-sm text-text-secondary">
-                  <div>• Query Validation</div>
-                  <div>• Response Accuracy Checks</div>
-                  <div>• Data Integrity Verification</div>
-                  <div>• Error Handling & Recovery</div>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="card"
-              initial={{ opacity: 0, x: 50 }}
-              animate={featuresInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              <h3 className="text-xl font-semibold mb-4 flex items-center">
-                <Globe className="w-6 h-6 text-accent-color mr-3" />
-                Web Search Integration
-              </h3>
-              <p className="text-text-secondary mb-4">
-                Focused web search capabilities to enhance AI responses with real-time information 
-                and external data sources.
-              </p>
-              <div className="bg-interactive-bg p-4 rounded-lg">
-                <div className="text-sm text-text-secondary">
-                  <div>• Real-time Information Retrieval</div>
-                  <div>• External Data Integration</div>
-                  <div>• Context-Aware Searches</div>
-                  <div>• Multi-Source Aggregation</div>
-                </div>
-              </div>
-            </motion.div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            {technologies.map((tech, i) => {
+              const Icon = tech.icon;
+              return (
+                <motion.div
+                  key={tech.name}
+                  className="card text-center p-6"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={techInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ delay: i * 0.1 }}
+                  whileHover={{ 
+                    scale: 1.1,
+                    y: -5,
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  <Icon className="w-8 h-8 mx-auto mb-3" style={{ color: tech.color }} />
+                  <p className="text-sm font-medium">{tech.name}</p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* API Documentation Preview */}
+      {/* CTA Section */}
       <section className="section">
-        <div className="container mx-auto px-4">
+        <div className="container">
           <motion.div
+            className="card text-center max-w-4xl mx-auto relative overflow-hidden"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold mb-4">API Documentation</h2>
-            <p className="text-text-secondary max-w-2xl mx-auto">
-              Swagger-style documentation for our FastAPI endpoints and multi-agent system integration.
-            </p>
-          </motion.div>
-
-          <div className="max-w-4xl mx-auto">
-            <div className="card">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-semibold">FastAPI Endpoints</h3>
-                <div className="flex space-x-2">
-                  <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">GET</span>
-                  <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">POST</span>
-                  <span className="px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded">PUT</span>
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="bg-interactive-bg p-4 rounded-lg">
-                  <div className="flex items-center space-x-3 mb-2">
-                    <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">GET</span>
-                    <code className="text-accent-color">/api/chat</code>
-                  </div>
-                  <p className="text-text-secondary text-sm">Retrieve chat history and conversation context</p>
-                </div>
-                
-                <div className="bg-interactive-bg p-4 rounded-lg">
-                  <div className="flex items-center space-x-3 mb-2">
-                    <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">POST</span>
-                    <code className="text-accent-color">/api/chat/message</code>
-                  </div>
-                  <p className="text-text-secondary text-sm">Send message to multi-agent system</p>
-                </div>
-                
-                <div className="bg-interactive-bg p-4 rounded-lg">
-                  <div className="flex items-center space-x-3 mb-2">
-                    <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">GET</span>
-                    <code className="text-accent-color">/api/agents/status</code>
-                  </div>
-                  <p className="text-text-secondary text-sm">Get real-time status of all AI agents</p>
-                </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-accent-color/5 to-accent-secondary/5" />
+            
+            <div className="relative z-10">
+              <h2 className="text-4xl font-bold mb-6">Ready to Experience the Forge?</h2>
+              <p className="text-text-secondary text-xl mb-8">
+                Start exploring our projects and see how intelligent agents can transform your data workflow.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -3,
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <a
+                    href="#demo"
+                    className="btn-primary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
+                    onClick={handleButtonClick}
+                  >
+                    <span>Try Demo Now</span>
+                    <motion.div
+                      className="group-hover:translate-x-1 transition-transform"
+                      whileHover={{ x: 5 }}
+                    >
+                      <ArrowRight className="w-5 h-5" />
+                    </motion.div>
+                  </a>
+                </motion.div>
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -3,
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <a
+                    href="/technical-deep-dive"
+                    className="btn-secondary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
+                    onClick={handleButtonClick}
+                  >
+                    <span>Technical Details</span>
+                    <Code className="w-5 h-5" />
+                  </a>
+                </motion.div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>

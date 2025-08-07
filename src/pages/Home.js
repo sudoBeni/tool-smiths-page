@@ -2,13 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { 
-  ArrowRight, 
-  Code, 
-  Database, 
-  Zap, 
-  BarChart3, 
-  Shield, 
+import {
+  ArrowRight,
+  Code,
+  Database,
+  Zap,
+  BarChart3,
+  Shield,
   Globe,
   Code2,
   Package,
@@ -34,177 +34,213 @@ import {
 } from 'lucide-react';
 import LoadingHammer from '../components/LoadingHammer';
 import ChatPreview from '../components/ChatPreview';
+import ParticleEffect from '../components/ParticleEffect';
+import useSmoothScroll from '../hooks/useSmoothScroll';
+import IntroForge from '../components/IntroForge';
 
 const Home = () => {
-  const [heroRef, heroInView] = useInView({ triggerOnce: true });
-  const [howRef, howInView] = useInView({ triggerOnce: true });
-  const [demoRef, demoInView] = useInView({ triggerOnce: true });
-  const [teamRef, teamInView] = useInView({ triggerOnce: true });
-  const [techRef, techInView] = useInView({ triggerOnce: true });
-  const [featuresRef, featuresInView] = useInView({ triggerOnce: true });
+  const [heroRef, heroInView] = useInView({ threshold: 0.3, triggerOnce: true });
+  const [howRef, howInView] = useInView({ threshold: 0.3, triggerOnce: true });
+  const [demoRef, demoInView] = useInView({ threshold: 0.3, triggerOnce: true });
+  const [teamRef, teamInView] = useInView({ threshold: 0.3, triggerOnce: true });
+  const [techRef, techInView] = useInView({ threshold: 0.3, triggerOnce: true });
+  const [featuresRef, featuresInView] = useInView({ threshold: 0.3, triggerOnce: true });
+  const [ctaRef, ctaInView] = useInView({ threshold: 0.3, triggerOnce: true });
+
+  // Particle effect state
+  const [particleTrigger, setParticleTrigger] = React.useState(false);
+  const [particlePosition, setParticlePosition] = React.useState({ x: 0, y: 0 });
+
+  // Background hammer after intro
+  const [showBgHammer, setShowBgHammer] = React.useState(false);
+
+  // Initialize smooth scroll
+  useSmoothScroll();
+
+  const handleButtonClick = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setParticlePosition({
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2
+    });
+    setParticleTrigger(true);
+    setTimeout(() => setParticleTrigger(false), 100);
+  };
 
   const teamMembers = [
     {
       name: 'Benjamin Amhof',
-      role: 'AI & Machine Learning Specialist',
-      expertise: 'BSc Student in AI & Machine Learning at HSLU',
+      role: 'Lead Architect',
+      expertise: 'AI Agent Systems, Data Engineering',
       avatar: '👨‍💻',
-      contribution: 'Led the multi-agent system design and AI integration',
-      color: '#ff6b35',
-      linkedin: 'https://www.linkedin.com/in/benjamin-amhof/',
-      github: 'https://github.com/sudoBeni'
+      linkedin: 'https://linkedin.com/in/benjamin-amhof',
+      github: 'https://github.com/benjamin-amhof'
     },
     {
       name: 'Jan Wahli',
-      role: 'Frontend Developer',
-      expertise: 'BSc Student in AI & Machine Learning at HSLU',
+      role: 'Full Stack Developer',
+      expertise: 'React, FastAPI, Database Design',
       avatar: '👨‍💻',
-      contribution: 'Built the responsive React frontend with real-time chat interface',
-      color: '#ffd700',
-      linkedin: 'https://www.linkedin.com/in/jan-wahli/',
-      github: 'https://github.com/jan-5'
+      linkedin: 'https://linkedin.com/in/jan-wahli',
+      github: 'https://github.com/jan-wahli'
     },
     {
       name: 'Noel Jensen',
-      role: 'Backend Architect',
-      expertise: 'BSc Student in AI & Machine Learning at HSLU',
+      role: 'AI Specialist',
+      expertise: 'Machine Learning, Agent Orchestration',
       avatar: '👨‍💻',
-      contribution: 'Implemented FastAPI backend and database architecture',
-      color: '#ff8c42',
-      linkedin: 'https://www.linkedin.com/in/noel-jensen-/',
-      github: 'https://github.com/noeljen'
+      linkedin: 'https://linkedin.com/in/noel-jensen',
+      github: 'https://github.com/noel-jensen'
     }
   ];
 
   const technologies = [
-    { 
-      name: 'Agno AI Agent Framework', 
-      icon: Crown, 
-      color: '#ff6b35', 
-      description: 'Core AI Agent Orchestration',
-      featured: true,
-      glow: true
-    },
-    { name: 'React', icon: Code2, color: '#61dafb', description: 'Modern UI Framework' },
-    { name: 'FastAPI', icon: Server, color: '#3776ab', description: 'High-Performance Backend' },
-    { name: 'Docker', icon: Package, color: '#2496ed', description: 'Container Orchestration' },
-    { name: 'Azure OpenAI', icon: Cloud, color: '#0078d4', description: 'AI-Powered Intelligence' },
-    { name: 'SQLite', icon: Database, color: '#003b57', description: 'Lightweight Database' },
+    { name: 'React', icon: Code, color: '#61dafb' },
+    { name: 'FastAPI', icon: Server, color: '#009688' },
+    { name: 'Azure OpenAI', icon: Brain, color: '#0078d4' },
+    { name: 'SQLite', icon: Database, color: '#003b57' },
+    { name: 'WebSocket', icon: Zap, color: '#ff6b35' },
+    { name: 'Agno AI Agent Framework', icon: Crown, color: '#ffcc02' }
   ];
 
   const features = [
     {
-      icon: Brain,
-      title: 'Multi-Agent System',
-      description: 'Orchestrated AI agents for specialized tasks including database management, query generation, and data visualization.',
-      gradient: 'from-orange-500 to-red-500'
+      icon: Bot,
+      title: 'Multi-Agent Chat',
+      description: 'Intelligent agents that understand context and collaborate to answer your questions.',
+      color: 'from-blue-500 to-cyan-500'
     },
     {
-      icon: Zap,
-      title: 'Real-time Processing',
-      description: 'FastAPI backend with async processing capabilities for handling complex database queries and AI responses.',
-      gradient: 'from-yellow-500 to-orange-500'
-    },
-    {
-      icon: Cpu,
-      title: 'Intelligent Chat Interface',
-      description: 'React frontend with real-time updates and context-aware conversation management.',
-      gradient: 'from-red-500 to-pink-500'
-    },
-    {
-      icon: Shield,
-      title: 'Response Validation',
-      description: 'Comprehensive validation system ensuring accuracy and reliability of AI-generated responses.',
-      gradient: 'from-pink-500 to-purple-500'
+      icon: Database,
+      title: 'SQL Generation',
+      description: 'Automatically generate and validate SQL queries from natural language.',
+      color: 'from-green-500 to-emerald-500'
     },
     {
       icon: BarChart3,
-      title: 'Business Intelligence',
-      description: 'Advanced analytics and reporting capabilities with interactive data visualizations.',
-      gradient: 'from-purple-500 to-indigo-500'
+      title: 'Data Visualization',
+      description: 'Beautiful charts and insights automatically generated from your data.',
+      color: 'from-purple-500 to-pink-500'
     },
     {
-      icon: Globe,
-      title: 'Web Search Integration',
-      description: 'Focused web search capabilities to enhance AI responses with real-time information.',
-      gradient: 'from-indigo-500 to-blue-500'
+      icon: Shield,
+      title: 'Enterprise Security',
+      description: 'Built with security-first principles for enterprise environments.',
+      color: 'from-red-500 to-orange-500'
     }
   ];
 
   return (
     <div className="min-h-screen">
+      {/* 3s entry overlay */}
+      <IntroForge durationMs={3000} playOnce={false} onFinished={() => setShowBgHammer(true)} />
+
+      {/* Background hammer at center (behind content) */}
+      {showBgHammer && (
+        <div className="background-hammer">
+          <LoadingHammer size={180} showText={false} />
+        </div>
+      )}
+
+      <ParticleEffect trigger={particleTrigger} position={particlePosition} />
+      
       {/* Hero Section */}
       <section className="hero">
-        <div className="hero-content">
+        <div className="container">
           <motion.div
             ref={heroRef}
+            className="hero-content"
             initial={{ opacity: 0, y: 50 }}
             animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-center"
+            transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            {/* Forge Badge */}
+            {/* Enhanced Badge */}
             <motion.div
-              className="inline-flex items-center space-x-3 forge rounded-full px-6 py-3 mb-8"
+              className="mb-8"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={heroInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <Hammer className="w-5 h-5 text-accent-color" />
-              <span className="text-accent-color font-medium uppercase tracking-wide">Data Forge</span>
+              <div className="inline-flex items-center space-x-3 forge rounded-full px-6 py-3 mb-6">
+                <Hammer className="w-5 h-5 text-accent-color" />
+                <span className="text-sm uppercase tracking-wide text-text-secondary">Data Forge</span>
+                <motion.div
+                  className="w-2 h-2 bg-accent-color rounded-full"
+                  animate={{ scale: [1, 1.5, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+              </div>
             </motion.div>
 
-            {/* Main Title */}
+            {/* Enhanced Title */}
             <motion.h1
               className="hero-title mb-6"
               initial={{ opacity: 0, y: 30 }}
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: 1, delay: 0.3 }}
             >
-              Forge Your Data. Instantly.
+              Forge Answers from Your Data
             </motion.h1>
 
-            {/* Subtitle */}
+            {/* Enhanced Subtitle */}
             <motion.p
-              className="hero-subtitle mb-10"
-              initial={{ opacity: 0, y: 30 }}
+              className="hero-subtitle mb-12"
+              initial={{ opacity: 0, y: 20 }}
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Chat with your database and transform raw data into precise, decision-ready insights — crafted by intelligent agents.
+              Talk to your database. Intelligent agents do the heavy lifting, you get crisp, forged results.
             </motion.p>
 
-            {/* Loading Hammer Animation */}
-            <motion.div
-              className="mb-12"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={heroInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.8, delay: 0.5 }}
-            >
-              <LoadingHammer size={180} text="Forging Data into Shape…" />
-            </motion.div>
+            {/* Removed in-content LoadingHammer to keep single centered background hammer */}
 
-            {/* CTA Buttons */}
+            {/* Enhanced CTA Buttons */}
             <motion.div
               className="flex flex-col sm:flex-row gap-6 justify-center"
               initial={{ opacity: 0, y: 30 }}
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <Link
-                to="/project-showcase"
-                className="btn-primary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
+              <motion.div
+                whileHover={{ 
+                  scale: 1.05,
+                  y: -5,
+                  transition: { duration: 0.2 }
+                }}
+                whileTap={{ scale: 0.95 }}
               >
-                <span>Try the Demo</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <a
-                href="#how"
-                className="btn-secondary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
+                <Link
+                  to="/project-showcase"
+                  className="btn-primary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
+                  onClick={handleButtonClick}
+                >
+                  <span>Try the Demo</span>
+                  <motion.div
+                    className="group-hover:translate-x-1 transition-transform"
+                    whileHover={{ x: 5 }}
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </motion.div>
+                </Link>
+              </motion.div>
+              
+              <motion.div
+                whileHover={{ 
+                  scale: 1.05,
+                  y: -5,
+                  transition: { duration: 0.2 }
+                }}
+                whileTap={{ scale: 0.95 }}
               >
-                <span>See How It Works</span>
-                <Workflow className="w-5 h-5" />
-              </a>
+                <a
+                  href="#how"
+                  className="btn-secondary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
+                  onClick={handleButtonClick}
+                >
+                  <span>See How It Works</span>
+                  <Workflow className="w-5 h-5" />
+                </a>
+              </motion.div>
             </motion.div>
           </motion.div>
         </div>
@@ -236,7 +272,17 @@ const Home = () => {
             }].map((s, i) => {
               const Icon = s.icon;
               return (
-                <motion.div key={s.title} className="card text-left" initial={{ opacity: 0, y: 24 }} animate={howInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: i * 0.1 }}>
+                <motion.div 
+                  key={s.title} 
+                  className="card text-left" 
+                  initial={{ opacity: 0, y: 24 }} 
+                  animate={howInView ? { opacity: 1, y: 0 } : {}} 
+                  transition={{ delay: i * 0.1 }}
+                  whileHover={{ 
+                    y: -8,
+                    transition: { duration: 0.3 }
+                  }}
+                >
                   <Icon className="w-8 h-8 text-accent-color mb-4" />
                   <h3 className="text-2xl font-semibold mb-2">{s.title}</h3>
                   <p className="text-text-secondary">{s.desc}</p>
@@ -266,8 +312,38 @@ const Home = () => {
                 <li className="flex items-center space-x-3"><CheckCircle2 className="w-5 h-5 text-accent-color" /><span>Built for BI teams and operators</span></li>
               </ul>
               <div className="mt-8 flex space-x-4">
-                <Link to="/project-showcase" className="btn-primary px-8 py-4">Open Demo</Link>
-                <Link to="/technical-deep-dive" className="btn-secondary px-8 py-4">Technical Deep Dive</Link>
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -3,
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Link 
+                    to="/project-showcase" 
+                    className="btn-primary px-8 py-4"
+                    onClick={handleButtonClick}
+                  >
+                    Open Demo
+                  </Link>
+                </motion.div>
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -3,
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Link 
+                    to="/technical-deep-dive" 
+                    className="btn-secondary px-8 py-4"
+                    onClick={handleButtonClick}
+                  >
+                    Technical Deep Dive
+                  </Link>
+                </motion.div>
               </div>
             </div>
             <div>
@@ -287,50 +363,36 @@ const Home = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-5xl font-bold mb-6">Meet Our Team</h2>
+            <h2 className="text-5xl font-bold mb-6">Meet the Team</h2>
             <p className="text-text-secondary text-xl max-w-2xl mx-auto">
-              Three developers with complementary skills who came together to build something extraordinary.
+              The minds behind the forge, crafting intelligent solutions for data challenges.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
+            {teamMembers.map((member, i) => (
               <motion.div
                 key={member.name}
-                className="card group"
-                initial={{ opacity: 0, y: 50 }}
+                className="card text-center"
+                initial={{ opacity: 0, y: 30 }}
                 animate={teamInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                whileHover={{ y: -8 }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ 
+                  y: -8,
+                  transition: { duration: 0.3 }
+                }}
               >
-                <div className="text-center">
-                  <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">{member.avatar}</div>
-                  <h3 className="text-2xl font-semibold mb-3">{member.name}</h3>
-                  <p className="text-accent-color font-medium mb-4 uppercase tracking-wide">{member.role}</p>
-                  <p className="text-text-secondary text-sm mb-4">{member.expertise}</p>
-                  <p className="text-text-secondary text-sm mb-6">{member.contribution}</p>
-                  
-                  {/* Social Media Links */}
-                  <div className="flex justify-center space-x-4">
-                    <a
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-3 rounded-full forge hover:bg-tertiary-bg transition-colors duration-200 group-hover:scale-110"
-                      title="LinkedIn Profile"
-                    >
-                      <Linkedin className="w-5 h-5 text-text-secondary group-hover:text-white" />
-                    </a>
-                    <a
-                      href={member.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-3 rounded-full forge hover:bg-tertiary-bg transition-colors duration-200 group-hover:scale-110"
-                      title="GitHub Profile"
-                    >
-                      <Github className="w-5 h-5 text-text-secondary group-hover:text-white" />
-                    </a>
-                  </div>
+                <div className="text-4xl mb-4">{member.avatar}</div>
+                <h3 className="text-xl font-semibold mb-2">{member.name}</h3>
+                <p className="text-accent-color mb-2">{member.role}</p>
+                <p className="text-text-secondary text-sm mb-4">{member.expertise}</p>
+                <div className="flex justify-center space-x-3">
+                  <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-color transition-colors">
+                    <Linkedin className="w-5 h-5" />
+                  </a>
+                  <a href={member.github} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-color transition-colors">
+                    <Github className="w-5 h-5" />
+                  </a>
                 </div>
               </motion.div>
             ))}
@@ -350,55 +412,71 @@ const Home = () => {
           >
             <h2 className="text-5xl font-bold mb-6">Technology Stack</h2>
             <p className="text-text-secondary text-xl max-w-2xl mx-auto">
-              Modern technologies powering our sophisticated multi-agent system.
+              Built with modern technologies for maximum performance and reliability.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {technologies.map((tech, index) => {
+            {technologies.map((tech, i) => {
               const Icon = tech.icon;
               return (
                 <motion.div
                   key={tech.name}
-                  className={`card text-center group relative ${
-                    tech.featured 
-                      ? 'md:col-span-2 lg:col-span-2 border-2 border-accent-color/30 forge' 
-                      : ''
-                  }`}
+                  className="card text-center p-6"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={techInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -8 }}
+                  transition={{ delay: i * 0.1 }}
+                  whileHover={{ 
+                    scale: 1.1,
+                    y: -5,
+                    transition: { duration: 0.3 }
+                  }}
                 >
-                  {/* Special glow effect for featured technology */}
-                  {tech.glow && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-accent-color/10 to-accent-secondary/10 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  )}
-                  
-                  <div className="relative z-10">
-                    <Icon 
-                      className={`mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 ${
-                        tech.featured ? 'w-16 h-16' : 'w-12 h-12'
-                      }`} 
-                      style={{ color: tech.color }} 
-                    />
-                    <h3 className={`font-semibold mb-2 ${tech.featured ? 'text-lg' : ''}`}>
-                      {tech.name}
-                    </h3>
-                    <p className="text-text-secondary text-xs">{tech.description}</p>
-                    
-                    {/* Featured badge */}
-                    {tech.featured && (
-                      <motion.div
-                        className="absolute -top-2 -right-2 bg-gradient-to-r from-accent-color to-accent-secondary text-white text-xs px-3 py-1 rounded-full font-bold"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.3 }}
-                      >
-                        CORE
-                      </motion.div>
-                    )}
+                  <Icon className="w-8 h-8 mx-auto mb-3" style={{ color: tech.color }} />
+                  <p className="text-sm font-medium">{tech.name}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Key Features */}
+      <section className="section bg-secondary-bg">
+        <div className="container">
+          <motion.div
+            ref={featuresRef}
+            initial={{ opacity: 0, y: 50 }}
+            animate={featuresInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-5xl font-bold mb-6">Key Features</h2>
+            <p className="text-text-secondary text-xl max-w-2xl mx-auto">
+              Everything you need to transform your data into actionable insights.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {features.map((feature, i) => {
+              const Icon = feature.icon;
+              return (
+                <motion.div
+                  key={feature.title}
+                  className="card p-8"
+                  initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
+                  animate={featuresInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ delay: i * 0.1 }}
+                  whileHover={{ 
+                    y: -8,
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${feature.color} flex items-center justify-center mb-6`}>
+                    <Icon className="w-6 h-6 text-white" />
                   </div>
+                  <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
+                  <p className="text-text-secondary">{feature.description}</p>
                 </motion.div>
               );
             })}
@@ -410,6 +488,7 @@ const Home = () => {
       <section className="section bg-secondary-bg">
         <div className="container">
           <motion.div
+            ref={ctaRef}
             className="card text-center max-w-4xl mx-auto relative overflow-hidden"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -424,20 +503,45 @@ const Home = () => {
                 Start a conversation with your database and turn raw data into clarity.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <Link
-                  to="/project-showcase"
-                  className="btn-primary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -3,
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <span>Launch Demo</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link
-                  to="/technical-deep-dive"
-                  className="btn-secondary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
+                  <Link
+                    to="/project-showcase"
+                    className="btn-primary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
+                    onClick={handleButtonClick}
+                  >
+                    <span>Launch Demo</span>
+                    <motion.div
+                      className="group-hover:translate-x-1 transition-transform"
+                      whileHover={{ x: 5 }}
+                    >
+                      <ArrowRight className="w-5 h-5" />
+                    </motion.div>
+                  </Link>
+                </motion.div>
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -3,
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <span>Learn More</span>
-                  <Code className="w-5 h-5" />
-                </Link>
+                  <Link
+                    to="/technical-deep-dive"
+                    className="btn-secondary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
+                    onClick={handleButtonClick}
+                  >
+                    <span>Learn More</span>
+                    <Code className="w-5 h-5" />
+                  </Link>
+                </motion.div>
               </div>
             </div>
           </motion.div>

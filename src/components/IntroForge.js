@@ -1,92 +1,123 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Hammer } from 'lucide-react';
-import LoadingHammer from './LoadingHammer';
 
-const IntroForge = () => {
+const IntroForge = ({ durationMs = 3000, playOnce = false, onFinished = () => {} }) => {
   const [show, setShow] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [sparks, setSparks] = useState([]);
+  const endedRef = useRef(false);
+  const timeoutsRef = useRef([]);
+  const onFinishedRef = useRef(onFinished);
+
+  useEffect(() => { onFinishedRef.current = onFinished; }, [onFinished]);
 
   useEffect(() => {
-    setIsMobile(window.innerWidth <= 480);
-    const played = sessionStorage.getItem('introPlayed');
-    if (!played) {
-      setShow(true);
-      const total = setTimeout(() => {
-        sessionStorage.setItem('introPlayed', '1');
-        setShow(false);
-      }, window.innerWidth <= 480 ? 1500 : 2600);
-      return () => clearTimeout(total);
+    const isMobile = window.innerWidth <= 480;
+
+    if (playOnce) {
+      const played = sessionStorage.getItem('introPlayed');
+      if (played) return;
+      sessionStorage.setItem('introPlayed', '1');
     }
-  }, []);
+
+    setShow(true);
+
+    const end = () => {
+      if (endedRef.current) return;
+      endedRef.current = true;
+      try { onFinishedRef.current(); } catch {}
+      setShow(false);
+    };
+
+    // Schedule end of overlay and failsafe
+    timeoutsRef.current.push(setTimeout(end, durationMs));
+    timeoutsRef.current.push(setTimeout(end, durationMs + 1500));
+
+    // Timed pulses (sparks from a single source with pulsing motion)
+    const lastPulseDelay = Math.max(0, durationMs - 560);
+    const pulseOffsets = isMobile
+      ? [900, 1800, lastPulseDelay]
+      : [700, 1400, 2100, lastPulseDelay];
+
+    pulseOffsets.forEach((offset, pulseIndex) => {
+      const id = setTimeout(() => {
+        const count = (pulseIndex === pulseOffsets.length - 1 ? 18 : 10) + Math.floor(Math.random() * 4);
+        const newSparks = Array.from({ length: count }).map((_, i) => {
+          const angle = Math.random() * Math.PI * 2;
+          const distance = 140 + Math.random() * 160; // px outward
+          const wobble = (Math.random() - 0.5) * 20;
+          return {
+            id: `${offset}-${i}-${Math.random()}`,
+            size: 2 + Math.random() * 3,
+            color: ['#ff6b35', '#ff8c42', '#ffa726', '#ffcc02'][Math.floor(Math.random() * 4)],
+            dx: Math.cos(angle) * (distance + wobble),
+            dy: Math.sin(angle) * (distance + wobble),
+            pulse: pulseIndex,
+          };
+        });
+        setSparks((prev) => [...prev, ...newSparks].slice(-160));
+
+        // Clear this pulse's sparks shortly after
+        timeoutsRef.current.push(setTimeout(() => {
+          setSparks((prev) => prev.filter((s) => s.pulse !== pulseIndex));
+        }, 800));
+      }, offset);
+      timeoutsRef.current.push(id);
+    });
+
+    return () => {
+      timeoutsRef.current.forEach((t) => clearTimeout(t));
+      timeoutsRef.current = [];
+    };
+  }, [durationMs, playOnce]);
 
   return (
     <AnimatePresence>
       {show && (
         <motion.div
+          key="intro-forge"
           className="intro-forge-overlay"
+          style={{ pointerEvents: 'none' }}
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4 }}
-          onClick={() => setShow(false)}
         >
-          {/* Glow pulse circle */}
+          {/* Center-out reveal gradient: transparent center expands to reveal content */}
           <motion.div
-            className="intro-glow"
-            initial={{ scale: 0.6, opacity: 0.4 }}
-            animate={{ scale: [0.6, 1, 1.2, 1], opacity: [0.4, 0.8, 1, 0.7] }}
-            transition={{ duration: isMobile ? 1.0 : 2.2, times: [0, 0.4, 0.7, 1], ease: 'easeInOut' }}
+            className="intro-reveal"
+            initial={{ ['--reveal-radius']: '0%' }}
+            animate={{ ['--reveal-radius']: '120%' }}
+            transition={{ duration: durationMs / 1000, ease: 'easeInOut' }}
           />
 
-          {/* Brand */}
-          <motion.div
-            className="intro-brand"
-            initial={{ y: 16, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <span className="intro-badge">
-              <Hammer className="w-4 h-4 text-accent-color" />
-              <span>Data Forge</span>
-            </span>
-            <motion.h1
-              className="intro-title"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.25 }}
-            >
-              Forge answers
-            </motion.h1>
-          </motion.div>
+          {/* Pulsing sparks from single source (center) */}
+          <div className="intro-sparks">
+            <AnimatePresence>
+              {sparks.map((s) => (
+                <motion.span
+                  key={s.id}
+                  className="intro-spark"
+                  style={{ left: '50%', top: '50%', backgroundColor: s.color, width: s.size, height: s.size }}
+                  initial={{ opacity: 0.95, scale: 0, x: 0, y: 0 }}
+                  animate={{
+                    opacity: [0.95, 0.85, 0.9, 0.6, 0],
+                    scale: [0.6, 1.2, 0.95, 0.8, 0.4],
+                    x: [0, s.dx * 0.7, s.dx],
+                    y: [0, s.dy * 0.7, s.dy]
+                  }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.8, ease: 'easeOut' }}
+                />)
+              )}
+            </AnimatePresence>
+          </div>
 
-          {/* Hammer animation (skip on small screens for perf) */}
-          {!isMobile && (
-            <motion.div
-              className="intro-hammer"
-              initial={{ rotate: -35, y: -40, opacity: 0 }}
-              animate={{ rotate: [ -35, 0, 12, 0 ], y: [ -40, 0, -6, 0 ], opacity: 1 }}
-              transition={{ duration: 0.9, delay: 0.55, times: [0, 0.6, 0.85, 1], ease: 'easeOut' }}
-            >
-              <LoadingHammer size={120} showText={false} />
-            </motion.div>
-          )}
-
-          {/* Impact flash */}
-          <motion.div
-            className="intro-flash"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 0.8, 0] }}
-            transition={{ duration: 0.25, delay: isMobile ? 0.6 : 1.6 }}
-          />
-
-          {/* Fade curtain up */
-          }
+          {/* Backup curtain to ensure overlay goes away */}
           <motion.div
             className="intro-curtain"
             initial={{ y: 0 }}
             animate={{ y: '-110%' }}
-            transition={{ duration: isMobile ? 0.4 : 0.6, delay: isMobile ? 0.9 : 2.0, ease: 'easeIn' }}
+            transition={{ duration: 0.6, delay: (durationMs - 600) / 1000, ease: 'easeIn' }}
           />
         </motion.div>
       )}
