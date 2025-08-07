@@ -33,6 +33,7 @@ const Navigation = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
+      style={{ display: 'none' }}
     >
       <div className="nav-container">
         {/* Logo */}

@@ -5,15 +5,17 @@ import LoadingHammer from './LoadingHammer';
 
 const IntroForge = () => {
   const [show, setShow] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setIsMobile(window.innerWidth <= 480);
     const played = sessionStorage.getItem('introPlayed');
     if (!played) {
       setShow(true);
       const total = setTimeout(() => {
         sessionStorage.setItem('introPlayed', '1');
         setShow(false);
-      }, 2600);
+      }, window.innerWidth <= 480 ? 1200 : 2600);
       return () => clearTimeout(total);
     }
   }, []);
@@ -27,13 +29,14 @@ const IntroForge = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4 }}
+          onClick={() => setShow(false)}
         >
           {/* Glow pulse circle */}
           <motion.div
             className="intro-glow"
             initial={{ scale: 0.6, opacity: 0.4 }}
             animate={{ scale: [0.6, 1, 1.2, 1], opacity: [0.4, 0.8, 1, 0.7] }}
-            transition={{ duration: 2.2, times: [0, 0.4, 0.7, 1], ease: 'easeInOut' }}
+            transition={{ duration: isMobile ? 1.0 : 2.2, times: [0, 0.4, 0.7, 1], ease: 'easeInOut' }}
           />
 
           {/* Brand */}
@@ -51,28 +54,30 @@ const IntroForge = () => {
               className="intro-title"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.35 }}
+              transition={{ duration: 0.4, delay: 0.25 }}
             >
               Forge answers
             </motion.h1>
           </motion.div>
 
-          {/* Hammer animation */}
-          <motion.div
-            className="intro-hammer"
-            initial={{ rotate: -35, y: -40, opacity: 0 }}
-            animate={{ rotate: [ -35, 0, 12, 0 ], y: [ -40, 0, -6, 0 ], opacity: 1 }}
-            transition={{ duration: 0.9, delay: 0.55, times: [0, 0.6, 0.85, 1], ease: 'easeOut' }}
-          >
-            <LoadingHammer size={120} showText={false} />
-          </motion.div>
+          {/* Hammer animation (skip on small screens for perf) */}
+          {!isMobile && (
+            <motion.div
+              className="intro-hammer"
+              initial={{ rotate: -35, y: -40, opacity: 0 }}
+              animate={{ rotate: [ -35, 0, 12, 0 ], y: [ -40, 0, -6, 0 ], opacity: 1 }}
+              transition={{ duration: 0.9, delay: 0.55, times: [0, 0.6, 0.85, 1], ease: 'easeOut' }}
+            >
+              <LoadingHammer size={120} showText={false} />
+            </motion.div>
+          )}
 
           {/* Impact flash */}
           <motion.div
             className="intro-flash"
             initial={{ opacity: 0 }}
             animate={{ opacity: [0, 0.8, 0] }}
-            transition={{ duration: 0.35, delay: 1.6 }}
+            transition={{ duration: 0.25, delay: isMobile ? 0.6 : 1.6 }}
           />
 
           {/* Fade curtain up */
@@ -81,7 +86,7 @@ const IntroForge = () => {
             className="intro-curtain"
             initial={{ y: 0 }}
             animate={{ y: '-110%' }}
-            transition={{ duration: 0.6, delay: 2.0, ease: 'easeIn' }}
+            transition={{ duration: isMobile ? 0.4 : 0.6, delay: isMobile ? 0.9 : 2.0, ease: 'easeIn' }}
           />
         </motion.div>
       )}

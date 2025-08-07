@@ -4,7 +4,6 @@ import { Hammer, Sparkles, MessageSquare, ArrowRight, Database, Bot, CheckCircle
 import LoadingHammer from '../components/LoadingHammer';
 import ChatPreview from '../components/ChatPreview';
 import { hapticTick } from '../utils/haptics';
-import SparkField from '../components/SparkField';
 
 const Landing = () => {
   const heroRef = useRef(null);
@@ -14,7 +13,6 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen">
-      <SparkField />
       {/* Hero */}
       <section className="hero" id="home" ref={heroRef}>
         {/* Parallax background glows */}
@@ -76,7 +74,7 @@ const Landing = () => {
             Raw metal → Forging agents → Forged output
           </motion.p>
 
-          <div className="flex gap-4 overflow-x-auto pb-2" style={{ scrollSnapType: 'x mandatory' }}>
+          <div className="flex gap-4 overflow-x-auto pb-2" style={{ scrollSnapType: 'x mandatory', padding: '0 8px' }}>
             {[{
               icon: Database,
               title: 'Raw metal',
@@ -95,7 +93,7 @@ const Landing = () => {
                 <motion.div
                   key={s.title}
                   className="card" 
-                  style={{ scrollSnapAlign: 'center', minWidth: '80%' }}
+                  style={{ scrollSnapAlign: 'center', minWidth: '85%' }}
                   initial={{ opacity: 0, y: 16, rotate: 0.2 }}
                   whileInView={{ opacity: 1, y: 0, rotate: 0 }}
                   viewport={{ once: true, amount: 0.6 }}

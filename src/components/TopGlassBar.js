@@ -25,6 +25,9 @@ const TopGlassBar = () => {
         </span>
         <span>Data Forge</span>
       </div>
+      <div className="skip" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+        Top
+      </div>
     </div>
   );
 };

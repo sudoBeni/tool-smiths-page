@@ -22,9 +22,9 @@ const MobileNav = () => {
   };
 
   return (
-    <nav className="mobile-tabbar">
+    <nav className="mobile-tabbar" role="navigation" aria-label="Primary">
       {items.map(({ href, label, icon: Icon }) => (
-        <a key={href} href={href} onClick={(e) => handleClick(e, href)} className="tab">
+        <a key={href} href={href} onClick={(e) => handleClick(e, href)} className="tab" aria-label={label}>
           <Icon className="w-5 h-5" />
           <span>{label}</span>
         </a>

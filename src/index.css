@@ -371,7 +371,7 @@ a:hover {
   height: 56px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   background: rgba(10, 10, 10, 0.6);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--forge-border);
@@ -379,6 +379,7 @@ a:hover {
   opacity: 0;
   transform: translateY(-10px);
   transition: all 0.25s ease;
+  padding: 0 12px;
 }
 
 .top-glassbar .brand {
@@ -395,6 +396,14 @@ a:hover {
 .top-glassbar.show {
   opacity: 1;
   transform: translateY(0);
+}
+
+.top-glassbar .skip {
+  font-size: 11px;
+  color: var(--text-secondary);
+  padding: 6px 10px;
+  border-radius: 9999px;
+  border: 1px solid var(--forge-border);
 }
 
 .nav-container {
@@ -472,7 +481,7 @@ a:hover {
   text-align: center;
   position: relative;
   overflow: hidden;
-  padding: var(--spacing-20) 0;
+  padding: var(--spacing-16) 0;
 }
 
 .hero::before {
@@ -633,6 +642,10 @@ a:hover {
   .hero-content {
     padding: var(--spacing-4);
   }
+  .intro-brand { top: 12vh; }
+  .intro-hammer { margin-top: 4vh; }
+  .intro-glow { width: 240px; height: 240px; }
+  .mobile-tabbar { padding-bottom: calc(8px + env(safe-area-inset-bottom)); }
   
   .section {
     padding: var(--spacing-12) 0;
