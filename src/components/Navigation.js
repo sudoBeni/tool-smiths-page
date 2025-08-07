@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Code, BarChart3, BookOpen, Users, Zap, Hammer } from 'lucide-react';
+import { Menu, X, Code, BarChart3, BookOpen, Users, Zap, Hammer, ArrowRight } from 'lucide-react';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -70,6 +70,14 @@ const Navigation = () => {
             );
           })}
         </ul>
+
+        {/* Desktop CTA */}
+        <div className="hidden md:block">
+          <Link to="/project-showcase" className="btn-primary px-4 py-2 text-sm inline-flex items-center space-x-2">
+            <span>Try Demo</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
 
         {/* Mobile Menu Button */}
         <motion.button
@@ -148,6 +156,12 @@ const Navigation = () => {
                     </motion.div>
                   );
                 })}
+
+                {/* Mobile CTA */}
+                <Link to="/project-showcase" className="btn-primary mt-2 inline-flex items-center justify-center space-x-2">
+                  <span>Try Demo</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
               
               {/* Mobile Menu Footer */}

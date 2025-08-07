@@ -28,12 +28,17 @@ import {
   Hammer,
   Flame,
   Settings,
-  Gauge
+  Gauge,
+  Workflow,
+  CheckCircle2
 } from 'lucide-react';
 import LoadingHammer from '../components/LoadingHammer';
+import ChatPreview from '../components/ChatPreview';
 
 const Home = () => {
   const [heroRef, heroInView] = useInView({ triggerOnce: true });
+  const [howRef, howInView] = useInView({ triggerOnce: true });
+  const [demoRef, demoInView] = useInView({ triggerOnce: true });
   const [teamRef, teamInView] = useInView({ triggerOnce: true });
   const [techRef, techInView] = useInView({ triggerOnce: true });
   const [featuresRef, featuresInView] = useInView({ triggerOnce: true });
@@ -140,34 +145,33 @@ const Home = () => {
           >
             {/* Forge Badge */}
             <motion.div
-              className="inline-flex items-center space-x-3 forge rounded-full px-6 py-3 mb-12"
+              className="inline-flex items-center space-x-3 forge rounded-full px-6 py-3 mb-8"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={heroInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <Hammer className="w-5 h-5 text-accent-color" />
-              <span className="text-accent-color font-medium uppercase tracking-wide">Data Forge System</span>
+              <span className="text-accent-color font-medium uppercase tracking-wide">Data Forge</span>
             </motion.div>
 
             {/* Main Title */}
             <motion.h1
-              className="hero-title mb-8"
+              className="hero-title mb-6"
               initial={{ opacity: 0, y: 30 }}
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              Tool Smiths
+              Forge Your Data. Instantly.
             </motion.h1>
 
             {/* Subtitle */}
             <motion.p
-              className="hero-subtitle mb-12"
+              className="hero-subtitle mb-10"
               initial={{ opacity: 0, y: 30 }}
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              A team of three passionate developers who built a sophisticated multi-agent data retrieval system 
-              for SQL databases, combining AI, modern web technologies, and business intelligence.
+              Chat with your database and transform raw data into precise, decision-ready insights — crafted by intelligent agents.
             </motion.p>
 
             {/* Loading Hammer Animation */}
@@ -177,12 +181,12 @@ const Home = () => {
               animate={heroInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              <LoadingHammer size={200} text="Forging Data into Shape..." />
+              <LoadingHammer size={180} text="Forging Data into Shape…" />
             </motion.div>
 
             {/* CTA Buttons */}
             <motion.div
-              className="flex flex-col sm:flex-row gap-6 justify-center mb-16"
+              className="flex flex-col sm:flex-row gap-6 justify-center"
               initial={{ opacity: 0, y: 30 }}
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.6 }}
@@ -191,44 +195,90 @@ const Home = () => {
                 to="/project-showcase"
                 className="btn-primary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
               >
-                <span>Explore Our Project</span>
+                <span>Try the Demo</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link
-                to="/technical-deep-dive"
+              <a
+                href="#how"
                 className="btn-secondary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
               >
-                <span>Technical Details</span>
-                <Code className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-              </Link>
-            </motion.div>
-
-            {/* Stats */}
-            <motion.div
-              className="grid grid-cols-3 gap-8 max-w-md mx-auto"
-              initial={{ opacity: 0, y: 30 }}
-              animate={heroInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.7 }}
-            >
-              <div className="text-center">
-                <div className="text-3xl font-bold text-accent-color mb-2">3</div>
-                <div className="text-sm text-text-secondary uppercase tracking-wide">Developers</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-accent-secondary mb-2">8</div>
-                <div className="text-sm text-text-secondary uppercase tracking-wide">AI Agents</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-success-color mb-2">99.9%</div>
-                <div className="text-sm text-text-secondary uppercase tracking-wide">Uptime</div>
-              </div>
+                <span>See How It Works</span>
+                <Workflow className="w-5 h-5" />
+              </a>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* Team Section */}
+      {/* How It Works */}
+      <section id="how" className="section bg-secondary-bg">
+        <div className="container">
+          <motion.div
+            ref={howRef}
+            initial={{ opacity: 0, y: 50 }}
+            animate={howInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-5xl font-bold mb-6">How It Works</h2>
+            <p className="text-text-secondary text-xl max-w-2xl mx-auto">
+              From raw data to forged insights — crafted with precision by intelligent agents.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[{
+              icon: Database, title: 'Raw Metal', desc: 'Your database — the source of truth and raw potential.'
+            }, {
+              icon: Hammer, title: 'Forging Agents', desc: 'Specialized AI agents that shape your request into SQL and logic.'
+            }, {
+              icon: CheckCircle2, title: 'Forged Output', desc: 'Accurate answers, summaries, and visuals tailored to your prompt.'
+            }].map((s, i) => {
+              const Icon = s.icon;
+              return (
+                <motion.div key={s.title} className="card text-left" initial={{ opacity: 0, y: 24 }} animate={howInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: i * 0.1 }}>
+                  <Icon className="w-8 h-8 text-accent-color mb-4" />
+                  <h3 className="text-2xl font-semibold mb-2">{s.title}</h3>
+                  <p className="text-text-secondary">{s.desc}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Live Demo Preview */}
       <section className="section">
+        <div className="container">
+          <motion.div
+            ref={demoRef}
+            initial={{ opacity: 0, y: 50 }}
+            animate={demoInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
+          >
+            <div>
+              <h2 className="text-5xl font-bold mb-6">Talk to Your Data</h2>
+              <p className="text-text-secondary text-xl mb-6">Ask questions in natural language. Watch agents forge SQL, validate results, and deliver crisp insights.</p>
+              <ul className="space-y-3 text-text-secondary">
+                <li className="flex items-center space-x-3"><CheckCircle2 className="w-5 h-5 text-accent-color" /><span>Context-aware agent orchestration</span></li>
+                <li className="flex items-center space-x-3"><CheckCircle2 className="w-5 h-5 text-accent-color" /><span>Human-readable outputs with optional SQL</span></li>
+                <li className="flex items-center space-x-3"><CheckCircle2 className="w-5 h-5 text-accent-color" /><span>Built for BI teams and operators</span></li>
+              </ul>
+              <div className="mt-8 flex space-x-4">
+                <Link to="/project-showcase" className="btn-primary px-8 py-4">Open Demo</Link>
+                <Link to="/technical-deep-dive" className="btn-secondary px-8 py-4">Technical Deep Dive</Link>
+              </div>
+            </div>
+            <div>
+              <ChatPreview />
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section className="section bg-secondary-bg">
         <div className="container">
           <motion.div
             ref={teamRef}
@@ -289,7 +339,7 @@ const Home = () => {
       </section>
 
       {/* Technology Stack */}
-      <section className="section bg-secondary-bg">
+      <section className="section">
         <div className="container">
           <motion.div
             ref={techRef}
@@ -356,47 +406,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Key Features */}
-      <section className="section">
-        <div className="container">
-          <motion.div
-            ref={featuresRef}
-            initial={{ opacity: 0, y: 50 }}
-            animate={featuresInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl font-bold mb-6">Key Features</h2>
-            <p className="text-text-secondary text-xl max-w-2xl mx-auto">
-              Discover what makes our multi-agent system truly innovative and powerful.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => {
-              const Icon = feature.icon;
-              return (
-                <motion.div
-                  key={feature.title}
-                  className="card group relative overflow-hidden"
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={featuresInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  whileHover={{ y: -8 }}
-                >
-                  {/* Gradient Background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-                  
-                  <Icon className="w-10 h-10 text-accent-color mb-6 group-hover:scale-110 transition-transform duration-300" />
-                  <h3 className="text-xl font-semibold mb-4">{feature.title}</h3>
-                  <p className="text-text-secondary">{feature.description}</p>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="section bg-secondary-bg">
         <div className="container">
@@ -410,24 +419,24 @@ const Home = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-accent-color/5 to-accent-secondary/5" />
             
             <div className="relative z-10">
-              <h2 className="text-4xl font-bold mb-6">Ready to Explore Our Work?</h2>
+              <h2 className="text-4xl font-bold mb-6">Ready to Forge Your Data?</h2>
               <p className="text-text-secondary text-xl mb-8">
-                Dive deep into our project showcase, technical implementation, and see the real impact of our multi-agent system.
+                Start a conversation with your database and turn raw data into clarity.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
                 <Link
                   to="/project-showcase"
                   className="btn-primary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
                 >
-                  <span>View Project Showcase</span>
+                  <span>Launch Demo</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
-                  to="/results-impact"
+                  to="/technical-deep-dive"
                   className="btn-secondary flex items-center justify-center space-x-3 px-8 py-4 text-lg group"
                 >
-                  <span>See Results & Impact</span>
-                  <Rocket className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                  <span>Learn More</span>
+                  <Code className="w-5 h-5" />
                 </Link>
               </div>
             </div>
