@@ -17,7 +17,10 @@ import {
   TrendingUp,
   Cpu,
   Crown,
-  Bot
+  Bot,
+  GitBranch,
+  Package,
+  Cloud
 } from 'lucide-react';
 
 const TechnicalDeepDive = () => {
@@ -29,7 +32,7 @@ const TechnicalDeepDive = () => {
 
   const agents = [
     {
-      name: 'Database Manager Agent',
+      name: 'DatabaseManagerAgent',
       description: 'Analyzes user requests and maps to database entities',
       responsibilities: [
         'Parse natural language queries',
@@ -58,7 +61,7 @@ const TechnicalDeepDive = () => {
         }`
     },
     {
-      name: 'Query Generator Agent',
+      name: 'QueryGeneratorAgent',
       description: 'Creates SQLite3-compatible SQL queries',
       responsibilities: [
         'Generate optimized SQL queries',
@@ -87,7 +90,7 @@ const TechnicalDeepDive = () => {
         }`
     },
     {
-      name: 'Plot Agent',
+      name: 'PlotAgent',
       description: 'Generates data visualizations and charts',
       responsibilities: [
         'Create interactive charts',
@@ -116,12 +119,12 @@ const TechnicalDeepDive = () => {
         }`
     },
     {
-      name: 'Response Validator Agent',
-      description: 'Validates AI-generated responses',
+      name: 'ResponseValidatorAgent',
+      description: 'Validates each AI-generated claim against the database in the background',
       responsibilities: [
-        'Verify query accuracy',
-        'Check response completeness',
-        'Validate data integrity',
+        'Verify claim accuracy row-by-row',
+        'Surface validation status per message',
+        'Attach evidence with links to underlying data',
         'Ensure security compliance'
       ],
       code: `class ResponseValidatorAgent:
@@ -223,10 +226,9 @@ const TechnicalDeepDive = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h1 className="text-5xl font-bold mb-6">Technical Deep Dive</h1>
+            <h1 className="text-5xl font-bold mb-6">Technical Deep Dive — PXP BI Chat</h1>
             <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-              Explore the technical architecture, agent implementations, and system performance 
-              of our sophisticated multi-agent data retrieval system.
+              Multi-agent architecture with real-time validation, built for Press'nXPress (PXP): Azure OpenAI, FastAPI backend, React frontend, Docker, and GitLab CI.
             </p>
           </motion.div>
         </div>
@@ -274,9 +276,7 @@ const TechnicalDeepDive = () => {
                   <h3 className="text-3xl font-bold">Agno AI Agent Framework</h3>
                 </div>
                 <p className="text-text-secondary text-lg max-w-3xl mx-auto">
-                  The core orchestration engine that powers our sophisticated multi-agent system. 
-                  Agno AI provides the foundation for intelligent agent coordination, communication, 
-                  and decision-making processes.
+                  Orchestrates specialized agents (DatabaseManagerAgent, QueryGeneratorAgent, ResponseValidatorAgent, PlotAgent) with context-aware routing and monitoring.
                 </p>
               </div>
 

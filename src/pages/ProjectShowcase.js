@@ -52,24 +52,24 @@ const ProjectShowcase = () => {
 
   const projects = [
     {
-      title: 'Multi-Agent Chat System',
-      description: 'Intelligent conversation interface with specialized AI agents for database queries, data analysis, and visualization.',
+      title: "PXP BI Chat",
+      description: 'AI chat for Press\'nXPress (PXP) that analyzes reviews, ratings, and branch performance.',
       icon: MessageSquare,
       color: 'from-blue-500 to-cyan-500',
-      features: ['Real-time chat', 'Context awareness', 'Multi-agent orchestration'],
+      features: ['Real-time chat', 'Context awareness', 'Agno multi-agent orchestration'],
       status: 'Active'
     },
     {
-      title: 'SQL Query Generator',
-      description: 'AI-powered natural language to SQL conversion with validation and optimization.',
-      icon: Database,
-      color: 'from-green-500 to-emerald-500',
-      features: ['Natural language input', 'Query validation', 'Performance optimization'],
+      title: 'Real-Time Validation',
+      description: 'Background fact-checking of every claim against the database with clear status feedback.',
+      icon: Shield,
+      color: 'from-emerald-500 to-green-600',
+      features: ['Non-blocking verification', 'Transparent badges', 'Detailed validation insights'],
       status: 'Active'
     },
     {
-      title: 'Data Visualization Engine',
-      description: 'Automated chart generation and interactive dashboards from query results.',
+      title: 'Visualization Engine',
+      description: 'Auto-generated charts for BI with drill-downs from query results.',
       icon: BarChart3,
       color: 'from-purple-500 to-pink-500',
       features: ['Auto-chart selection', 'Interactive dashboards', 'Export capabilities'],
@@ -83,7 +83,9 @@ const ProjectShowcase = () => {
     { name: 'WebSocket', icon: Zap, color: '#ff6b35' },
     { name: 'SQLite', icon: Database, color: '#003b57' },
     { name: 'Azure OpenAI', icon: Cloud, color: '#0078d4' },
-    { name: 'Docker', icon: Package, color: '#2496ed' }
+    { name: 'Agno Framework', icon: Bot, color: '#ffcc02' },
+    { name: 'Docker', icon: Package, color: '#2496ed' },
+    { name: 'GitLab', icon: GitBranch, color: '#e24329' }
   ];
 
   return (
@@ -195,8 +197,8 @@ const ProjectShowcase = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-8"
           >
-            <h2 className="text-3xl font-bold mb-4">Interactive Demo</h2>
-            <p className="text-text-secondary">Try out our chat interface and see the agents in action</p>
+            <h2 className="text-3xl font-bold mb-4">PXP BI Chat Demo</h2>
+            <p className="text-text-secondary">Ask about reviews, ratings, or branch performance — see multi-agent reasoning and validation.</p>
           </motion.div>
 
           <div className="max-w-4xl mx-auto">
@@ -212,10 +214,10 @@ const ProjectShowcase = () => {
             >
               {/* Chat Header */}
               <div className="flex items-center justify-between mb-6 pb-4 border-b border-border-color">
-                <div className="flex items-center space-x-3">
-                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  <h3 className="text-lg font-semibold">Multi-Agent Chat Interface</h3>
-                </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-green-500 rounded-full" title="connected" />
+                    <h3 className="text-lg font-semibold">PXP BI Chat Interface</h3>
+                  </div>
                 <div className="flex space-x-2">
                   <button className="p-2 rounded-lg hover:bg-interactive-bg transition-colors">
                     <Settings className="w-4 h-4" />
@@ -245,11 +247,15 @@ const ProjectShowcase = () => {
                   </div>
                   <div className="flex-1">
                     <div className="bg-accent-color/10 rounded-lg p-3 border border-accent-color/20">
-                      <p className="text-sm mb-2">I'll help you find the top customers by revenue. Let me query the database...</p>
+                      <p className="text-sm mb-2">I will query the database and validate every claim in the background.</p>
                       <div className="text-xs text-text-secondary">
                         <div className="flex items-center space-x-2 mb-1">
                           <Database className="w-3 h-3" />
                           <span>Generated SQL: SELECT customer_name, revenue FROM customers ORDER BY revenue DESC LIMIT 10</span>
+                        </div>
+                        <div className="flex items-center space-x-2 mb-1">
+                          <Shield className="w-3 h-3 text-green-500" />
+                          <span>Validation: 10/10 rows verified</span>
                         </div>
                         <div className="flex items-center space-x-2">
                           <CheckCircle className="w-3 h-3 text-green-500" />

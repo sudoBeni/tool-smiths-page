@@ -30,7 +30,9 @@ import {
   Settings,
   Gauge,
   Workflow,
-  CheckCircle2
+  CheckCircle2,
+  
+  GitBranch
 } from 'lucide-react';
 import LoadingHammer from '../components/LoadingHammer';
 import ChatPreview from '../components/ChatPreview';
@@ -72,7 +74,7 @@ const Home = () => {
       name: 'Benjamin Amhof',
       role: 'Lead Architect',
       expertise: 'AI Agent Systems, Data Engineering',
-      avatar: '👨‍💻',
+      icon: Crown,
       linkedin: 'https://linkedin.com/in/benjamin-amhof',
       github: 'https://github.com/benjamin-amhof'
     },
@@ -80,7 +82,7 @@ const Home = () => {
       name: 'Jan Wahli',
       role: 'Full Stack Developer',
       expertise: 'React, FastAPI, Database Design',
-      avatar: '👨‍💻',
+      icon: Code,
       linkedin: 'https://linkedin.com/in/jan-wahli',
       github: 'https://github.com/jan-wahli'
     },
@@ -88,7 +90,7 @@ const Home = () => {
       name: 'Noel Jensen',
       role: 'AI Specialist',
       expertise: 'Machine Learning, Agent Orchestration',
-      avatar: '👨‍💻',
+      icon: Bot,
       linkedin: 'https://linkedin.com/in/noel-jensen',
       github: 'https://github.com/noel-jensen'
     }
@@ -100,7 +102,9 @@ const Home = () => {
     { name: 'Azure OpenAI', icon: Brain, color: '#0078d4' },
     { name: 'SQLite', icon: Database, color: '#003b57' },
     { name: 'WebSocket', icon: Zap, color: '#ff6b35' },
-    { name: 'Agno AI Agent Framework', icon: Crown, color: '#ffcc02' }
+    { name: 'Agno AI Agent Framework', icon: Crown, color: '#ffcc02' },
+    { name: 'Docker', icon: Package, color: '#2496ed' },
+    { name: 'GitLab', icon: GitBranch, color: '#e24329' }
   ];
 
   const features = [
@@ -189,7 +193,7 @@ const Home = () => {
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Talk to your database. Intelligent agents do the heavy lifting, you get crisp, forged results.
+              Press'nXPress (PXP) business intelligence chat. Ask in natural language, get validated answers and visuals — in real time.
             </motion.p>
 
             {/* Removed in-content LoadingHammer to keep single centered background hammer */}
@@ -262,13 +266,15 @@ const Home = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[{
-              icon: Database, title: 'Raw Metal', desc: 'Your database — the source of truth and raw potential.'
+              icon: Database, title: 'Raw Metal', desc: 'Your PXP datasets — reviews, ratings, and branch performance.'
             }, {
-              icon: Hammer, title: 'Forging Agents', desc: 'Specialized AI agents that shape your request into SQL and logic.'
+              icon: Hammer, title: 'Forging Agents', desc: 'Multi-agent orchestration (Agno): DB Manager, Query Generator, Plot Agent.'
             }, {
-              icon: CheckCircle2, title: 'Forged Output', desc: 'Accurate answers, summaries, and visuals tailored to your prompt.'
+              icon: Shield, title: 'Real-time Validation', desc: 'Every claim fact-checked against the database without slowing responses.'
+            }, {
+              icon: CheckCircle2, title: 'Forged Output', desc: 'Verified insights with charts and transparent validation status.'
             }].map((s, i) => {
               const Icon = s.icon;
               return (
@@ -382,7 +388,12 @@ const Home = () => {
                   transition: { duration: 0.3 }
                 }}
               >
-                <div className="text-4xl mb-4">{member.avatar}</div>
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl forge mb-4">
+                  {(() => {
+                    const Icon = member.icon || Users;
+                    return <Icon className="w-7 h-7 text-accent-color" />;
+                  })()}
+                </div>
                 <h3 className="text-xl font-semibold mb-2">{member.name}</h3>
                 <p className="text-accent-color mb-2">{member.role}</p>
                 <p className="text-text-secondary text-sm mb-4">{member.expertise}</p>

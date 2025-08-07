@@ -1,12 +1,12 @@
 import React from 'react';
-import { Hammer, MessageSquare, Layers, Code2 } from 'lucide-react';
+import { Hammer, MessageSquare, Layers, Bot } from 'lucide-react';
 import { hapticTick } from '../utils/haptics';
 
 const items = [
   { href: '#home', label: 'Home', icon: Hammer },
-  { href: '#how', label: 'Process', icon: Layers },
   { href: '#demo', label: 'Demo', icon: MessageSquare },
-  { href: '#cta', label: 'Get', icon: Code2 },
+  { href: '#data-flow', label: 'Flow', icon: Layers },
+  { href: '#ai-agents', label: 'Agents', icon: Bot },
 ];
 
 const MobileNav = () => {

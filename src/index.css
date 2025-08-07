@@ -308,6 +308,15 @@ a:hover {
   transition: all 0.1s ease;
 }
 
+/* Animation delays for pulsing effects */
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
 /* Enhanced Card Hover Effects */
 .card {
   background: var(--forge-bg);
@@ -749,6 +758,13 @@ a:hover {
   .section {
     padding: var(--spacing-12) 0;
   }
+
+  /* Mobile specific tweaks for hero and sections */
+  .hero { min-height: auto; padding: var(--spacing-12) 0; }
+  .hero-title { margin-bottom: var(--spacing-6); }
+  .hero-subtitle { margin-bottom: var(--spacing-8); max-width: 90%; }
+  .video-aspect { padding-top: 56.25%; }
+  .top-glassbar { height: 48px; }
 }
 
 @media (max-width: 480px) {
@@ -771,6 +787,11 @@ a:hover {
   .hero-title {
     font-size: clamp(2.5rem, 12vw, var(--font-size-6xl));
   }
+
+  /* Tighter grids on very small screens */
+  .grid { gap: var(--spacing-6); }
+  .mobile-tabbar .tab { font-size: 10px; padding: 4px 0; }
+  .btn-primary, .btn-secondary { padding: var(--spacing-3) var(--spacing-5); }
 }
 
 /* Mobile bottom tabbar */

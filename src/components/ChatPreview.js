@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Send, Database, Hammer, Bot } from 'lucide-react';
+import { Send, Database, Hammer, Bot, Shield, XCircle, CheckCircle2 } from 'lucide-react';
 
 const messages = [
   {
@@ -53,6 +53,12 @@ LIMIT 5;
             <div>$1,002,230</div>
           </div>
         </div>
+        <div className="flex items-center gap-3 mt-3 text-xs">
+          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-green-500/10 text-green-500">
+            <CheckCircle2 className="w-3 h-3" /> Verified
+          </span>
+          <span className="text-text-secondary">Evidence: 5/5 rows matched database</span>
+        </div>
       </div>
     )
   }
@@ -72,9 +78,15 @@ const ChatPreview = () => {
             <div className="text-text-secondary text-xs uppercase tracking-wide">Talk to your database</div>
           </div>
         </div>
-        <div className="flex items-center space-x-2 text-text-secondary text-xs uppercase tracking-wide">
-          <Database className="w-4 h-4" />
-          <span>Connected</span>
+        <div className="flex items-center space-x-3 text-text-secondary text-xs">
+          <div className="flex items-center space-x-1 uppercase tracking-wide">
+            <Database className="w-4 h-4" />
+            <span>Connected</span>
+          </div>
+          <div className="flex items-center space-x-1">
+            <Shield className="w-4 h-4 text-green-500" />
+            <span className="uppercase tracking-wide text-green-500">Validation On</span>
+          </div>
         </div>
       </div>
 
