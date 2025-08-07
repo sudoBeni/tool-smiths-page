@@ -7,19 +7,15 @@ import {
   Code, 
   Database, 
   BarChart3, 
-  Search, 
   Shield, 
   MessageSquare, 
   Eye, 
   FileText,
-  Zap,
   ArrowRight,
   CheckCircle,
-  AlertCircle,
   Clock,
   TrendingUp,
-  Cpu,
-  HardDrive
+  Cpu
 } from 'lucide-react';
 
 const TechnicalDeepDive = () => {

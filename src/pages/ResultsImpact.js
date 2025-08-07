@@ -8,13 +8,9 @@ import {
   DollarSign, 
   Clock, 
   CheckCircle, 
-  AlertCircle,
   Eye,
   Download,
   Share2,
-  Filter,
-  Calendar,
-  MapPin,
   Star,
   MessageSquare,
   Database,
@@ -24,7 +20,6 @@ import {
 
 const ResultsImpact = () => {
   const [selectedReport, setSelectedReport] = useState(0);
-  const [selectedMetric, setSelectedMetric] = useState('overview');
 
   const [dashboardRef, dashboardInView] = useInView({ triggerOnce: true });
   const [statsRef, statsInView] = useInView({ triggerOnce: true });

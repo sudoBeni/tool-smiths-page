@@ -8,7 +8,6 @@ import {
   Database, 
   Zap, 
   CheckCircle, 
-  AlertCircle,
   Lightbulb,
   GitBranch,
   MessageSquare,
@@ -18,14 +17,10 @@ import {
   Globe,
   FileText,
   ArrowRight,
-  GitCommit,
-  GitPullRequest,
-  GitMerge,
-  GitBranch as GitBranchIcon
+  GitCommit
 } from 'lucide-react';
 
 const DevelopmentProcess = () => {
-  const [selectedPhase, setSelectedPhase] = useState(0);
   const [selectedChallenge, setSelectedChallenge] = useState(0);
 
   const [timelineRef, timelineInView] = useInView({ triggerOnce: true });
@@ -343,7 +338,7 @@ const DevelopmentProcess = () => {
                   initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                   animate={timelineInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  onClick={() => setSelectedPhase(index)}
+
                   whileHover={{ y: -5 }}
                 >
                   <div className="flex items-start space-x-6">

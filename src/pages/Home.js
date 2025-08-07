@@ -7,7 +7,6 @@ import {
   Code, 
   Database, 
   Zap, 
-  Users, 
   BarChart3, 
   Shield, 
   Globe,

@@ -9,9 +9,6 @@ import {
   BarChart3, 
   Search, 
   CheckCircle, 
-  AlertCircle,
-  Play,
-  Pause,
   RotateCcw,
   Settings,
   Zap,
@@ -31,7 +28,6 @@ const ProjectShowcase = () => {
     { id: 6, type: 'agent', content: 'Here\'s your Q3 2023 sales performance report with interactive charts and key insights.', timestamp: '10:31 AM' }
   ]);
   const [newMessage, setNewMessage] = useState('');
-  const [isPlaying, setIsPlaying] = useState(false);
 
   const [archRef, archInView] = useInView({ triggerOnce: true });
   const [featuresRef, featuresInView] = useInView({ triggerOnce: true });
