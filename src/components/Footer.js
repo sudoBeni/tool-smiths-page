@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Code, Database, BarChart3 } from 'lucide-react';
+import { Github, Linkedin, Mail, Code, Database, BarChart3, Hammer } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -19,9 +19,9 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-secondary-bg border-t border-border-color">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-secondary-bg border-t border-forge-border">
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Team Info */}
           <div className="md:col-span-2">
             <motion.div
@@ -29,44 +29,44 @@ const Footer = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-accent-color rounded-lg flex items-center justify-center">
-                  <Code className="w-5 h-5 text-white" />
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-10 h-10 bg-accent-color rounded-xl flex items-center justify-center">
+                  <Hammer className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-text-primary">Tool Smiths</h3>
+                <h3 className="text-2xl font-bold text-text-primary uppercase tracking-wide">Tool Smiths</h3>
               </div>
-              <p className="text-text-secondary mb-4">
+              <p className="text-text-secondary text-lg mb-6 leading-relaxed">
                 A team of three passionate developers who built a sophisticated multi-agent data retrieval system 
                 for SQL databases. We specialize in AI, backend architecture, and modern web technologies.
               </p>
               <div className="flex space-x-4">
                 <motion.a
                   href="mailto:team@toolsmiths.dev"
-                  className="text-text-secondary hover:text-accent-color transition-colors"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+                  className="p-3 rounded-xl forge hover:bg-tertiary-bg transition-all duration-200"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <Mail className="w-5 h-5" />
+                  <Mail className="w-5 h-5 text-text-secondary" />
                 </motion.a>
                 <motion.a
                   href="https://github.com/toolsmiths"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-text-secondary hover:text-accent-color transition-colors"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+                  className="p-3 rounded-xl forge hover:bg-tertiary-bg transition-all duration-200"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <Github className="w-5 h-5" />
+                  <Github className="w-5 h-5 text-text-secondary" />
                 </motion.a>
                 <motion.a
                   href="https://linkedin.com/company/toolsmiths"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-text-secondary hover:text-accent-color transition-colors"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+                  className="p-3 rounded-xl forge hover:bg-tertiary-bg transition-all duration-200"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <Linkedin className="w-5 h-5" />
+                  <Linkedin className="w-5 h-5 text-text-secondary" />
                 </motion.a>
               </div>
             </motion.div>
@@ -79,18 +79,18 @@ const Footer = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <h4 className="text-lg font-semibold text-text-primary mb-4">Quick Links</h4>
-              <ul className="space-y-2">
+              <h4 className="text-xl font-semibold text-text-primary mb-6 uppercase tracking-wide">Quick Links</h4>
+              <ul className="space-y-4">
                 {quickLinks.map((link) => {
                   const Icon = link.icon;
                   return (
                     <li key={link.path}>
                       <Link
                         to={link.path}
-                        className="flex items-center space-x-2 text-text-secondary hover:text-accent-color transition-colors"
+                        className="flex items-center space-x-3 text-text-secondary hover:text-accent-color transition-colors group"
                       >
-                        <Icon className="w-4 h-4" />
-                        <span>{link.label}</span>
+                        <Icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                        <span className="font-medium uppercase tracking-wide">{link.label}</span>
                       </Link>
                     </li>
                   );
@@ -106,20 +106,20 @@ const Footer = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <h4 className="text-lg font-semibold text-text-primary mb-4">Team Members</h4>
-              <ul className="space-y-2">
+              <h4 className="text-xl font-semibold text-text-primary mb-6 uppercase tracking-wide">Team Members</h4>
+              <ul className="space-y-4">
                 {teamMembers.map((member) => (
                   <li key={member.name}>
                     <a
                       href={member.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-2 text-text-secondary hover:text-accent-color transition-colors"
+                      className="flex items-center space-x-3 text-text-secondary hover:text-accent-color transition-colors group"
                     >
-                      <Github className="w-4 h-4" />
+                      <Github className="w-5 h-5 group-hover:scale-110 transition-transform" />
                       <div>
-                        <div className="text-text-primary font-medium">{member.name}</div>
-                        <div className="text-xs">{member.role}</div>
+                        <div className="text-text-primary font-semibold">{member.name}</div>
+                        <div className="text-sm text-text-secondary uppercase tracking-wide">{member.role}</div>
                       </div>
                     </a>
                   </li>
@@ -131,7 +131,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <motion.div
-          className="border-t border-border-color mt-8 pt-8 flex flex-col md:flex-row justify-between items-center"
+          className="border-t border-forge-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -139,11 +139,11 @@ const Footer = () => {
           <p className="text-text-secondary text-sm">
             © {currentYear} Tool Smiths. All rights reserved.
           </p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link to="/" className="text-text-secondary hover:text-accent-color text-sm transition-colors">
+          <div className="flex space-x-8 mt-4 md:mt-0">
+            <Link to="/" className="text-text-secondary hover:text-accent-color text-sm transition-colors font-medium uppercase tracking-wide">
               Privacy Policy
             </Link>
-            <Link to="/" className="text-text-secondary hover:text-accent-color text-sm transition-colors">
+            <Link to="/" className="text-text-secondary hover:text-accent-color text-sm transition-colors font-medium uppercase tracking-wide">
               Terms of Service
             </Link>
           </div>

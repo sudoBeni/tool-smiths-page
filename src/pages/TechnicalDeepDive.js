@@ -15,7 +15,9 @@ import {
   CheckCircle,
   Clock,
   TrendingUp,
-  Cpu
+  Cpu,
+  Crown,
+  Bot
 } from 'lucide-react';
 
 const TechnicalDeepDive = () => {
@@ -235,6 +237,7 @@ const TechnicalDeepDive = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             {[
+              { id: 'agno', label: 'Agno AI Framework', icon: Crown },
               { id: 'agents', label: 'Agent System', icon: Code },
               { id: 'flow', label: 'Data Flow', icon: ArrowRight },
               { id: 'performance', label: 'Performance', icon: TrendingUp },
@@ -257,6 +260,171 @@ const TechnicalDeepDive = () => {
               );
             })}
           </div>
+
+          {/* Agno AI Framework Tab */}
+          {activeTab === 'agno' && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center space-x-3 mb-6">
+                  <Crown className="w-8 h-8 text-accent-color" />
+                  <h3 className="text-3xl font-bold">Agno AI Agent Framework</h3>
+                </div>
+                <p className="text-text-secondary text-lg max-w-3xl mx-auto">
+                  The core orchestration engine that powers our sophisticated multi-agent system. 
+                  Agno AI provides the foundation for intelligent agent coordination, communication, 
+                  and decision-making processes.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Framework Overview */}
+                <div className="card">
+                  <h4 className="text-xl font-semibold mb-4 flex items-center">
+                    <Crown className="w-6 h-6 text-accent-color mr-2" />
+                    Framework Overview
+                  </h4>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-text-secondary">Agent Orchestration</span>
+                      <span className="text-accent-color">Advanced</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-text-secondary">Communication Protocol</span>
+                      <span className="text-accent-color">Event-Driven</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-text-secondary">Decision Making</span>
+                      <span className="text-accent-color">AI-Powered</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-text-secondary">Scalability</span>
+                      <span className="text-accent-color">Horizontal</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Key Features */}
+                <div className="card">
+                  <h4 className="text-xl font-semibold mb-4 flex items-center">
+                    <Bot className="w-6 h-6 text-accent-color mr-2" />
+                    Key Features
+                  </h4>
+                  <div className="space-y-3">
+                    <div className="flex items-start space-x-2">
+                      <CheckCircle className="w-4 h-4 text-accent-color mt-1" />
+                      <span className="text-text-secondary">Intelligent Agent Routing</span>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <CheckCircle className="w-4 h-4 text-accent-color mt-1" />
+                      <span className="text-text-secondary">Context-Aware Processing</span>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <CheckCircle className="w-4 h-4 text-accent-color mt-1" />
+                      <span className="text-text-secondary">Real-time Communication</span>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <CheckCircle className="w-4 h-4 text-accent-color mt-1" />
+                      <span className="text-text-secondary">Fault Tolerance & Recovery</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Implementation Details */}
+              <div className="mt-8">
+                <div className="card">
+                  <h4 className="text-xl font-semibold mb-4">Framework Implementation</h4>
+                  <SyntaxHighlighter
+                    language="python"
+                    style={tomorrow}
+                    className="rounded-lg"
+                    customStyle={{
+                      backgroundColor: 'var(--interactive-bg)',
+                      border: '1px solid var(--border-color)'
+                    }}
+                  >
+{`from agno import AgentFramework, Agent, Message
+from typing import Dict, List
+import asyncio
+
+class AgnoAIFramework:
+    def __init__(self):
+        self.agents = {}
+        self.message_queue = asyncio.Queue()
+        self.context_manager = ContextManager()
+    
+    async def register_agent(self, agent: Agent):
+        """Register a new agent in the framework"""
+        self.agents[agent.id] = agent
+        await agent.initialize()
+    
+    async def route_message(self, message: Message):
+        """Intelligent message routing based on content and context"""
+        target_agent = self.context_manager.determine_target(message)
+        await self.agents[target_agent].process(message)
+    
+    async def orchestrate_workflow(self, user_request: str):
+        """Orchestrate multi-agent workflow for complex requests"""
+        # 1. Parse and analyze request
+        analysis = await self.agents['analyzer'].analyze(user_request)
+        
+        # 2. Route to appropriate agents
+        workflow = self.create_workflow(analysis)
+        
+        # 3. Execute workflow with monitoring
+        result = await self.execute_workflow(workflow)
+        
+        return result
+
+# Agent base class
+class BaseAgent(Agent):
+    def __init__(self, agent_id: str, capabilities: List[str]):
+        super().__init__(agent_id)
+        self.capabilities = capabilities
+        self.context = {}
+    
+    async def process(self, message: Message):
+        """Process incoming message with context awareness"""
+        self.context.update(message.context)
+        result = await self.execute_task(message.content)
+        return Message(
+            sender=self.id,
+            content=result,
+            context=self.context
+        )`}
+                  </SyntaxHighlighter>
+                </div>
+              </div>
+
+              {/* Architecture Diagram */}
+              <div className="mt-8">
+                <div className="card">
+                  <h4 className="text-xl font-semibold mb-4">Architecture Overview</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div className="p-4 border border-border-color rounded-lg">
+                      <Bot className="w-8 h-8 text-accent-color mx-auto mb-2" />
+                      <h5 className="font-semibold">Agent Layer</h5>
+                      <p className="text-text-secondary text-sm">Specialized AI agents</p>
+                    </div>
+                    <div className="p-4 border border-border-color rounded-lg">
+                      <Crown className="w-8 h-8 text-accent-color mx-auto mb-2" />
+                      <h5 className="font-semibold">Orchestration Layer</h5>
+                      <p className="text-text-secondary text-sm">Agno AI Framework</p>
+                    </div>
+                    <div className="p-4 border border-border-color rounded-lg">
+                      <Database className="w-8 h-8 text-accent-color mx-auto mb-2" />
+                      <h5 className="font-semibold">Data Layer</h5>
+                      <p className="text-text-secondary text-sm">Database & Storage</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
 
           {/* Agent System Tab */}
           {activeTab === 'agents' && (

@@ -44,6 +44,7 @@ Tool Smiths is a team of three passionate developers who built an innovative mul
 
 ## 🛠️ Technology Stack
 
+- **🤖 Agno AI Agent Framework**: Core AI agent orchestration and coordination
 - **Frontend**: React 18, Framer Motion, Lucide React
 - **Backend**: FastAPI, Python 3.9+
 - **Database**: SQLite with web interface

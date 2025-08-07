@@ -1,19 +1,34 @@
 :root {
-  /* Futuristic Color Palette */
-  --primary-bg: #0a0a0f;
-  --secondary-bg: #1a1a2e;
-  --accent-color: #00d4ff;
-  --accent-secondary: #ff0080;
+  /* Data Forge Color Palette - Industrial/Blacksmith Theme */
+  --primary-bg: #0a0a0a;
+  --secondary-bg: #1a1a1a;
+  --tertiary-bg: #2a2a2a;
+  --accent-color: #ff6b35;
+  --accent-secondary: #ffd700;
+  --accent-tertiary: #ff4757;
+  --accent-forge: #ff8c42;
   --text-primary: #ffffff;
-  --text-secondary: #b0b0b0;
-  --border-color: #2a2a3e;
-  --interactive-bg: #1e1e2e;
-  --success-color: #00ff88;
-  --warning-color: #ffaa00;
-  --error-color: #ff4757;
+  --text-secondary: #cccccc;
+  --text-tertiary: #999999;
+  --text-muted: #666666;
+  --border-color: #333333;
+  --border-light: #444444;
+  --interactive-bg: #1c1c1c;
+  --success-color: #30d158;
+  --warning-color: #ff9f0a;
+  --error-color: #ff453a;
   
-  /* Typography */
-  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  /* Forge-specific colors */
+  --forge-glow: #ff6b35;
+  --forge-spark: #ffd700;
+  --forge-metal: #4a5568;
+  --forge-steel: #2d3748;
+  --forge-dark: #1a202c;
+  --forge-fire: #ff8c42;
+  --forge-smoke: #2a2a2a;
+  
+  /* Typography - Industrial/Technical */
+  --font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', 'Menlo', 'DejaVu Sans Mono', monospace;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -24,8 +39,10 @@
   --font-size-4xl: 2.25rem;
   --font-size-5xl: 3rem;
   --font-size-6xl: 3.75rem;
+  --font-size-7xl: 4.5rem;
+  --font-size-8xl: 6rem;
   
-  /* Spacing */
+  /* Spacing - Industrial grid */
   --spacing-1: 0.25rem;
   --spacing-2: 0.5rem;
   --spacing-3: 0.75rem;
@@ -38,26 +55,32 @@
   --spacing-16: 4rem;
   --spacing-20: 5rem;
   --spacing-24: 6rem;
+  --spacing-32: 8rem;
+  --spacing-40: 10rem;
   
-  /* Border Radius */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
+  /* Border Radius - Industrial */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
   --radius-full: 9999px;
   
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  /* Shadows - Industrial/Forge */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  --shadow-forge: 0 0 30px rgba(255, 107, 53, 0.4);
+  --shadow-spark: 0 0 20px rgba(255, 215, 0, 0.6);
   
-  /* Glow Effects */
-  --glow-primary: 0 0 20px rgba(0, 212, 255, 0.3);
-  --glow-secondary: 0 0 20px rgba(255, 0, 128, 0.3);
-  --glow-success: 0 0 20px rgba(0, 255, 136, 0.3);
+  /* Forge effects */
+  --forge-bg: rgba(255, 107, 53, 0.05);
+  --forge-border: rgba(255, 107, 53, 0.2);
+  --forge-blur: blur(20px);
+  --forge-glow-intensity: 0.8;
 }
 
 * {
@@ -78,9 +101,12 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   position: relative;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Futuristic Background */
+/* Forge Background with animated elements */
 body::before {
   content: '';
   position: fixed;
@@ -89,14 +115,23 @@ body::before {
   width: 100%;
   height: 100%;
   background: 
-    radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 0, 128, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 20% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255, 140, 66, 0.05) 0%, transparent 50%),
+    linear-gradient(45deg, transparent 49%, rgba(255, 107, 53, 0.02) 50%, transparent 51%),
+    linear-gradient(-45deg, transparent 49%, rgba(255, 215, 0, 0.02) 50%, transparent 51%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 50px 50px, 50px 50px;
   pointer-events: none;
   z-index: -1;
+  animation: forgeBackground 20s linear infinite;
 }
 
-/* Animated Grid Background */
+@keyframes forgeBackground {
+  0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0px 0px, 0px 0px; }
+  100% { background-position: 100% 100%, 100% 100%, 100% 100%, 50px 50px, 50px 50px; }
+}
+
+/* Animated sparks */
 body::after {
   content: '';
   position: fixed;
@@ -105,53 +140,77 @@ body::after {
   width: 100%;
   height: 100%;
   background-image: 
-    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: gridMove 20s linear infinite;
+    radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.3) 0%, transparent 2px),
+    radial-gradient(circle at 90% 80%, rgba(255, 107, 53, 0.3) 0%, transparent 2px),
+    radial-gradient(circle at 50% 50%, rgba(255, 140, 66, 0.2) 0%, transparent 1px);
+  background-size: 200px 200px, 150px 150px, 100px 100px;
+  animation: sparkle 8s linear infinite;
   pointer-events: none;
   z-index: -1;
 }
 
-@keyframes gridMove {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(50px, 50px); }
+@keyframes sparkle {
+  0% { transform: translate(0, 0); opacity: 0.3; }
+  50% { opacity: 0.8; }
+  100% { transform: translate(-50px, -50px); opacity: 0.3; }
 }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  line-height: 1.2;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   margin-bottom: var(--spacing-4);
+  text-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
 }
 
-h1 { font-size: var(--font-size-4xl); }
-h2 { font-size: var(--font-size-3xl); }
-h3 { font-size: var(--font-size-2xl); }
-h4 { font-size: var(--font-size-xl); }
-h5 { font-size: var(--font-size-lg); }
-h6 { font-size: var(--font-size-base); }
+h1 { 
+  font-size: clamp(2.5rem, 8vw, var(--font-size-7xl));
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+h2 { 
+  font-size: clamp(2rem, 6vw, var(--font-size-5xl));
+  font-weight: 600;
+}
+
+h3 { 
+  font-size: clamp(1.5rem, 4vw, var(--font-size-3xl));
+  font-weight: 600;
+}
+
+h4 { font-size: var(--font-size-2xl); }
+h5 { font-size: var(--font-size-xl); }
+h6 { font-size: var(--font-size-lg); }
 
 p {
   margin-bottom: var(--spacing-4);
   color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: var(--font-size-lg);
 }
 
 /* Links */
 a {
   color: var(--accent-color);
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  position: relative;
 }
 
 a:hover {
   color: var(--accent-secondary);
-  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+  text-shadow: 0 0 8px rgba(255, 107, 53, 0.5);
 }
 
-/* Buttons */
+/* Buttons - Forge-style */
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-forge));
   color: var(--text-primary);
   padding: var(--spacing-4) var(--spacing-8);
   border: none;
@@ -162,7 +221,9 @@ a:hover {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  box-shadow: var(--glow-primary);
+  box-shadow: var(--shadow-forge);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .btn-primary::before {
@@ -182,14 +243,19 @@ a:hover {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-xl), var(--glow-primary);
+  box-shadow: var(--shadow-xl), var(--shadow-forge);
+  background: linear-gradient(135deg, var(--accent-forge), var(--accent-secondary));
+}
+
+.btn-primary:active {
+  transform: translateY(0);
 }
 
 .btn-secondary {
-  background: transparent;
+  background: var(--forge-bg);
   color: var(--text-primary);
   padding: var(--spacing-4) var(--spacing-8);
-  border: 2px solid var(--accent-color);
+  border: 2px solid var(--forge-border);
   border-radius: var(--radius-lg);
   font-weight: 600;
   font-size: var(--font-size-base);
@@ -197,6 +263,9 @@ a:hover {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  backdrop-filter: var(--forge-blur);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .btn-secondary::before {
@@ -206,7 +275,7 @@ a:hover {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.1), transparent);
   transition: left 0.5s;
 }
 
@@ -218,19 +287,25 @@ a:hover {
   background: var(--accent-color);
   color: var(--primary-bg);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-lg), var(--glow-primary);
+  box-shadow: var(--shadow-lg), var(--shadow-forge);
+  border-color: var(--accent-color);
 }
 
-/* Cards */
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+/* Cards - Forge-style */
 .card {
-  background: rgba(26, 26, 46, 0.8);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border-color);
+  background: var(--forge-bg);
+  backdrop-filter: var(--forge-blur);
+  border: 1px solid var(--forge-border);
   border-radius: var(--radius-xl);
-  padding: var(--spacing-6);
+  padding: var(--spacing-8);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  box-shadow: var(--shadow-md);
 }
 
 .card::before {
@@ -239,7 +314,7 @@ a:hover {
   top: 0;
   left: 0;
   right: 0;
-  height: 1px;
+  height: 2px;
   background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -250,14 +325,15 @@ a:hover {
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-xl), var(--glow-primary);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl), var(--shadow-forge);
   border-color: var(--accent-color);
+  background: rgba(255, 107, 53, 0.08);
 }
 
 /* Sections */
 .section {
-  padding: var(--spacing-16) 0;
+  padding: var(--spacing-32) 0;
   position: relative;
 }
 
@@ -267,22 +343,22 @@ a:hover {
   padding: 0 var(--spacing-4);
 }
 
-/* Navigation */
+/* Navigation - Forge-style */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  background: rgba(10, 10, 15, 0.95);
+  background: rgba(10, 10, 10, 0.95);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--forge-border);
   transition: all 0.3s ease;
 }
 
 .navbar.scrolled {
-  background: rgba(10, 10, 15, 0.98);
-  box-shadow: var(--shadow-lg);
+  background: rgba(10, 10, 10, 0.98);
+  box-shadow: var(--shadow-lg), var(--shadow-forge);
 }
 
 .nav-container {
@@ -299,31 +375,37 @@ a:hover {
   font-weight: 700;
   color: var(--accent-color);
   text-decoration: none;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
 }
 
 .nav-menu {
   display: flex;
   list-style: none;
-  gap: var(--spacing-6);
+  gap: var(--spacing-8);
 }
 
 .nav-link {
   color: var(--text-secondary);
   text-decoration: none;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   position: relative;
+  font-size: var(--font-size-base);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .nav-link::after {
   content: '';
   position: absolute;
-  bottom: -5px;
+  bottom: -4px;
   left: 0;
   width: 0;
   height: 2px;
   background: var(--accent-color);
-  transition: width 0.3s ease;
+  transition: width 0.2s ease;
+  box-shadow: 0 0 8px rgba(255, 107, 53, 0.5);
 }
 
 .nav-link:hover::after {
@@ -332,6 +414,7 @@ a:hover {
 
 .nav-link:hover {
   color: var(--accent-color);
+  text-shadow: 0 0 8px rgba(255, 107, 53, 0.3);
 }
 
 /* Mobile Menu */
@@ -344,7 +427,7 @@ a:hover {
   cursor: pointer;
 }
 
-/* Hero Section */
+/* Hero Section - Forge-style */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -353,6 +436,7 @@ a:hover {
   text-align: center;
   position: relative;
   overflow: hidden;
+  padding: var(--spacing-20) 0;
 }
 
 .hero::before {
@@ -362,66 +446,83 @@ a:hover {
   left: 50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
   transform: translate(-50%, -50%);
-  animation: pulse 4s ease-in-out infinite;
+  animation: forgePulse 4s ease-in-out infinite;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+@keyframes forgePulse {
+  0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 800px;
+  max-width: 900px;
   padding: var(--spacing-8);
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 8vw, 4rem);
-  font-weight: 800;
+  font-size: clamp(3rem, 10vw, var(--font-size-8xl));
+  font-weight: 700;
   background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: var(--spacing-6);
-  animation: titleGlow 3s ease-in-out infinite;
+  margin-bottom: var(--spacing-8);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
+  animation: forgeGlow 3s ease-in-out infinite;
 }
 
-@keyframes titleGlow {
-  0%, 100% { filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5)); }
-  50% { filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.8)); }
+@keyframes forgeGlow {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.3)); }
+  50% { filter: drop-shadow(0 0 40px rgba(255, 107, 53, 0.6)); }
 }
 
 .hero-subtitle {
-  font-size: clamp(1rem, 4vw, 1.25rem);
+  font-size: clamp(1.125rem, 4vw, var(--font-size-xl));
   color: var(--text-secondary);
-  margin-bottom: var(--spacing-8);
+  margin-bottom: var(--spacing-12);
   line-height: 1.6;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Grid Layouts */
 .grid {
   display: grid;
-  gap: var(--spacing-6);
+  gap: var(--spacing-8);
 }
 
 .grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
 .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
 .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-cols-5 { grid-template-columns: repeat(5, 1fr); }
+.grid-cols-6 { grid-template-columns: repeat(6, 1fr); }
 
 /* Flexbox Utilities */
 .flex { display: flex; }
 .flex-col { flex-direction: column; }
 .items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
 .justify-center { justify-content: center; }
 .justify-between { justify-content: space-between; }
+.justify-start { justify-content: flex-start; }
+.justify-end { justify-content: flex-end; }
 .space-x-2 > * + * { margin-left: var(--spacing-2); }
 .space-x-4 > * + * { margin-left: var(--spacing-4); }
+.space-x-6 > * + * { margin-left: var(--spacing-6); }
+.space-x-8 > * + * { margin-left: var(--spacing-8); }
 .space-y-2 > * + * { margin-top: var(--spacing-2); }
 .space-y-4 > * + * { margin-top: var(--spacing-4); }
+.space-y-6 > * + * { margin-top: var(--spacing-6); }
+.space-y-8 > * + * { margin-top: var(--spacing-8); }
 
 /* Text Utilities */
 .text-center { text-align: center; }
@@ -430,17 +531,23 @@ a:hover {
 .font-bold { font-weight: 700; }
 .font-semibold { font-weight: 600; }
 .font-medium { font-weight: 500; }
+.font-light { font-weight: 300; }
 
 /* Spacing Utilities */
 .mb-2 { margin-bottom: var(--spacing-2); }
 .mb-4 { margin-bottom: var(--spacing-4); }
 .mb-6 { margin-bottom: var(--spacing-6); }
 .mb-8 { margin-bottom: var(--spacing-8); }
+.mb-12 { margin-bottom: var(--spacing-12); }
+.mb-16 { margin-bottom: var(--spacing-16); }
 .mt-4 { margin-top: var(--spacing-4); }
 .mt-8 { margin-top: var(--spacing-8); }
+.mt-12 { margin-top: var(--spacing-12); }
+.mt-16 { margin-top: var(--spacing-16); }
 .p-4 { padding: var(--spacing-4); }
 .p-6 { padding: var(--spacing-6); }
 .p-8 { padding: var(--spacing-8); }
+.p-12 { padding: var(--spacing-12); }
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -453,7 +560,10 @@ a:hover {
   }
   
   .grid-cols-2,
-  .grid-cols-3 {
+  .grid-cols-3,
+  .grid-cols-4,
+  .grid-cols-5,
+  .grid-cols-6 {
     grid-template-columns: 1fr;
   }
   
@@ -462,13 +572,17 @@ a:hover {
   }
   
   .card {
-    padding: var(--spacing-4);
+    padding: var(--spacing-6);
   }
   
   .btn-primary,
   .btn-secondary {
     padding: var(--spacing-3) var(--spacing-6);
     font-size: var(--font-size-sm);
+  }
+  
+  .section {
+    padding: var(--spacing-16) 0;
   }
 }
 
@@ -478,15 +592,19 @@ a:hover {
   }
   
   .section {
-    padding: var(--spacing-8) 0;
+    padding: var(--spacing-12) 0;
   }
   
   .card {
-    padding: var(--spacing-3);
+    padding: var(--spacing-4);
+  }
+  
+  .hero-title {
+    font-size: clamp(2.5rem, 12vw, var(--font-size-6xl));
   }
 }
 
-/* Scrollbar */
+/* Scrollbar - Forge-style */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -498,6 +616,7 @@ a:hover {
 ::-webkit-scrollbar-thumb {
   background: var(--accent-color);
   border-radius: var(--radius-full);
+  box-shadow: var(--shadow-forge);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -507,7 +626,7 @@ a:hover {
 /* Selection */
 ::selection {
   background: var(--accent-color);
-  color: var(--primary-bg);
+  color: var(--text-primary);
 }
 
 /* Loading Animation */
@@ -515,7 +634,7 @@ a:hover {
   display: inline-block;
   width: 20px;
   height: 20px;
-  border: 3px solid var(--border-color);
+  border: 2px solid var(--forge-border);
   border-radius: 50%;
   border-top-color: var(--accent-color);
   animation: spin 1s ease-in-out infinite;
@@ -533,20 +652,6 @@ a:hover {
 
 .float {
   animation: float 3s ease-in-out infinite;
-}
-
-/* Glitch Effect */
-@keyframes glitch {
-  0% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
-  100% { transform: translate(0); }
-}
-
-.glitch {
-  animation: glitch 0.3s ease-in-out;
 }
 
 /* Utility Classes */
@@ -581,4 +686,64 @@ a:hover {
 .z-20 { z-index: 20; }
 .z-30 { z-index: 30; }
 .z-40 { z-index: 40; }
-.z-50 { z-index: 50; } 
+.z-50 { z-index: 50; }
+
+/* Forge morphism utilities */
+.forge {
+  background: var(--forge-bg);
+  backdrop-filter: var(--forge-blur);
+  border: 1px solid var(--forge-border);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow effects */
+.glow {
+  box-shadow: var(--shadow-forge);
+}
+
+.spark-glow {
+  box-shadow: var(--shadow-spark);
+}
+
+/* Smooth transitions */
+.transition-all {
+  transition: all 0.2s ease;
+}
+
+.transition-transform {
+  transition: transform 0.2s ease;
+}
+
+.transition-colors {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Forge-specific animations */
+@keyframes forgeHammer {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(45deg); }
+  50% { transform: rotate(90deg); }
+  75% { transform: rotate(45deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes forgeSpark {
+  0% { transform: scale(0) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1) rotate(180deg); opacity: 1; }
+  100% { transform: scale(0) rotate(360deg); opacity: 0; }
+}
+
+.forge-hammer {
+  animation: forgeHammer 2s ease-in-out infinite;
+}
+
+.forge-spark {
+  animation: forgeSpark 1s ease-out infinite;
+} 

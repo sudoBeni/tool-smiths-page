@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Code, BarChart3, BookOpen, Users, Zap } from 'lucide-react';
+import { Menu, X, Code, BarChart3, BookOpen, Users, Zap, Hammer } from 'lucide-react';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -38,14 +38,14 @@ const Navigation = () => {
         {/* Logo */}
         <Link to="/" className="nav-logo">
           <motion.div
-            className="flex items-center space-x-2"
+            className="flex items-center space-x-3"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="w-8 h-8 bg-gradient-to-r from-accent-color to-accent-secondary rounded-lg flex items-center justify-center">
-              <Code className="w-5 h-5 text-white" />
+            <div className="w-8 h-8 bg-accent-color rounded-lg flex items-center justify-center">
+              <Hammer className="w-5 h-5 text-white" />
             </div>
-            <span className="font-bold text-xl">Tool Smiths</span>
+            <span className="font-bold text-xl uppercase tracking-wide">Tool Smiths</span>
           </motion.div>
         </Link>
 
@@ -57,14 +57,14 @@ const Navigation = () => {
               <motion.li key={item.path} whileHover={{ y: -2 }}>
                 <Link
                   to={item.path}
-                  className={`nav-link flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-300 ${
+                  className={`nav-link flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-200 ${
                     isActive(item.path)
-                      ? 'text-accent-color bg-accent-color/10 border border-accent-color/20'
-                      : 'text-text-secondary hover:text-accent-color'
+                      ? 'text-accent-color forge'
+                      : 'text-text-secondary hover:text-accent-color hover:forge'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
-                  <span>{item.label}</span>
+                  <span className="font-medium uppercase tracking-wide">{item.label}</span>
                 </Link>
               </motion.li>
             );
@@ -108,14 +108,14 @@ const Navigation = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="absolute top-full left-0 right-0 bg-secondary-bg/95 backdrop-blur-xl border-t border-border-color md:hidden"
+            className="absolute top-full left-0 right-0 forge border-t border-forge-border md:hidden"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="container py-4">
-              <div className="grid gap-2">
+            <div className="container py-6">
+              <div className="grid gap-3">
                 {navItems.map((item, index) => {
                   const Icon = item.icon;
                   return (
@@ -127,15 +127,15 @@ const Navigation = () => {
                     >
                       <Link
                         to={item.path}
-                        className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
+                        className={`flex items-center space-x-4 px-6 py-4 rounded-xl transition-all duration-200 ${
                           isActive(item.path)
-                            ? 'text-accent-color bg-accent-color/10 border border-accent-color/20'
-                            : 'text-text-secondary hover:text-accent-color hover:bg-interactive-bg'
+                            ? 'text-accent-color forge'
+                            : 'text-text-secondary hover:text-accent-color hover:forge'
                         }`}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         <Icon className="w-5 h-5" />
-                        <span className="font-medium">{item.label}</span>
+                        <span className="font-medium uppercase tracking-wide">{item.label}</span>
                         {isActive(item.path) && (
                           <motion.div
                             className="ml-auto w-2 h-2 bg-accent-color rounded-full"
@@ -152,14 +152,14 @@ const Navigation = () => {
               
               {/* Mobile Menu Footer */}
               <motion.div
-                className="mt-6 pt-4 border-t border-border-color"
+                className="mt-8 pt-6 border-t border-forge-border"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.5 }}
               >
                 <div className="text-center">
-                  <p className="text-text-secondary text-sm mb-2">Multi-Agent Data Retrieval System</p>
-                  <div className="flex justify-center space-x-4">
+                  <p className="text-text-secondary text-sm mb-4 uppercase tracking-wide">Data Forge System</p>
+                  <div className="flex justify-center space-x-3">
                     <div className="w-2 h-2 bg-accent-color rounded-full animate-pulse"></div>
                     <div className="w-2 h-2 bg-accent-secondary rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
                     <div className="w-2 h-2 bg-success-color rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
@@ -175,7 +175,7 @@ const Navigation = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-[-1] md:hidden"
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[-1] md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
