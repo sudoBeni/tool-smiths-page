@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Send, Database, Hammer, Bot, Code2 } from 'lucide-react';
+import { Send, Database, Hammer, Bot } from 'lucide-react';
 
 const messages = [
   {
