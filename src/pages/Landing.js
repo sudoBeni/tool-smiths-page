@@ -1,9 +1,11 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Hammer, Sparkles, MessageSquare, ArrowRight, Database, Bot, CheckCircle2 } from 'lucide-react';
+import { Hammer, Sparkles, Database, Bot, CheckCircle2, MessageSquare } from 'lucide-react';
 import LoadingHammer from '../components/LoadingHammer';
 import ChatPreview from '../components/ChatPreview';
 import { hapticTick } from '../utils/haptics';
+import MiniSpark from '../components/MiniSpark';
+import VideoShowcase from '../components/VideoShowcase';
 
 const Landing = () => {
   const heroRef = useRef(null);
@@ -30,7 +32,8 @@ const Landing = () => {
         >
           <div style={{ width: '100%', height: '100%', background: 'radial-gradient(circle, rgba(255,215,0,0.25), transparent 60%)' }} />
         </motion.div>
-        <div className="hero-content">
+        <div className="hero-content" style={{ position: 'relative' }}>
+          <MiniSpark />
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <div className="inline-flex items-center space-x-3 forge rounded-full px-5 py-2 mb-6">
               <Hammer className="w-4 h-4 text-accent-color" />
@@ -45,19 +48,7 @@ const Landing = () => {
             </motion.div>
 
             <div className="flex flex-col gap-4 items-center">
-              <a
-                href="#demo"
-                className="btn-primary px-8 py-4 text-lg inline-flex items-center space-x-2"
-                onClick={() => hapticTick(14)}
-              >
-                <span>Start demo</span>
-                <ArrowRight className="w-5 h-5" />
-              </a>
-              <a
-                href="#how"
-                className="btn-secondary px-8 py-4 inline-flex items-center space-x-2"
-                onClick={() => hapticTick(10)}
-              >
+              <a href="#demo" className="btn-secondary px-8 py-4 inline-flex items-center space-x-2" onClick={() => hapticTick(10)}>
                 <Sparkles className="w-4 h-4" />
                 <span>How it works</span>
               </a>
@@ -74,7 +65,7 @@ const Landing = () => {
             Raw metal → Forging agents → Forged output
           </motion.p>
 
-          <div className="flex gap-4 overflow-x-auto pb-2" style={{ scrollSnapType: 'x mandatory', padding: '0 8px' }}>
+          <div className="flex gap-4 overflow-x-auto pb-2" style={{ scrollSnapType: 'x mandatory', padding: '0 8px', overscrollBehaviorX: 'contain' }}>
             {[{
               icon: Database,
               title: 'Raw metal',
@@ -111,16 +102,16 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Demo */}
+      {/* Demo video */}
       <section id="demo" className="section">
         <div className="container">
-          <motion.h2 className="text-4xl font-bold mb-6 text-center" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>Try the forge</motion.h2>
+          <motion.h2 className="text-4xl font-bold mb-6 text-center" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>Demo video</motion.h2>
           <motion.p className="text-text-secondary text-center mb-8" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
-            Ask in natural language. Watch agents work.
+            A short walkthrough of chatting with your data.
           </motion.p>
 
           <div className="max-w-xl mx-auto">
-            <ChatPreview />
+            <VideoShowcase title="Data Forge Demo" src="" poster="" />
           </div>
         </div>
       </section>

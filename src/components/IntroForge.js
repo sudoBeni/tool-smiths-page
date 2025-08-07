@@ -15,7 +15,7 @@ const IntroForge = () => {
       const total = setTimeout(() => {
         sessionStorage.setItem('introPlayed', '1');
         setShow(false);
-      }, window.innerWidth <= 480 ? 1200 : 2600);
+      }, window.innerWidth <= 480 ? 1500 : 2600);
       return () => clearTimeout(total);
     }
   }, []);

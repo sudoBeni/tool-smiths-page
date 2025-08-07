@@ -166,7 +166,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 { 
-  font-size: clamp(2.5rem, 8vw, var(--font-size-7xl));
+  font-size: clamp(2rem, 7vw, var(--font-size-6xl));
   font-weight: 700;
   letter-spacing: -0.03em;
   background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
@@ -176,12 +176,12 @@ h1 {
 }
 
 h2 { 
-  font-size: clamp(2rem, 6vw, var(--font-size-5xl));
+  font-size: clamp(1.75rem, 5.6vw, var(--font-size-4xl));
   font-weight: 600;
 }
 
 h3 { 
-  font-size: clamp(1.5rem, 4vw, var(--font-size-3xl));
+  font-size: clamp(1.25rem, 3.8vw, var(--font-size-2xl));
   font-weight: 600;
 }
 
@@ -192,8 +192,8 @@ h6 { font-size: var(--font-size-lg); }
 p {
   margin-bottom: var(--spacing-4);
   color: var(--text-secondary);
-  line-height: 1.7;
-  font-size: var(--font-size-lg);
+  line-height: 1.65;
+  font-size: clamp(0.95rem, 3.8vw, 1.05rem);
 }
 
 /* Links */
@@ -342,6 +342,7 @@ a:hover {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--spacing-4);
+  overflow: hidden;
 }
 
 /* Navigation - Forge-style */
@@ -508,8 +509,26 @@ a:hover {
   padding: var(--spacing-8);
 }
 
+/* Video showcase */
+.video-shell { margin: 0 auto; }
+.video-aspect {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.video-aspect > * { position: absolute; inset: 0; }
+.video-caption {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
+
 .hero-title {
-  font-size: clamp(3rem, 10vw, var(--font-size-8xl));
+  font-size: clamp(2.2rem, 9vw, var(--font-size-7xl));
   font-weight: 700;
   background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
   -webkit-background-clip: text;
@@ -528,7 +547,7 @@ a:hover {
 }
 
 .hero-subtitle {
-  font-size: clamp(1.125rem, 4vw, var(--font-size-xl));
+  font-size: clamp(1rem, 3.9vw, 1.125rem);
   color: var(--text-secondary);
   margin-bottom: var(--spacing-12);
   line-height: 1.6;
@@ -673,6 +692,7 @@ a:hover {
   backdrop-filter: blur(10px);
   border-top: 1px solid var(--forge-border);
   padding: 8px env(safe-area-inset-right) calc(8px + env(safe-area-inset-bottom)) env(safe-area-inset-left);
+  overflow: hidden;
 }
 
 .mobile-tabbar .tab {

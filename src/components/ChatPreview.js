@@ -60,7 +60,7 @@ LIMIT 5;
 
 const ChatPreview = () => {
   return (
-    <div className="card relative overflow-hidden" style={{ padding: '16px' }}>
+    <div className="card relative overflow-hidden" style={{ padding: '14px' }}>
       <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full blur-3xl opacity-20" style={{ background: 'radial-gradient(circle, rgba(255,107,53,0.4), transparent 60%)' }} />
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
