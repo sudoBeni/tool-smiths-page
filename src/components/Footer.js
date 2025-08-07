@@ -13,9 +13,9 @@ const Footer = () => {
   ];
 
   const teamMembers = [
-    { name: 'Alex Chen', role: 'Backend Architect', github: '#' },
-    { name: 'Sarah Kim', role: 'Frontend Developer', github: '#' },
-    { name: 'Marcus Rodriguez', role: 'AI Specialist', github: '#' },
+    { name: 'Benjamin Amhof', role: 'AI & Machine Learning Specialist', github: 'https://github.com/sudoBeni' },
+    { name: 'Jan Wahli', role: 'Frontend Developer', github: 'https://github.com/jan-5' },
+    { name: 'Noel Jensen', role: 'Backend Architect', github: 'https://github.com/noeljen' },
   ];
 
   return (

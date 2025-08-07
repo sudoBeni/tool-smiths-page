@@ -39,7 +39,7 @@ const DevelopmentProcess = () => {
         'Database schema design',
         'Team role assignment and collaboration setup'
       ],
-      team: ['Alex Chen', 'Sarah Kim', 'Marcus Rodriguez'],
+      team: ['Benjamin Amhof', 'Jan Wahli', 'Noel Jensen'],
       icon: Lightbulb,
       color: '#10a37f'
     },
@@ -55,7 +55,7 @@ const DevelopmentProcess = () => {
         'Database integration and optimization',
         'API endpoint development'
       ],
-      team: ['Alex Chen', 'Marcus Rodriguez'],
+      team: ['Benjamin Amhof', 'Noel Jensen'],
       icon: Code,
       color: '#61dafb'
     },
@@ -71,7 +71,7 @@ const DevelopmentProcess = () => {
         'Real-time data visualization',
         'Responsive design implementation'
       ],
-      team: ['Sarah Kim', 'Alex Chen'],
+      team: ['Jan Wahli', 'Benjamin Amhof'],
       icon: Globe,
       color: '#f7df1e'
     },
@@ -87,7 +87,7 @@ const DevelopmentProcess = () => {
         'Response validation system',
         'Performance optimization'
       ],
-      team: ['Marcus Rodriguez', 'Alex Chen'],
+      team: ['Noel Jensen', 'Benjamin Amhof'],
       icon: Zap,
       color: '#ff6b6b'
     },
@@ -239,49 +239,49 @@ const DevelopmentProcess = () => {
     {
       date: 'Jan 15, 2023',
       commit: 'Initial project setup',
-      author: 'Alex Chen',
+      author: 'Benjamin Amhof',
       message: 'feat: Initialize project structure with FastAPI and React'
     },
     {
       date: 'Jan 22, 2023',
       commit: 'Database schema design',
-      author: 'Marcus Rodriguez',
+      author: 'Noel Jensen',
       message: 'feat: Design and implement database schema with relationships'
     },
     {
       date: 'Feb 8, 2023',
       commit: 'First agent implementation',
-      author: 'Alex Chen',
+      author: 'Benjamin Amhof',
       message: 'feat: Implement Database Manager Agent with entity mapping'
     },
     {
       date: 'Feb 15, 2023',
       commit: 'Query generator agent',
-      author: 'Marcus Rodriguez',
+      author: 'Noel Jensen',
       message: 'feat: Add Query Generator Agent with SQL optimization'
     },
     {
       date: 'Mar 1, 2023',
       commit: 'React frontend setup',
-      author: 'Sarah Kim',
+      author: 'Jan Wahli',
       message: 'feat: Initialize React application with routing and state management'
     },
     {
       date: 'Mar 15, 2023',
       commit: 'Chat interface',
-      author: 'Sarah Kim',
+      author: 'Jan Wahli',
       message: 'feat: Implement real-time chat interface with WebSocket'
     },
     {
       date: 'Apr 5, 2023',
       commit: 'Azure OpenAI integration',
-      author: 'Marcus Rodriguez',
+      author: 'Benjamin Amhof',
       message: 'feat: Integrate Azure OpenAI with custom agent training'
     },
     {
       date: 'Apr 20, 2023',
       commit: 'Docker containerization',
-      author: 'Alex Chen',
+      author: 'Noel Jensen',
       message: 'feat: Containerize application with multi-stage builds'
     },
     {

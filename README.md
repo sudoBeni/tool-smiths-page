@@ -259,9 +259,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👥 Team
 
 ### Tool Smiths
-- **Alex Chen** - Backend Architect
-- **Sarah Kim** - Frontend Developer  
-- **Marcus Rodriguez** - AI Specialist
+- **Benjamin Amhof** - AI & Machine Learning Specialist
+  - BSc Student in AI & Machine Learning at HSLU
+  - [LinkedIn](https://www.linkedin.com/in/benjamin-amhof/)
+  - [GitHub](https://github.com/sudoBeni)
+- **Jan Wahli** - Frontend Developer
+  - BSc Student in AI & Machine Learning at HSLU
+  - [LinkedIn](https://www.linkedin.com/in/jan-wahli/)
+  - [GitHub](https://github.com/jan-5)
+- **Noel Jensen** - Backend Architect
+  - BSc Student in AI & Machine Learning at HSLU
+  - [LinkedIn](https://www.linkedin.com/in/noel-jensen-/)
+  - [GitHub](https://github.com/noeljen)
 
 ## 🙏 Acknowledgments
 

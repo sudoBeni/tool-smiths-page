@@ -17,7 +17,9 @@ import {
   Sparkles,
   Cpu,
   Brain,
-  Rocket
+  Rocket,
+  Linkedin,
+  Github
 } from 'lucide-react';
 
 const Home = () => {
@@ -28,28 +30,34 @@ const Home = () => {
 
   const teamMembers = [
     {
-      name: 'Alex Chen',
-      role: 'Backend Architect',
-      expertise: 'FastAPI, Database Design, System Architecture',
+      name: 'Benjamin Amhof',
+      role: 'AI & Machine Learning Specialist',
+      expertise: 'BSc Student in AI & Machine Learning at HSLU',
       avatar: '👨‍💻',
-      contribution: 'Led the multi-agent system design and FastAPI backend development',
-      color: '#00d4ff'
+      contribution: 'Led the multi-agent system design and AI integration',
+      color: '#00d4ff',
+      linkedin: 'https://www.linkedin.com/in/benjamin-amhof/',
+      github: 'https://github.com/sudoBeni'
     },
     {
-      name: 'Sarah Kim',
+      name: 'Jan Wahli',
       role: 'Frontend Developer',
-      expertise: 'React, TypeScript, UI/UX Design',
-      avatar: '👩‍💻',
+      expertise: 'BSc Student in AI & Machine Learning at HSLU',
+      avatar: '👨‍💻',
       contribution: 'Built the responsive React frontend with real-time chat interface',
-      color: '#ff0080'
+      color: '#ff0080',
+      linkedin: 'https://www.linkedin.com/in/jan-wahli/',
+      github: 'https://github.com/jan-5'
     },
     {
-      name: 'Marcus Rodriguez',
-      role: 'AI Specialist',
-      expertise: 'Azure OpenAI, Machine Learning, Data Processing',
-      avatar: '👨‍🔬',
-      contribution: 'Implemented AI agents and Azure OpenAI integration',
-      color: '#00ff88'
+      name: 'Noel Jensen',
+      role: 'Backend Architect',
+      expertise: 'BSc Student in AI & Machine Learning at HSLU',
+      avatar: '👨‍💻',
+      contribution: 'Implemented FastAPI backend and database architecture',
+      color: '#00ff88',
+      linkedin: 'https://www.linkedin.com/in/noel-jensen-/',
+      github: 'https://github.com/noeljen'
     }
   ];
 
@@ -241,7 +249,29 @@ const Home = () => {
                   <h3 className="text-xl font-semibold mb-2">{member.name}</h3>
                   <p className="text-accent-color font-medium mb-3">{member.role}</p>
                   <p className="text-text-secondary text-sm mb-4">{member.expertise}</p>
-                  <p className="text-text-secondary text-sm">{member.contribution}</p>
+                  <p className="text-text-secondary text-sm mb-4">{member.contribution}</p>
+                  
+                  {/* Social Media Links */}
+                  <div className="flex justify-center space-x-3">
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full bg-interactive-bg hover:bg-accent-color transition-colors duration-200 group-hover:scale-110"
+                      title="LinkedIn Profile"
+                    >
+                      <Linkedin className="w-4 h-4 text-text-secondary group-hover:text-white" />
+                    </a>
+                    <a
+                      href={member.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full bg-interactive-bg hover:bg-accent-color transition-colors duration-200 group-hover:scale-110"
+                      title="GitHub Profile"
+                    >
+                      <Github className="w-4 h-4 text-text-secondary group-hover:text-white" />
+                    </a>
+                  </div>
                   
                   {/* Glow Effect */}
                   <div 
