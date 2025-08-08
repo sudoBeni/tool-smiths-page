@@ -886,6 +886,20 @@ a:hover {
     border-radius: var(--radius-lg);
   }
   
+  /* Partner logos smaller on mobile */
+  .partner-logo {
+    padding: var(--spacing-2) !important;
+  }
+  .partner-logo img {
+    object-fit: contain;
+  }
+  
+  /* Developer avatars smaller and consistent on mobile */
+  .developer-avatar {
+    width: 44px !important;
+    height: 44px !important;
+  }
+  
   .top-glassbar { 
     height: 48px; 
   }

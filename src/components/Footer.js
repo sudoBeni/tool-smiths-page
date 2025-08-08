@@ -87,12 +87,12 @@ const Footer = () => {
                   transition: { duration: 0.2 }
                 }}
               >
-                                 <div className="mx-auto mb-4 flex justify-center w-full h-32">
+                 <div className="mx-auto mb-4 flex justify-center w-full h-24 md:h-32">
                    <Logo
                      src={partner.logo}
                      alt={partner.name}
                      fallbackText={partner.name.charAt(0)}
-                     containerClassName="bg-orange-100 rounded-lg p-2 border border-orange-200 w-full h-full"
+                     containerClassName="bg-orange-100 rounded-lg p-2 border border-orange-200 w-full h-full partner-logo"
                      className="rounded-lg"
                      responsive={true}
                    />
@@ -133,11 +133,11 @@ const Footer = () => {
                >
                  <div className="flex items-start space-x-4">
                    {/* Profile Photo */}
-                   <div className="w-12 h-12 rounded-full overflow-hidden bg-forge-bg border-2 border-accent-color/20 flex-shrink-0">
+                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden bg-forge-bg border-2 border-accent-color/20 flex-shrink-0 developer-avatar">
                      <img 
                        src={member.photo} 
                        alt={member.name}
-                       className="w-full h-full object-cover"
+                      className="w-full h-full object-cover"
                        onError={(e) => {
                          // Fallback to initials if image fails to load
                          e.target.style.display = 'none';

@@ -789,7 +789,7 @@ const Landing = () => {
           </motion.p>
 
           <div className="max-w-sm mx-auto mb-4">
-            <VideoShowcase title="Data Forge Demo" src="" poster="" />
+            <VideoShowcase title="Data Forge Demo" src="/pxp.mp4" poster="" />
           </div>
           
           {/* Quick highlights for mobile */}
