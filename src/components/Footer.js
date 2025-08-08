@@ -137,7 +137,7 @@ const Footer = () => {
                      <img 
                        src={member.photo} 
                        alt={member.name}
-                      className="w-full h-full object-cover"
+                       className="profile-picture w-full h-full object-cover"
                        onError={(e) => {
                          // Fallback to initials if image fails to load
                          e.target.style.display = 'none';

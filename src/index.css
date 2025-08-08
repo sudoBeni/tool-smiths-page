@@ -1,3 +1,11 @@
+/* Ensures profile pictures are always square and undistorted */
+.profile-picture {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
 :root {
   /* Data Forge Color Palette - Industrial/Blacksmith Theme */
   --primary-bg: #0a0a0a;
@@ -739,6 +747,7 @@ a:hover {
 
 /* Flexbox Utilities */
 .flex { display: flex; }
+.inline-flex { display: inline-flex; }
 .flex-col { flex-direction: column; }
 .items-center { align-items: center; }
 .items-start { align-items: flex-start; }
@@ -961,6 +970,7 @@ a:hover {
   
   /* Developer avatars smaller and consistent on mobile */
   .developer-avatar {
+    flex-basis: 44px !important;
     width: 44px !important;
     height: 44px !important;
   }
@@ -1477,9 +1487,18 @@ a:hover {
 }
 
 /* Developer avatars - keep tidy on desktop */
-.developer-avatar { width: 52px; height: 52px; }
+.developer-avatar { 
+  flex: 0 0 52px;
+  width: 52px; 
+  height: 52px; 
+  border-radius: 50%;
+}
 @media (min-width: 768px) {
-  .developer-avatar { width: 60px; height: 60px; }
+  .developer-avatar { 
+    flex-basis: 60px;
+    width: 60px; 
+    height: 60px; 
+  }
 }
 
 /* Developer text sizing */
