@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
   Hammer, 
@@ -25,13 +25,386 @@ import {
   Cpu,
   Settings,
   Search,
-  RefreshCw
+  RefreshCw,
+  User,
+  Wrench,
+  BarChart,
+  Target,
+  Globe,
+  Cog,
+  Send,
+  HardDrive
 } from 'lucide-react';
 import LoadingHammer from '../components/LoadingHammer';
 import ChatPreview from '../components/ChatPreview';
 import { hapticTick } from '../utils/haptics';
 import MiniSpark from '../components/MiniSpark';
 import VideoShowcase from '../components/VideoShowcase';
+
+// New Graph-based Workflow Animation Component
+const WorkflowAnimation = () => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  // New graph structure based on your mermaid diagram
+  const graphNodes = [
+    // Main Flow
+    { id: 'user', title: '👤 User Input', description: 'User submits query', icon: User, color: 'from-blue-500 to-cyan-500', position: { x: 50, y: 5 }, group: 'main' },
+    { id: 'cs', title: '🔧 Chat Service', description: 'Entry point for all requests', icon: Wrench, color: 'from-green-500 to-emerald-500', position: { x: 50, y: 20 }, group: 'main' },
+    { id: 'as', title: '📊 Admin Service', description: 'Administrative oversight', icon: BarChart, color: 'from-purple-500 to-violet-500', position: { x: 20, y: 35 }, group: 'main' },
+    { id: 'oa', title: '🎯 Orchestrator Agent', description: 'Coordinates all operations', icon: Target, color: 'from-yellow-500 to-orange-500', position: { x: 50, y: 35 }, group: 'main' },
+    { id: 'da', title: '⚖️ Decision Agent', description: 'Makes routing decisions', icon: Brain, color: 'from-indigo-500 to-blue-500', position: { x: 80, y: 50 }, group: 'main' },
+    { id: 'rfa', title: '✨ Response Formatter', description: 'Formats final response', icon: Settings, color: 'from-teal-500 to-cyan-500', position: { x: 80, y: 65 }, group: 'main' },
+    { id: 'response', title: '📤 Final Response', description: 'Delivered to user', icon: Send, color: 'from-pink-500 to-rose-500', position: { x: 50, y: 85 }, group: 'main' },
+    
+    // Orchestrator Internal Processing (Subgraph)
+    { id: 'qa', title: '❓ Query Analysis', description: 'Analyzes user intent', icon: MessageSquare, color: 'from-amber-500 to-yellow-500', position: { x: 15, y: 50 }, group: 'orchestrator' },
+    { id: 'ts', title: '🛠️ Tool Selection', description: 'Selects appropriate tools', icon: Cog, color: 'from-amber-500 to-yellow-500', position: { x: 15, y: 65 }, group: 'orchestrator' },
+    { id: 'wf', title: '🔄 Workflow Execution', description: 'Executes the workflow', icon: RefreshCw, color: 'from-amber-500 to-yellow-500', position: { x: 15, y: 80 }, group: 'orchestrator' },
+    { id: 'ri', title: '🔗 Result Integration', description: 'Integrates all results', icon: GitBranch, color: 'from-amber-500 to-yellow-500', position: { x: 30, y: 80 }, group: 'orchestrator' },
+    
+    // Data Sources (Subgraph)
+    { id: 'db', title: '🗄️ Database', description: 'Internal data storage', icon: Database, color: 'from-blue-500 to-cyan-500', position: { x: 25, y: 50 }, group: 'data' },
+    { id: 'ws', title: '🌐 Web Search Service', description: 'External data retrieval', icon: Globe, color: 'from-green-500 to-emerald-500', position: { x: 40, y: 50 }, group: 'data' },
+    { id: 'ca', title: '📊 Chart Analysis', description: 'Data visualization', icon: BarChart3, color: 'from-purple-500 to-violet-500', position: { x: 60, y: 50 }, group: 'data' },
+    { id: 'ctx', title: '🧠 Context Processing', description: 'Context management', icon: Brain, color: 'from-teal-500 to-cyan-500', position: { x: 75, y: 35 }, group: 'data' },
+    
+    // Response Processing Pipeline (Subgraph)
+    { id: 'rf', title: 'Format Needed?', description: 'Decision point', icon: CheckCircle2, color: 'from-orange-500 to-red-500', position: { x: 85, y: 80 }, group: 'response' },
+    { id: 'dr', title: 'Direct Response', description: 'No formatting needed', icon: ArrowRight, color: 'from-gray-500 to-gray-600', position: { x: 95, y: 70 }, group: 'response' },
+    { id: 'fr', title: '📝 Formatted Response', description: 'Formatted output', icon: FileText, color: 'from-teal-500 to-cyan-500', position: { x: 95, y: 90 }, group: 'response' }
+  ];
+
+  // Connections based on your mermaid diagram
+  const connections = [
+    // Main flow
+    { from: 'user', to: 'cs', type: 'main' },
+    { from: 'cs', to: 'as', type: 'main' },
+    { from: 'cs', to: 'oa', type: 'main' },
+    { from: 'cs', to: 'da', type: 'main' },
+    { from: 'da', to: 'rfa', type: 'main' },
+    { from: 'cs', to: 'response', type: 'main' },
+    { from: 'rfa', to: 'response', type: 'main' },
+    
+    // Orchestrator connections
+    { from: 'oa', to: 'db', type: 'orchestrator' },
+    { from: 'oa', to: 'ws', type: 'orchestrator' },
+    { from: 'oa', to: 'ca', type: 'orchestrator' },
+    { from: 'oa', to: 'ctx', type: 'orchestrator' },
+    
+    // Internal orchestrator processing
+    { from: 'oa', to: 'qa', type: 'internal' },
+    { from: 'qa', to: 'ts', type: 'internal' },
+    { from: 'ts', to: 'wf', type: 'internal' },
+    { from: 'wf', to: 'ri', type: 'internal' },
+    
+    // Data sources
+    { from: 'db', to: 'response', type: 'data', label: 'SQL Queries' },
+    { from: 'ws', to: 'response', type: 'data', label: 'API Calls' },
+    
+    // Response processing
+    { from: 'da', to: 'rf', type: 'response', label: 'Evaluates' },
+    { from: 'rf', to: 'rfa', type: 'response', label: 'Yes' },
+    { from: 'rf', to: 'dr', type: 'response', label: 'No' },
+    { from: 'rfa', to: 'fr', type: 'response' },
+    { from: 'dr', to: 'response', type: 'response' },
+    { from: 'fr', to: 'response', type: 'response' }
+  ];
+
+  const startAnimation = () => {
+    setIsPlaying(true);
+    setCurrentStep(0);
+    
+    // Phase 1: Entry flow
+    setTimeout(() => setCurrentStep(1), 800);  // User -> Decision
+    setTimeout(() => setCurrentStep(2), 1600); // Decision -> Orchestrator
+    
+    // Phase 2: Orchestrator activates all team agents simultaneously
+    setTimeout(() => setCurrentStep(3), 2400); // All team agents activate
+    
+    // Phase 3: Wait 2 seconds for processing
+    setTimeout(() => setCurrentStep(4), 4400); // Processing complete
+    
+    // Phase 4: Output and validation
+    setTimeout(() => setCurrentStep(5), 5200); // Orchestrator -> Output
+    setTimeout(() => setCurrentStep(6), 6000); // Output -> Validator
+    
+    // Phase 5: Bidirectional validation
+    setTimeout(() => setCurrentStep(7), 6800); // Validator -> Output
+    
+    // Reset for continuous loop
+    setTimeout(() => {
+      setIsPlaying(false);
+      setTimeout(startAnimation, 1000);
+    }, 8000);
+  };
+
+  useEffect(() => {
+    startAnimation();
+    const interval = setInterval(startAnimation, 8000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Mobile-first workflow with proper flow
+  const mobileNodes = [
+    // Entry flow
+    { id: 'user', title: 'User', icon: User, color: 'from-blue-500 to-cyan-500', position: { x: 50, y: 8 } },
+    { id: 'decision', title: 'Decision', icon: Brain, color: 'from-indigo-500 to-blue-500', position: { x: 50, y: 20 } },
+    
+    // Orchestrator (center star)
+    { id: 'orchestrator', title: 'Orchestrator', icon: Crown, color: 'from-yellow-500 to-orange-500', position: { x: 50, y: 50 } },
+    
+    // Team agents (star around orchestrator)
+    { id: 'dbmanager', title: 'DB Manager', icon: Database, color: 'from-blue-600 to-cyan-600', position: { x: 25, y: 35 } },
+    { id: 'querygen', title: 'Query Gen', icon: Code, color: 'from-green-600 to-emerald-600', position: { x: 75, y: 35 } },
+    { id: 'formatter', title: 'Formatter', icon: Settings, color: 'from-teal-600 to-cyan-600', position: { x: 25, y: 65 } },
+    { id: 'reportgen', title: 'Report Gen', icon: FileText, color: 'from-purple-600 to-violet-600', position: { x: 75, y: 65 } },
+    { id: 'websearch', title: 'Web Search', icon: Globe, color: 'from-indigo-600 to-blue-600', position: { x: 15, y: 50 } },
+    { id: 'plotagent', title: 'Plot Agent', icon: BarChart3, color: 'from-pink-500 to-rose-500', position: { x: 85, y: 50 } },
+    
+    // Database
+    { id: 'database', title: 'DB', icon: HardDrive, color: 'from-gray-600 to-gray-700', position: { x: 25, y: 15 } },
+    
+    // Output and validation
+    { id: 'output', title: 'Output', icon: Send, color: 'from-pink-600 to-rose-600', position: { x: 50, y: 80 } },
+    { id: 'validator', title: 'Validator', icon: Shield, color: 'from-red-600 to-pink-600', position: { x: 50, y: 92 } }
+  ];
+
+  const mobileConnections = [
+    // Entry flow
+    { from: 'user', to: 'decision' },
+    { from: 'decision', to: 'orchestrator' },
+    
+    // Star schema (orchestrator to all team agents)
+    { from: 'orchestrator', to: 'dbmanager' },
+    { from: 'orchestrator', to: 'querygen' },
+    { from: 'orchestrator', to: 'formatter' },
+    { from: 'orchestrator', to: 'reportgen' },
+    { from: 'orchestrator', to: 'websearch' },
+    { from: 'orchestrator', to: 'plotagent' },
+    
+    // Database access
+    { from: 'dbmanager', to: 'database' },
+    { from: 'dbmanager', to: 'querygen' },
+    
+    // Output and validation
+    { from: 'orchestrator', to: 'output' },
+    { from: 'output', to: 'validator' },
+    { from: 'validator', to: 'output' } // Bidirectional validation
+  ];
+
+  return (
+    <div className="workflow-container">
+
+      {/* Mobile-First Graph Visualization */}
+      <div className="relative w-full bg-forge-bg border border-forge-border rounded-lg p-6" style={{ height: '500px' }}>
+        {/* Connection Lines */}
+        <svg className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
+          {mobileConnections.map((connection, index) => {
+            const fromNode = mobileNodes.find(n => n.id === connection.from);
+            const toNode = mobileNodes.find(n => n.id === connection.to);
+            if (!fromNode || !toNode) return null;
+            
+            const x1 = `${fromNode.position.x}%`;
+            const y1 = `${fromNode.position.y}%`;
+            const x2 = `${toNode.position.x}%`;
+            const y2 = `${toNode.position.y}%`;
+            
+            const fromIndex = mobileNodes.findIndex(n => n.id === connection.from);
+            const toIndex = mobileNodes.findIndex(n => n.id === connection.to);
+            
+            // Special logic for simultaneous activation and bidirectional validation
+            let isActive = false;
+            
+            if (currentStep <= 2) {
+              // Phase 1: Only entry flow active
+              isActive = (connection.from === 'user' && connection.to === 'decision') ||
+                       (connection.from === 'decision' && connection.to === 'orchestrator');
+            } else if (currentStep === 3) {
+              // Phase 2: All orchestrator connections active simultaneously
+              isActive = connection.from === 'orchestrator' || 
+                       (connection.from === 'dbmanager' && connection.to === 'database') ||
+                       (connection.from === 'dbmanager' && connection.to === 'querygen');
+            } else if (currentStep >= 4) {
+              // Phase 3+: All connections active
+              isActive = true;
+            }
+            
+            return (
+              <motion.line
+                key={`connection-${index}`}
+                x1={x1}
+                y1={y1}
+                x2={x2}
+                y2={y2}
+                stroke={isActive ? '#ff6b35' : '#6b7280'}
+                strokeWidth={isActive ? '3' : '2'}
+                initial={{ pathLength: 0 }}
+                animate={{ 
+                  pathLength: isActive ? 1 : 0.3,
+                  stroke: isActive ? '#ff6b35' : '#6b7280'
+                }}
+                transition={{ duration: 0.6 }}
+              />
+            );
+          })}
+        </svg>
+
+        {/* Mobile-Optimized Nodes */}
+        {mobileNodes.map((node, index) => {
+          const Icon = node.icon;
+          
+          // Special activation logic for simultaneous team activation
+          let isActive = false;
+          let isCurrent = false;
+          
+          if (currentStep <= 2) {
+            // Phase 1: Only entry nodes active
+            isActive = ['user', 'decision', 'orchestrator'].includes(node.id);
+            isCurrent = (currentStep === 0 && node.id === 'user') ||
+                       (currentStep === 1 && node.id === 'decision') ||
+                       (currentStep === 2 && node.id === 'orchestrator');
+          } else if (currentStep === 3) {
+            // Phase 2: All team agents activate simultaneously
+            isActive = true;
+            isCurrent = ['dbmanager', 'querygen', 'formatter', 'reportgen', 'websearch', 'plotagent', 'database'].includes(node.id);
+          } else if (currentStep >= 4) {
+            // Phase 3+: All nodes active
+            isActive = true;
+            isCurrent = (currentStep === 4 && node.id === 'output') ||
+                       (currentStep === 5 && node.id === 'validator') ||
+                       (currentStep === 6 && node.id === 'output');
+          }
+          
+          return (
+            <motion.div
+              key={node.id}
+              className="absolute"
+              style={{ 
+                left: `${node.position.x}%`, 
+                top: `${node.position.y}%`,
+                transform: 'translate(-50%, -50%)',
+                zIndex: 2
+              }}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ 
+                scale: isActive ? 1 : 0.6,
+                opacity: isActive ? 1 : 0.3
+              }}
+              transition={{ duration: 0.4 }}
+            >
+              {/* Node Circle */}
+              <motion.div
+                className={`w-14 h-14 rounded-full bg-gradient-to-br ${node.color} 
+                           flex items-center justify-center shadow-lg border-2 
+                           ${isCurrent ? 'border-white' : 'border-white/30'}`}
+                animate={{ 
+                  scale: isCurrent ? [1, 1.1, 1] : 1,
+                  boxShadow: isCurrent 
+                    ? '0 0 25px rgba(255, 107, 53, 0.6)' 
+                    : '0 6px 15px rgba(0, 0, 0, 0.3)'
+                }}
+                transition={{ 
+                  scale: { duration: 0.8, repeat: isCurrent ? Infinity : 0 },
+                  boxShadow: { duration: 0.4 }
+                }}
+              >
+                <Icon className="w-7 h-7 text-white" />
+              </motion.div>
+
+              {/* Node Label - Positioned to the side to avoid overlap */}
+                                        <motion.div
+                            className="absolute left-20 top-1/2 transform -translate-y-1/2"
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: isActive ? 1 : 0.5, x: 0 }}
+                            transition={{ delay: 0.3 }}
+                          >
+                            <div className="bg-secondary-bg border border-forge-border rounded-lg px-1.5 py-0.5 shadow-lg">
+                              <h4 className="text-xs font-medium text-text-primary">{node.title}</h4>
+                            </div>
+                          </motion.div>
+
+              {/* Current Step Indicator */}
+              {isCurrent && (
+                <motion.div
+                  className="absolute -inset-2 rounded-full border-2 border-accent-color"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ 
+                    scale: [0.8, 1.3, 0.8],
+                    opacity: [0, 1, 0]
+                  }}
+                  transition={{ 
+                    duration: 2.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              )}
+
+              {/* Step Number */}
+              <div className="absolute -left-6 top-1/2 transform -translate-y-1/2">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold
+                               ${isActive ? 'bg-accent-color text-white' : 'bg-forge-border text-text-secondary'}`}>
+                  {index + 1}
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
+
+        {/* Progress Indicator */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+          <div className="flex items-center space-x-2">
+            {mobileNodes.map((_, index) => (
+              <div
+                key={index}
+                className={`w-2.5 h-2.5 rounded-full transition-colors duration-300 ${
+                  index <= currentStep ? 'bg-accent-color' : 'bg-forge-border'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Data Flow Particles */}
+        {isPlaying && (
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            style={{ zIndex: 3 }}
+          >
+            {mobileConnections.map((connection, index) => {
+              const fromNode = mobileNodes.find(n => n.id === connection.from);
+              const toNode = mobileNodes.find(n => n.id === connection.to);
+              if (!fromNode || !toNode) return null;
+              
+              return (
+                <motion.div
+                  key={`particle-${index}`}
+                  className="absolute w-3 h-3 bg-accent-color rounded-full"
+                  style={{
+                    left: `${fromNode.position.x}%`,
+                    top: `${fromNode.position.y}%`,
+                  }}
+                  animate={{
+                    left: `${toNode.position.x}%`,
+                    top: `${toNode.position.y}%`,
+                  }}
+                  transition={{
+                    duration: 1,
+                    delay: index * 0.7,
+                    ease: "easeInOut"
+                  }}
+                />
+              );
+            })}
+          </motion.div>
+        )}
+      </div>
+
+
+    </div>
+  );
+};
 
 const Landing = () => {
   const heroRef = useRef(null);
@@ -249,6 +622,72 @@ const Landing = () => {
       color: 'from-amber-500 to-yellow-500',
       accentColor: '#f59e0b',
       position: { x: 80, y: 50 } // Right center
+    },
+    {
+      name: 'DatabaseManagerAgent',
+      shortName: 'DB Manager',
+      role: 'Data Analysis Specialist',
+      description: 'Analyzes user requests to determine required database tables, columns, and values needed for queries.',
+      responsibilities: [
+        'Maps user terminology to actual database entities',
+        'Validates request feasibility before processing',
+        'Provides structured instructions for SQL query generation'
+      ],
+      capabilities: [
+        'Analyzes user requests to determine database requirements',
+        'Maps natural language to database schema',
+        'Validates query feasibility and data availability',
+        'Provides clear instructions for query construction',
+        'Ensures optimal database interaction strategies'
+      ],
+      icon: Database,
+      color: 'from-blue-600 to-cyan-600',
+      accentColor: '#2563eb',
+      position: { x: 20, y: 80 } // Bottom left
+    },
+    {
+      name: 'QueryGeneratorAgent',
+      shortName: 'Query Gen',
+      role: 'SQL Generation Expert',
+      description: 'Generates exactly ONE SQLite3-compatible SQL SELECT statement based on DatabaseManager instructions.',
+      responsibilities: [
+        'Specializes in proper SQLite3 syntax with LIKE operators',
+        'Returns only raw SQL statements without explanations',
+        'Ensures query compatibility and performance'
+      ],
+      capabilities: [
+        'Creates precise SQLite3-compatible queries',
+        'Handles complex filtering with LIKE operators',
+        'Optimizes query structure for performance',
+        'Ensures syntax accuracy and compatibility',
+        'Generates clean, executable SQL statements'
+      ],
+      icon: Code,
+      color: 'from-green-600 to-emerald-600',
+      accentColor: '#059669',
+      position: { x: 80, y: 80 } // Bottom right
+    },
+    {
+      name: 'ResponseValidatorAgent',
+      shortName: 'Validator',
+      role: 'Quality Assurance',
+      description: 'Validates response quality and accuracy in background threads for performance optimization.',
+      responsibilities: [
+        'Ensures responses meet quality standards and accuracy',
+        'Runs asynchronously to avoid blocking main response delivery',
+        'Maintains quality control while optimizing performance'
+      ],
+      capabilities: [
+        'Performs comprehensive quality checks',
+        'Validates data accuracy and completeness',
+        'Runs background quality assurance processes',
+        'Ensures response reliability and consistency',
+        'Optimizes validation without blocking delivery'
+      ],
+      icon: Shield,
+      color: 'from-red-500 to-pink-500',
+      accentColor: '#dc2626',
+      position: { x: 50, y: 95 } // Bottom center
     }
   ];
 
@@ -502,7 +941,7 @@ const Landing = () => {
             <div className="flex items-center space-x-2 p-2 forge rounded">
               <Shield className="w-3 h-3 text-success-color flex-shrink-0" />
               <span className="text-xs text-text-secondary">Enterprise security</span>
-            </div>
+          </div>
             <div className="flex items-center space-x-2 p-2 forge rounded">
               <Zap className="w-3 h-3 text-accent-color flex-shrink-0" />
               <span className="text-xs text-text-secondary">Real-time responses</span>
@@ -535,14 +974,14 @@ const Landing = () => {
           {/* Mobile-first grid: 3x3 on mobile, 4+ on larger screens */}
           <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-2 max-w-sm mx-auto mb-6">
             {agents.map((agent, index) => {
-              const Icon = agent.icon;
-              return (
-                <motion.div
-                  key={agent.name}
+                  const Icon = agent.icon;
+                  return (
+                    <motion.div
+                      key={agent.name}
                   className="card p-2 mobile-agent-grid-card text-center"
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
+                      viewport={{ once: true }}
                   transition={{ delay: index * 0.05, duration: 0.3 }}
                 >
                   {/* Grid Card Content */}
@@ -551,16 +990,16 @@ const Landing = () => {
                     <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${agent.color} 
                                    flex items-center justify-center flex-shrink-0 mb-2 shadow-md`}>
                       <Icon className="w-5 h-5 text-white" />
-                    </div>
-                    
+                        </div>
+                        
                     {/* Agent Name */}
                     <h3 className="font-medium text-text-primary text-xs leading-tight text-center">
-                      {agent.shortName}
-                    </h3>
-                  </div>
-                </motion.div>
-              );
-            })}
+                          {agent.shortName}
+                        </h3>
+                      </div>
+                    </motion.div>
+                  );
+                })}
           </div>
 
           {/* Deep Dive Button */}
@@ -585,6 +1024,29 @@ const Landing = () => {
               <ArrowRight className="w-4 h-4" />
             </button>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Animated Workflow Visualization */}
+      <section className="section bg-secondary-bg" id="workflow">
+        <div className="container">
+          <motion.div 
+            className="text-center mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-2xl font-bold mb-3">See Them in Action</h2>
+            <p className="text-text-secondary text-sm max-w-md mx-auto">
+              Watch how your query flows through our intelligent agent system in real-time
+            </p>
+          </motion.div>
+
+          {/* Animated Workflow */}
+          <div className="max-w-lg mx-auto">
+            <WorkflowAnimation />
+          </div>
         </div>
       </section>
 
@@ -765,10 +1227,10 @@ const Landing = () => {
                   <div className="w-1 h-1 bg-text-secondary rounded-full" />
                   <Users className="w-3 h-3 text-accent-color" />
                   <span>Personal consultation</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+                  </div>
+                      </div>
+                  </div>
+                </motion.div>
         </div>
       </section>
     </div>
