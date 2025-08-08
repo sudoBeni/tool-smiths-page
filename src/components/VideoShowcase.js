@@ -7,7 +7,10 @@ const VideoShowcase = ({ title = 'Demo Video', src = '', poster = '', compact = 
         <video
           controls
           playsInline
-          preload="none"
+          autoPlay
+          muted
+          loop
+          preload="auto"
           poster={poster}
           style={{ width: '100%', height: '100%', display: 'block', borderRadius: '12px' }}
         >

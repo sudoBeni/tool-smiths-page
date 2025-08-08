@@ -36,6 +36,8 @@ import {
   HardDrive
 } from 'lucide-react';
 import LoadingHammer from '../components/LoadingHammer';
+import { DeviceFrameset } from 'react-device-frameset';
+import 'react-device-frameset/styles/marvel-devices.min.css';
 import ChatPreview from '../components/ChatPreview';
 import { hapticTick } from '../utils/haptics';
 import MiniSpark from '../components/MiniSpark';
@@ -788,8 +790,10 @@ const Landing = () => {
             How to chat with your data
           </motion.p>
 
-          <div className="max-w-sm mx-auto mb-4">
-            <VideoShowcase title="Data Forge Demo" src="/pxp.mp4" poster="" />
+          <div className="max-w-3xl mx-auto mb-4">
+            <DeviceFrameset device="MacBook Pro" zoom={0.9} width={1200} height={750}>
+              <VideoShowcase title="" src="/pxp.mp4" poster="" />
+            </DeviceFrameset>
           </div>
           
           {/* Quick highlights for mobile */}

@@ -605,6 +605,36 @@ a:hover {
   margin-top: 8px;
 }
 
+/* removed custom macbook css in favor of library device frame */
+
+/* Social link styling */
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--forge-border);
+  border-radius: 9999px;
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.03);
+  transition: all 0.2s ease;
+}
+.social-link:hover {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+  background: rgba(255,107,53,0.08);
+}
+.linkedin-icon {
+  width: 14px;
+  height: 14px;
+  opacity: 0.8;
+}
+.social-link-label {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
 /* Enhanced Title Animations */
 .hero-title {
   font-size: clamp(2.2rem, 9vw, var(--font-size-7xl));
@@ -900,6 +930,9 @@ a:hover {
     height: 44px !important;
   }
   
+  .macbook-notch { width: 120px; height: 14px; }
+  .screen-content { padding-top: 14px; }
+  
   .top-glassbar { 
     height: 48px; 
   }
@@ -979,6 +1012,9 @@ a:hover {
   .workflow-container .relative {
     height: 450px !important;
   }
+  
+  .macbook-notch { width: 100px; height: 12px; }
+  .screen-content { padding-top: 12px; }
   
   /* Mobile workflow labels positioned to the right */
   .workflow-container .absolute.left-20 {
@@ -1392,6 +1428,20 @@ a:hover {
   background: rgba(255, 107, 53, 0.08);
   color: var(--text-primary);
   font-weight: 600;
+}
+
+/* Footer partner logos sizing adjustments */
+.partner-logo { padding: var(--spacing-3); }
+@media (min-width: 1024px) {
+  .partner-logo { padding: var(--spacing-4); }
+}
+
+/* Developer text sizing */
+.developer-card h4 { font-size: 1rem; }
+.developer-card p { font-size: 0.9rem; }
+@media (min-width: 1024px) {
+  .developer-card h4 { font-size: 1rem; }
+  .developer-card p { font-size: 0.9rem; }
 }
 
 /* Logo marquee */
