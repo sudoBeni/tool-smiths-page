@@ -115,28 +115,17 @@ const WorkflowAnimation = () => {
     setIsPlaying(true);
     setCurrentStep(0);
     
-    // Phase 1: Entry flow
-    setTimeout(() => setCurrentStep(1), 800);  // User -> Decision
-    setTimeout(() => setCurrentStep(2), 1600); // Decision -> Orchestrator
-    
-    // Phase 2: Orchestrator activates all team agents simultaneously
-    setTimeout(() => setCurrentStep(3), 2400); // All team agents activate
-    
-    // Phase 3: Wait 2 seconds for processing
-    setTimeout(() => setCurrentStep(4), 4400); // Processing complete
-    
-    // Phase 4: Output and validation
-    setTimeout(() => setCurrentStep(5), 5200); // Orchestrator -> Output
-    setTimeout(() => setCurrentStep(6), 6000); // Output -> Validator
-    
-    // Phase 5: Bidirectional validation
-    setTimeout(() => setCurrentStep(7), 6800); // Validator -> Output
+    // Simple sequential animation
+    setTimeout(() => setCurrentStep(1), 1000);  // Input -> Process
+    setTimeout(() => setCurrentStep(2), 2000);  // Process -> Agents
+    setTimeout(() => setCurrentStep(3), 4000);  // Agents -> Output
+    setTimeout(() => setCurrentStep(4), 5000);  // Output -> Check
     
     // Reset for continuous loop
     setTimeout(() => {
       setIsPlaying(false);
       setTimeout(startAnimation, 1000);
-    }, 8000);
+    }, 6000);
   };
 
   useEffect(() => {
@@ -145,59 +134,46 @@ const WorkflowAnimation = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Mobile-first workflow with proper flow
+  // Simple mobile-first flow with icons only
   const mobileNodes = [
-    // Entry flow
-    { id: 'user', title: 'User', icon: User, color: 'from-blue-500 to-cyan-500', position: { x: 50, y: 8 } },
-    { id: 'decision', title: 'Decision', icon: Brain, color: 'from-indigo-500 to-blue-500', position: { x: 50, y: 20 } },
+    // Input
+    { id: 'input', icon: User, color: 'from-blue-500 to-cyan-500', position: { x: 20, y: 20 } },
     
-    // Orchestrator (center star)
-    { id: 'orchestrator', title: 'Orchestrator', icon: Crown, color: 'from-yellow-500 to-orange-500', position: { x: 50, y: 50 } },
+    // Processing
+    { id: 'process', icon: Cpu, color: 'from-yellow-500 to-orange-500', position: { x: 50, y: 20 } },
     
-    // Team agents (star around orchestrator)
-    { id: 'dbmanager', title: 'DB Manager', icon: Database, color: 'from-blue-600 to-cyan-600', position: { x: 25, y: 35 } },
-    { id: 'querygen', title: 'Query Gen', icon: Code, color: 'from-green-600 to-emerald-600', position: { x: 75, y: 35 } },
-    { id: 'formatter', title: 'Formatter', icon: Settings, color: 'from-teal-600 to-cyan-600', position: { x: 25, y: 65 } },
-    { id: 'reportgen', title: 'Report Gen', icon: FileText, color: 'from-purple-600 to-violet-600', position: { x: 75, y: 65 } },
-    { id: 'websearch', title: 'Web Search', icon: Globe, color: 'from-indigo-600 to-blue-600', position: { x: 15, y: 50 } },
-    { id: 'plotagent', title: 'Plot Agent', icon: BarChart3, color: 'from-pink-500 to-rose-500', position: { x: 85, y: 50 } },
+    // Team agents in a circle
+    { id: 'agent1', icon: Database, color: 'from-blue-600 to-cyan-600', position: { x: 20, y: 50 } },
+    { id: 'agent2', icon: Code, color: 'from-green-600 to-emerald-600', position: { x: 80, y: 50 } },
+    { id: 'agent3', icon: Settings, color: 'from-teal-600 to-cyan-600', position: { x: 20, y: 80 } },
+    { id: 'agent4', icon: FileText, color: 'from-purple-600 to-violet-600', position: { x: 80, y: 80 } },
     
-    // Database
-    { id: 'database', title: 'DB', icon: HardDrive, color: 'from-gray-600 to-gray-700', position: { x: 25, y: 15 } },
+    // Output
+    { id: 'output', icon: Send, color: 'from-pink-600 to-rose-600', position: { x: 50, y: 80 } },
     
-    // Output and validation
-    { id: 'output', title: 'Output', icon: Send, color: 'from-pink-600 to-rose-600', position: { x: 50, y: 80 } },
-    { id: 'validator', title: 'Validator', icon: Shield, color: 'from-red-600 to-pink-600', position: { x: 50, y: 92 } }
+    // Validation
+    { id: 'check', icon: Shield, color: 'from-red-600 to-pink-600', position: { x: 50, y: 95 } }
   ];
 
   const mobileConnections = [
-    // Entry flow
-    { from: 'user', to: 'decision' },
-    { from: 'decision', to: 'orchestrator' },
-    
-    // Star schema (orchestrator to all team agents)
-    { from: 'orchestrator', to: 'dbmanager' },
-    { from: 'orchestrator', to: 'querygen' },
-    { from: 'orchestrator', to: 'formatter' },
-    { from: 'orchestrator', to: 'reportgen' },
-    { from: 'orchestrator', to: 'websearch' },
-    { from: 'orchestrator', to: 'plotagent' },
-    
-    // Database access
-    { from: 'dbmanager', to: 'database' },
-    { from: 'dbmanager', to: 'querygen' },
-    
-    // Output and validation
-    { from: 'orchestrator', to: 'output' },
-    { from: 'output', to: 'validator' },
-    { from: 'validator', to: 'output' } // Bidirectional validation
+    // Main flow
+    { from: 'input', to: 'process' },
+    { from: 'process', to: 'agent1' },
+    { from: 'process', to: 'agent2' },
+    { from: 'process', to: 'agent3' },
+    { from: 'process', to: 'agent4' },
+    { from: 'agent1', to: 'output' },
+    { from: 'agent2', to: 'output' },
+    { from: 'agent3', to: 'output' },
+    { from: 'agent4', to: 'output' },
+    { from: 'output', to: 'check' }
   ];
 
   return (
     <div className="workflow-container">
 
       {/* Mobile-First Graph Visualization */}
-      <div className="relative w-full bg-forge-bg border border-forge-border rounded-lg p-6" style={{ height: '500px' }}>
+      <div className="relative w-full bg-forge-bg border border-forge-border rounded-lg p-6" style={{ height: '400px' }}>
         {/* Connection Lines */}
         <svg className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
           {mobileConnections.map((connection, index) => {
@@ -213,22 +189,8 @@ const WorkflowAnimation = () => {
             const fromIndex = mobileNodes.findIndex(n => n.id === connection.from);
             const toIndex = mobileNodes.findIndex(n => n.id === connection.to);
             
-            // Special logic for simultaneous activation and bidirectional validation
-            let isActive = false;
-            
-            if (currentStep <= 2) {
-              // Phase 1: Only entry flow active
-              isActive = (connection.from === 'user' && connection.to === 'decision') ||
-                       (connection.from === 'decision' && connection.to === 'orchestrator');
-            } else if (currentStep === 3) {
-              // Phase 2: All orchestrator connections active simultaneously
-              isActive = connection.from === 'orchestrator' || 
-                       (connection.from === 'dbmanager' && connection.to === 'database') ||
-                       (connection.from === 'dbmanager' && connection.to === 'querygen');
-            } else if (currentStep >= 4) {
-              // Phase 3+: All connections active
-              isActive = true;
-            }
+            // Simple connection logic
+            const isActive = currentStep >= 1;
             
             return (
               <motion.line
@@ -254,27 +216,9 @@ const WorkflowAnimation = () => {
         {mobileNodes.map((node, index) => {
           const Icon = node.icon;
           
-          // Special activation logic for simultaneous team activation
-          let isActive = false;
-          let isCurrent = false;
-          
-          if (currentStep <= 2) {
-            // Phase 1: Only entry nodes active
-            isActive = ['user', 'decision', 'orchestrator'].includes(node.id);
-            isCurrent = (currentStep === 0 && node.id === 'user') ||
-                       (currentStep === 1 && node.id === 'decision') ||
-                       (currentStep === 2 && node.id === 'orchestrator');
-          } else if (currentStep === 3) {
-            // Phase 2: All team agents activate simultaneously
-            isActive = true;
-            isCurrent = ['dbmanager', 'querygen', 'formatter', 'reportgen', 'websearch', 'plotagent', 'database'].includes(node.id);
-          } else if (currentStep >= 4) {
-            // Phase 3+: All nodes active
-            isActive = true;
-            isCurrent = (currentStep === 4 && node.id === 'output') ||
-                       (currentStep === 5 && node.id === 'validator') ||
-                       (currentStep === 6 && node.id === 'output');
-          }
+          // Simple node activation
+          const isActive = currentStep >= 1;
+          const isCurrent = currentStep === 2 && ['agent1', 'agent2', 'agent3', 'agent4'].includes(node.id);
           
           return (
             <motion.div
@@ -295,7 +239,7 @@ const WorkflowAnimation = () => {
             >
               {/* Node Circle */}
               <motion.div
-                className={`w-14 h-14 rounded-full bg-gradient-to-br ${node.color} 
+                className={`w-16 h-16 rounded-full bg-gradient-to-br ${node.color} 
                            flex items-center justify-center shadow-lg border-2 
                            ${isCurrent ? 'border-white' : 'border-white/30'}`}
                 animate={{ 
@@ -309,20 +253,10 @@ const WorkflowAnimation = () => {
                   boxShadow: { duration: 0.4 }
                 }}
               >
-                <Icon className="w-7 h-7 text-white" />
+                <Icon className="w-8 h-8 text-white" />
               </motion.div>
 
-              {/* Node Label - Positioned to the side to avoid overlap */}
-                                        <motion.div
-                            className="absolute left-20 top-1/2 transform -translate-y-1/2"
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: isActive ? 1 : 0.5, x: 0 }}
-                            transition={{ delay: 0.3 }}
-                          >
-                            <div className="bg-secondary-bg border border-forge-border rounded-lg px-1.5 py-0.5 shadow-lg">
-                              <h4 className="text-xs font-medium text-text-primary">{node.title}</h4>
-                            </div>
-                          </motion.div>
+              
 
               {/* Current Step Indicator */}
               {isCurrent && (
@@ -341,13 +275,7 @@ const WorkflowAnimation = () => {
                 />
               )}
 
-              {/* Step Number */}
-              <div className="absolute -left-6 top-1/2 transform -translate-y-1/2">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold
-                               ${isActive ? 'bg-accent-color text-white' : 'bg-forge-border text-text-secondary'}`}>
-                  {index + 1}
-                </div>
-              </div>
+
             </motion.div>
           );
         })}
@@ -1103,43 +1031,14 @@ const Landing = () => {
               </p>
               
               {/* Contact Form */}
-              <form className="space-y-4 text-left" onSubmit={async (e) => {
-                e.preventDefault();
-                hapticTick(15);
-                
-                // Get form data
-                const formData = new FormData(e.target);
-                const customerData = {
-                  firstName: formData.get('firstName'),
-                  lastName: formData.get('lastName'),
-                  email: formData.get('email'),
-                  company: formData.get('company'),
-                  position: formData.get('position'),
-                  submittedAt: new Date().toISOString()
-                };
-                
-                try {
-                  // Send data to backend to save to file
-                  const response = await fetch('/api/save-customer', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(customerData)
-                  });
-                  
-                  if (response.ok) {
-                    // Show success message
-                    alert('Thank you! We\'ll be in touch soon.');
-                    e.target.reset();
-                  } else {
-                    throw new Error('Failed to save customer data');
-                  }
-                } catch (error) {
-                  console.error('Error saving customer data:', error);
-                  alert('Sorry, there was an error. Please try again.');
-                }
-              }}>
+              <form 
+                action="https://formspree.io/f/xdkdpydk" 
+                method="POST"
+                className="space-y-4 text-left" 
+                onSubmit={(e) => {
+                  hapticTick(15);
+                }}
+              >
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label htmlFor="firstName" className="block text-xs font-medium text-text-secondary mb-1">
