@@ -17,6 +17,7 @@ import ProjectShowcase from './pages/ProjectShowcase';
 import TechnicalDeepDive from './pages/TechnicalDeepDive';
 import ResultsImpact from './pages/ResultsImpact';
 import DevelopmentProcess from './pages/DevelopmentProcess';
+import AgentsDeepDive from './pages/AgentsDeepDive';
 
 function App() {
   // Initialize smooth scroll for journey-like experience
@@ -35,6 +36,7 @@ function App() {
             <Route path="/technical-deep-dive" element={<TechnicalDeepDive />} />
             <Route path="/results-impact" element={<ResultsImpact />} />
             <Route path="/development-process" element={<DevelopmentProcess />} />
+            <Route path="/agents-deep-dive" element={<AgentsDeepDive />} />
           </Routes>
         </AnimatePresence>
         <Footer />

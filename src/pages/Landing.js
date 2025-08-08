@@ -39,6 +39,22 @@ const Landing = () => {
   const yLayer1 = useTransform(scrollYProgress, [0, 1], [0, -40]);
   const yLayer2 = useTransform(scrollYProgress, [0, 1], [0, -20]);
   const [selectedAgent, setSelectedAgent] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalContent, setModalContent] = useState(null);
+
+  const openModal = (title, content) => {
+    setModalTitle(title);
+    setModalContent(content);
+    setIsModalOpen(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalContent(null);
+    document.body.style.overflow = '';
+  };
 
   // Technology Stack Data
   const technologies = [
@@ -356,42 +372,40 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero */}
-      <section className="hero" id="home" ref={heroRef}>
-        {/* Parallax background glows */}
+      {/* Mobile-Optimized Hero */}
+      <section className="hero mobile-hero" id="home" ref={heroRef}>
+        {/* Simplified background effects */}
         <motion.div
           aria-hidden
           style={{ y: yLayer1 }}
-          className="absolute -top-20 -left-24 w-72 h-72 rounded-full opacity-20"
+          className="absolute -top-10 -left-12 w-48 h-48 rounded-full opacity-15"
         >
-          <div style={{ width: '100%', height: '100%', background: 'radial-gradient(circle, rgba(255,107,53,0.35), transparent 60%)' }} />
+          <div style={{ width: '100%', height: '100%', background: 'radial-gradient(circle, rgba(255,107,53,0.25), transparent 60%)' }} />
         </motion.div>
-        <motion.div
-          aria-hidden
-          style={{ y: yLayer2 }}
-          className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full opacity-15"
-        >
-          <div style={{ width: '100%', height: '100%', background: 'radial-gradient(circle, rgba(255,215,0,0.25), transparent 60%)' }} />
-        </motion.div>
-        <div className="hero-content" style={{ position: 'relative' }}>
+        
+        <div className="hero-content mobile-hero-content" style={{ position: 'relative' }}>
           <MiniSpark />
-          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <div className="inline-flex items-center space-x-3 forge rounded-full px-5 py-2 mb-6">
-              <Hammer className="w-4 h-4 text-accent-color" />
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <div className="inline-flex items-center space-x-2 forge rounded-full px-4 py-2 mb-4">
+              <Hammer className="w-3 h-3 text-accent-color" />
               <span className="text-xs uppercase tracking-wide text-text-secondary">Data Forge</span>
             </div>
 
-            <h1 className="hero-title mb-4">Forge answers from your data</h1>
-            <p className="hero-subtitle mb-10">Talk to your database. Agents do the heavy lifting, you get crisp, forged results.</p>
+            <h1 className="hero-title mobile-title mb-3">Chat with Your Data</h1>
+            <p className="hero-subtitle mobile-subtitle mb-6">AI agents transform complex database queries into simple conversations.</p>
 
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }} className="mb-10">
-              <LoadingHammer size={160} text="Heating the forge…" />
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }} className="mb-6">
+              <LoadingHammer size={120} text="Heating the forge…" />
             </motion.div>
 
-            <div className="flex flex-col gap-4 items-center">
-              <a href="#demo" className="btn-secondary px-8 py-4 inline-flex items-center space-x-2" onClick={() => hapticTick(10)}>
+            <div className="flex flex-col gap-3 items-center">
+              <a href="#demo" className="btn-primary mobile-btn px-6 py-3 inline-flex items-center space-x-2" onClick={() => hapticTick(10)}>
                 <Sparkles className="w-4 h-4" />
-                <span>How it works</span>
+                <span>See Demo</span>
+              </a>
+              <a href="#ai-agents" className="text-accent-color text-sm inline-flex items-center space-x-1" onClick={() => hapticTick(5)}>
+                <span>Meet the AI team</span>
+                <ArrowRight className="w-3 h-3" />
               </a>
             </div>
           </motion.div>
@@ -400,474 +414,361 @@ const Landing = () => {
 
 
 
-      {/* Demo video */}
-      <section id="demo" className="section">
+      {/* Mobile-Optimized Demo */}
+      <section id="demo" className="section mobile-demo">
         <div className="container">
-          <motion.h2 className="text-4xl font-bold mb-6 text-center" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>Demo video</motion.h2>
-          <motion.p className="text-text-secondary text-center mb-8" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
-            A short walkthrough of chatting with your data.
+          <motion.h2 className="text-2xl font-bold mb-3 text-center" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>See it in action</motion.h2>
+          <motion.p className="text-text-secondary text-center mb-6 text-sm" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+            Watch how simple questions become instant insights
           </motion.p>
 
-          <div className="max-w-xl mx-auto">
+          <div className="max-w-sm mx-auto mb-4">
             <VideoShowcase title="Data Forge Demo" src="" poster="" />
           </div>
-        </div>
-      </section>
-
-      {/* Technology Stack */}
-      <section className="section bg-secondary-bg" id="tech-stack">
-        <div className="container">
+          
+          {/* Quick highlights for mobile */}
           <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 50 }}
+            className="grid grid-cols-1 gap-3 max-w-xs mx-auto"
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl font-bold mb-6">Technology Stack</h2>
-            <p className="text-text-secondary text-xl max-w-2xl mx-auto">
-              Built with modern technologies for maximum performance and reliability.
-            </p>
-            <motion.div
-              className="mt-6 inline-flex items-center space-x-2 text-accent-color cursor-pointer"
-              whileHover={{ scale: 1.05 }}
-              onClick={() => window.location.href = '/technical-deep-dive'}
-            >
-              <span className="text-sm font-medium">Deep dive into architecture</span>
-              <ArrowRight className="w-4 h-4" />
-            </motion.div>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {technologies.map((tech, i) => {
-              const Icon = tech.icon;
-              return (
-                <motion.div
-                  key={tech.name}
-                  className="card text-center p-6"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  whileHover={{ 
-                    scale: 1.1,
-                    y: -5,
-                    transition: { duration: 0.3 }
-                  }}
-                >
-                  <Icon className="w-8 h-8 mx-auto mb-3" style={{ color: tech.color }} />
-                  <p className="text-sm font-medium">{tech.name}</p>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Animated Data Flow with Symbols */}
-      <section className="section" id="data-flow">
-        <div className="container">
-          <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-4xl font-bold mb-6">Live Data Flow Visualization</h2>
-            <p className="text-text-secondary text-xl max-w-3xl mx-auto">
-              Watch the red energy stream flow through our orchestrated system. Click any symbol to explore its role.
-            </p>
-            <motion.div
-              className="mt-6 inline-flex items-center space-x-2 text-accent-color cursor-pointer"
-              whileHover={{ scale: 1.05 }}
-              onClick={() => window.location.href = '/technical-deep-dive'}
-            >
-              <span className="text-sm font-medium">See detailed orchestration patterns</span>
-              <ArrowRight className="w-4 h-4" />
-            </motion.div>
-          </motion.div>
-
-          {/* Animated Flow Pipeline */}
-          <div className="relative max-w-6xl mx-auto">
-            {/* Flow Container */}
-            <div className="relative bg-slate-900/20 rounded-2xl p-8 border border-slate-700/30">
-              
-              {/* Animated Stream Path */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }}>
-                <defs>
-                  <linearGradient id="flowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#ef4444" stopOpacity="0" />
-                    <stop offset="50%" stopColor="#ef4444" stopOpacity="1" />
-                    <stop offset="100%" stopColor="#ef4444" stopOpacity="0" />
-                  </linearGradient>
-                  <filter id="glow">
-                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                    <feMerge> 
-                      <feMergeNode in="coloredBlur"/>
-                      <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                  </filter>
-                </defs>
-                
-                {/* Main flow line - adjusted for spaced layout */}
-                <motion.path
-                  d="M 10% 50% L 25% 50% L 40% 50% L 55% 50% L 70% 50% L 90% 50%"
-                  stroke="url(#flowGradient)"
-                  strokeWidth="4"
-                  fill="none"
-                  filter="url(#glow)"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                />
-              </svg>
-
-              {/* Flow Symbols - More Spaced Layout */}
-              <div className="relative flex justify-between items-center px-8 py-12" style={{ zIndex: 2 }}>
-                
-                {/* User Input */}
-                <motion.div
-                  className="flex flex-col items-center cursor-pointer group"
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                  onClick={() => setSelectedAgent(0)}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <div className="w-16 h-16 rounded-full bg-gray-600 border-2 border-gray-500 flex items-center justify-center shadow-lg group-hover:border-red-400 transition-all duration-300">
-                    <MessageSquare className="w-8 h-8 text-gray-300 group-hover:text-red-400" />
-                  </div>
-                  <span className="text-xs font-medium mt-3 text-center">User Input</span>
-                </motion.div>
-
-                {/* Orchestrator */}
-                <motion.div
-                  className="flex flex-col items-center cursor-pointer group"
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 }}
-                  onClick={() => setSelectedAgent(1)}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <div className="w-20 h-20 rounded-full bg-gray-600 border-2 border-gray-500 flex items-center justify-center shadow-xl group-hover:border-red-400 transition-all duration-300 relative">
-                    <Crown className="w-10 h-10 text-gray-300 group-hover:text-red-400" />
-                    <motion.div
-                      className="absolute inset-0 rounded-full border-2 border-red-400 opacity-0 group-hover:opacity-100"
-                      animate={{ scale: [1, 1.2, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    />
-                  </div>
-                  <span className="text-xs font-medium mt-3 text-center">Orchestrator</span>
-                </motion.div>
-
-                {/* Multi-Agent Processing */}
-                <motion.div
-                  className="flex flex-col items-center cursor-pointer group"
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.6 }}
-                  onClick={() => setSelectedAgent(2)}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <div className="w-16 h-16 rounded-full bg-gray-600 border-2 border-gray-500 flex items-center justify-center shadow-lg group-hover:border-red-400 transition-all duration-300">
-                    <Users className="w-8 h-8 text-gray-300 group-hover:text-red-400" />
-                  </div>
-                  <span className="text-xs font-medium mt-3 text-center">Multi-Agent</span>
-                </motion.div>
-
-                {/* Analysis */}
-                <motion.div
-                  className="flex flex-col items-center cursor-pointer group"
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.8 }}
-                  onClick={() => setSelectedAgent(3)}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <div className="w-16 h-16 rounded-full bg-gray-600 border-2 border-gray-500 flex items-center justify-center shadow-lg group-hover:border-red-400 transition-all duration-300">
-                    <Eye className="w-8 h-8 text-gray-300 group-hover:text-red-400" />
-                  </div>
-                  <span className="text-xs font-medium mt-3 text-center">Analysis</span>
-                </motion.div>
-
-                {/* Enhancement */}
-                <motion.div
-                  className="flex flex-col items-center cursor-pointer group"
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 1.0 }}
-                  onClick={() => setSelectedAgent(4)}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <div className="w-16 h-16 rounded-full bg-gray-600 border-2 border-gray-500 flex items-center justify-center shadow-lg group-hover:border-red-400 transition-all duration-300">
-                    <RefreshCw className="w-8 h-8 text-gray-300 group-hover:text-red-400" />
-                  </div>
-                  <span className="text-xs font-medium mt-3 text-center">Enhancement</span>
-                </motion.div>
-
-                {/* Final Output */}
-                <motion.div
-                  className="flex flex-col items-center cursor-pointer group"
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 1.2 }}
-                  onClick={() => setSelectedAgent(5)}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <div className="w-16 h-16 rounded-full bg-gray-600 border-2 border-gray-500 flex items-center justify-center shadow-lg group-hover:border-red-400 transition-all duration-300">
-                    <CheckCircle2 className="w-8 h-8 text-gray-300 group-hover:text-red-400" />
-                  </div>
-                  <span className="text-xs font-medium mt-3 text-center">Final Output</span>
-                </motion.div>
-              </div>
+            <div className="flex items-center space-x-3 p-3 forge rounded-lg">
+              <MessageSquare className="w-4 h-4 text-accent-color flex-shrink-0" />
+              <span className="text-xs text-text-secondary">Ask questions in plain English</span>
             </div>
-
-            {/* Selected Step Details - with bounds checking */}
-            {selectedAgent >= 0 && selectedAgent < dataFlowSteps.length && dataFlowSteps[selectedAgent] && (
-              <motion.div
-                key={selectedAgent}
-                className="mt-8 card p-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-              >
-                <div className="flex items-center space-x-4 mb-4">
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${dataFlowSteps[selectedAgent].gradient} flex items-center justify-center shadow-lg`}>
-                    {React.createElement(dataFlowSteps[selectedAgent].icon, { className: "w-6 h-6 text-white" })}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold">{dataFlowSteps[selectedAgent].title}</h3>
-                    <p className="text-accent-color font-medium">Step {dataFlowSteps[selectedAgent].step} of 6</p>
-                  </div>
-                </div>
-                
-                <p className="text-text-secondary mb-4">{dataFlowSteps[selectedAgent].description}</p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  {dataFlowSteps[selectedAgent].details && dataFlowSteps[selectedAgent].details.map((detail, index) => (
-                    <div key={index} className="flex items-center space-x-2 p-2 bg-slate-800/20 rounded-lg">
-                      <div className="w-2 h-2 bg-red-400 rounded-full flex-shrink-0"></div>
-                      <span className="text-text-secondary text-sm">{detail}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-
-            {/* Flow Legend */}
-            <div className="mt-6 flex justify-center">
-              <div className="flex items-center space-x-4 text-sm text-text-secondary">
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-1 bg-red-400 rounded-full"></div>
-                  <span>Data Stream</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 rounded-full bg-gray-600 border border-gray-500"></div>
-                  <span>Processing Node</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Crown className="w-4 h-4 text-gray-400" />
-                  <span>Central Orchestrator</span>
-                </div>
-              </div>
+            <div className="flex items-center space-x-3 p-3 forge rounded-lg">
+              <Bot className="w-4 h-4 text-accent-color flex-shrink-0" />
+              <span className="text-xs text-text-secondary">AI agents work together</span>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* AI Agents - Simplified Layout */}
-      <section className="section bg-secondary-bg" id="ai-agents">
-        <div className="container">
-          <motion.div 
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-3xl font-bold mb-4">AI Agent System</h2>
-            <p className="text-text-secondary text-lg max-w-2xl mx-auto mb-6">
-              Eight specialized agents working together. Click any agent to learn more.
-            </p>
-            <motion.div
-              className="inline-flex items-center space-x-2 text-accent-color cursor-pointer"
-              whileHover={{ scale: 1.05 }}
-              onClick={() => window.location.href = '/technical-deep-dive'}
-            >
-              <span className="text-sm font-medium">View technical details</span>
-              <ArrowRight className="w-4 h-4" />
-            </motion.div>
+            <div className="flex items-center space-x-3 p-3 forge rounded-lg">
+              <BarChart3 className="w-4 h-4 text-accent-color flex-shrink-0" />
+              <span className="text-xs text-text-secondary">Get charts and insights</span>
+            </div>
           </motion.div>
-
-          {/* Simplified Grid Layout - mobile-first */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6 mb-8" role="list">
-            {agents.map((agent, index) => {
-              const Icon = agent.icon;
-              return (
-                <motion.div
-                  key={agent.name}
-                  role="listitem"
-                  tabIndex={0}
-                  aria-label={`${agent.shortName} agent card`}
-                  className={`card p-6 cursor-pointer transition-all duration-300 ${
-                    selectedAgent === index ? 'ring-2 ring-accent-color bg-accent-color/5' : ''
-                  }`}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  onClick={() => setSelectedAgent(index)}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { setSelectedAgent(index); e.preventDefault(); } }}
-                  whileHover={{ 
-                    y: -5,
-                    transition: { duration: 0.2 }
-                  }}
-                >
-                  <div className="text-center">
-                    <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${agent.color} flex items-center justify-center mx-auto mb-4 shadow-lg`}>
-                      <Icon className="w-8 h-8 text-white" />
-                    </div>
-                    <h3 className="text-lg font-semibold mb-2 text-text-primary">{agent.shortName}</h3>
-                    <p className="text-accent-color text-sm font-medium mb-3" style={{ wordBreak: 'break-word' }}>{agent.role}</p>
-                    <p className="text-text-secondary text-xs leading-relaxed" style={{ wordBreak: 'break-word' }}>{agent.description}</p>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Agent Details Panel - Only shows when clicked */}
-          {selectedAgent >= 0 && selectedAgent < agents.length && agents[selectedAgent] && (
-            <motion.div
-              key={selectedAgent}
-              className="card p-8 max-w-4xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              {/* Agent Header */}
-              <div className="flex items-center space-x-4 mb-6">
-                <div 
-                  className={`w-16 h-16 rounded-xl bg-gradient-to-r ${agents[selectedAgent].color} flex items-center justify-center shadow-lg`}
-                >
-                  {React.createElement(agents[selectedAgent].icon, { className: "w-8 h-8 text-white" })}
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-text-primary" style={{ wordBreak: 'break-word' }}>{agents[selectedAgent].name}</h3>
-                  <p className="text-accent-color font-medium" style={{ wordBreak: 'break-word' }}>{agents[selectedAgent].role}</p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Responsibilities */}
-                <div>
-                  <h4 className="text-lg font-semibold mb-4 flex items-center space-x-2">
-                    <Users className="w-5 h-5 text-accent-color" />
-                    <span>Core Responsibilities</span>
-                  </h4>
-                  <div className="space-y-3">
-                    {agents[selectedAgent].responsibilities.map((responsibility, index) => (
-                      <div key={index} className="flex items-start space-x-3" style={{ wordBreak: 'break-word' }}>
-                        <CheckCircle2 className="w-4 h-4 text-accent-color flex-shrink-0 mt-0.5" />
-                        <span className="text-text-secondary text-sm leading-relaxed">{responsibility}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Capabilities */}
-                <div>
-                  <h4 className="text-lg font-semibold mb-4 flex items-center space-x-2">
-                    <Zap className="w-5 h-5 text-accent-color" />
-                    <span>Key Capabilities</span>
-                  </h4>
-                  <div className="space-y-3">
-                    {agents[selectedAgent].capabilities.map((capability, index) => (
-                      <div key={index} className="flex items-start space-x-3" style={{ wordBreak: 'break-word' }}>
-                        <div className="w-1.5 h-1.5 bg-accent-color rounded-full flex-shrink-0 mt-2"></div>
-                        <span className="text-text-secondary text-sm leading-relaxed">{capability}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Agent Status */}
-              <div className="mt-8 p-4 bg-accent-color/5 rounded-lg border border-accent-color/20">
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-sm font-medium text-accent-color">Agent Status: Active & Ready</span>
-                </div>
-              </div>
-            </motion.div>
-          )}
         </div>
       </section>
 
-      {/* Architecture Overview - Compact */}
-      <section className="section" id="architecture">
+      {/* Mobile-Optimized Technology Stack */}
+      <section className="section bg-secondary-bg mobile-tech-stack" id="tech-stack">
         <div className="container">
           <motion.div 
-            className="text-center mb-10"
+            className="text-center mb-6"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl font-bold mb-4">System Architecture</h2>
-            <p className="text-text-secondary text-lg max-w-xl mx-auto">
-              Robust, scalable architecture for high-performance data processing.
+            <h2 className="text-2xl font-bold mb-2">Built with Modern Tech</h2>
+            <p className="text-text-secondary text-sm max-w-xs mx-auto">
+              Enterprise-grade stack for reliable performance
             </p>
-            <motion.div
-              className="mt-4 inline-flex items-center space-x-2 text-accent-color cursor-pointer"
-              whileHover={{ scale: 1.05 }}
-              onClick={() => window.location.href = '/technical-deep-dive'}
-            >
-              <span className="text-sm font-medium">View detailed diagrams</span>
-              <ArrowRight className="w-4 h-4" />
-            </motion.div>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {architectureComponents.map((component, index) => {
-              const Icon = component.icon;
+          {/* Mobile-optimized 2x4 grid with key technologies */}
+          <div className="grid grid-cols-2 gap-4 mb-6 max-w-sm mx-auto">
+            {technologies.slice(0, 8).map((tech, i) => {
+              const Icon = tech.icon;
               return (
                 <motion.div
-                  key={component.layer}
-                  className="card p-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  key={tech.name}
+                  className="card text-center p-4 cursor-pointer mobile-tech-card"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                  whileHover={{ y: -3 }}
+                  transition={{ delay: i * 0.05 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <div className="flex items-center space-x-2 mb-3">
-                    <Icon className="w-6 h-6" style={{ color: component.color }} />
-                    <h3 className="text-base font-semibold">{component.layer}</h3>
-                  </div>
-                  <div className="space-y-1">
-                    {component.components.map((comp, i) => (
-                      <div key={i} className="flex items-center space-x-2">
-                        <div className="w-1.5 h-1.5 bg-accent-color rounded-full flex-shrink-0"></div>
-                        <span className="text-text-secondary text-xs">{comp}</span>
-                      </div>
-                    ))}
+                  <div className="flex flex-col items-center justify-center">
+                    <Icon className="w-6 h-6 mb-2" style={{ color: tech.color }} />
+                    <p className="text-xs font-medium text-center">{tech.name}</p>
                   </div>
                 </motion.div>
               );
             })}
           </div>
+          
+          {/* Key benefits for mobile */}
+          <motion.div 
+            className="grid grid-cols-1 gap-2 max-w-xs mx-auto mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="flex items-center space-x-2 p-2 forge rounded">
+              <Shield className="w-3 h-3 text-success-color flex-shrink-0" />
+              <span className="text-xs text-text-secondary">Enterprise security</span>
+            </div>
+            <div className="flex items-center space-x-2 p-2 forge rounded">
+              <Zap className="w-3 h-3 text-accent-color flex-shrink-0" />
+              <span className="text-xs text-text-secondary">Real-time responses</span>
+            </div>
+            <div className="flex items-center space-x-2 p-2 forge rounded">
+              <Package className="w-3 h-3 text-accent-secondary flex-shrink-0" />
+              <span className="text-xs text-text-secondary">Containerized deployment</span>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+
+      {/* Mobile-First AI Agents Grid */}
+      <section className="section mobile-ai-agents" id="ai-agents">
+        <div className="container">
+          <motion.div 
+            className="text-center mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-2xl font-bold mb-2">Meet Our AI Agents</h2>
+            <p className="text-text-secondary text-sm max-w-xs mx-auto">
+              {agents.length} specialized agents working together as one intelligent system.
+            </p>
+          </motion.div>
+
+          {/* Mobile-first grid: 3x3 on mobile, 4+ on larger screens */}
+          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-2 max-w-sm mx-auto mb-6">
+            {agents.map((agent, index) => {
+              const Icon = agent.icon;
+              return (
+                <motion.div
+                  key={agent.name}
+                  className="card p-2 mobile-agent-grid-card text-center"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05, duration: 0.3 }}
+                >
+                  {/* Grid Card Content */}
+                  <div className="flex flex-col items-center justify-center">
+                    {/* Agent Icon */}
+                    <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${agent.color} 
+                                   flex items-center justify-center flex-shrink-0 mb-2 shadow-md`}>
+                      <Icon className="w-5 h-5 text-white" />
+                    </div>
+                    
+                    {/* Agent Name */}
+                    <h3 className="font-medium text-text-primary text-xs leading-tight text-center">
+                      {agent.shortName}
+                    </h3>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Deep Dive Button */}
+          <motion.div 
+            className="text-center max-w-sm mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-xs text-text-secondary mb-4">
+              Want to see how they work together as an interconnected team?
+            </p>
+            <button 
+              className="btn-secondary px-6 py-3 inline-flex items-center space-x-2"
+              onClick={() => {
+                hapticTick(10);
+                window.location.href = '/agents-deep-dive';
+              }}
+            >
+              <Users className="w-4 h-4" />
+              <span>Deep dive into our agents</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Mobile-Optimized Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center">
+          <div className="absolute inset-0 bg-black/70" onClick={closeModal} />
+          <motion.div
+            className="relative w-full max-w-sm bg-secondary-bg border border-forge-border rounded-t-2xl p-6 z-10 max-h-[80vh] overflow-y-auto"
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 100 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          >
+            {/* Mobile-friendly header */}
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-lg font-semibold text-text-primary truncate">{modalTitle}</h4>
+              <button 
+                onClick={closeModal} 
+                className="text-text-secondary hover:text-accent-color text-sm bg-forge-bg px-3 py-1 rounded-full border border-forge-border"
+              >
+                Done
+              </button>
+            </div>
+            
+            {/* Scrollable content */}
+            <div className="text-text-secondary text-sm leading-relaxed">
+              {modalContent}
+            </div>
+            
+            {/* Mobile swipe indicator */}
+            <div className="flex justify-center mt-4">
+              <div className="w-8 h-1 bg-text-secondary opacity-30 rounded-full"></div>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Customer Acquisition Form */}
+      <section className="section mobile-cta" id="architecture">
+        <div className="container">
+          <motion.div 
+            className="text-center max-w-sm mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="p-6 forge rounded-lg">
+              <Hammer className="w-12 h-12 text-accent-color mx-auto mb-4" />
+              <h2 className="text-xl font-bold mb-3">Ready to get your own data forged?</h2>
+              <p className="text-text-secondary text-sm mb-6">
+                Let's discuss how AI agents can transform your data conversations
+              </p>
+              
+              {/* Contact Form */}
+              <form className="space-y-4 text-left" onSubmit={async (e) => {
+                e.preventDefault();
+                hapticTick(15);
+                
+                // Get form data
+                const formData = new FormData(e.target);
+                const customerData = {
+                  firstName: formData.get('firstName'),
+                  lastName: formData.get('lastName'),
+                  email: formData.get('email'),
+                  company: formData.get('company'),
+                  position: formData.get('position'),
+                  submittedAt: new Date().toISOString()
+                };
+                
+                try {
+                  // Send data to backend to save to file
+                  const response = await fetch('/api/save-customer', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(customerData)
+                  });
+                  
+                  if (response.ok) {
+                    // Show success message
+                    alert('Thank you! We\'ll be in touch soon.');
+                    e.target.reset();
+                  } else {
+                    throw new Error('Failed to save customer data');
+                  }
+                } catch (error) {
+                  console.error('Error saving customer data:', error);
+                  alert('Sorry, there was an error. Please try again.');
+                }
+              }}>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label htmlFor="firstName" className="block text-xs font-medium text-text-secondary mb-1">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      required
+                      className="w-full px-3 py-2 bg-secondary-bg border border-forge-border rounded-lg text-sm text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-color focus:border-accent-color transition-colors"
+                      placeholder="John"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="lastName" className="block text-xs font-medium text-text-secondary mb-1">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      required
+                      className="w-full px-3 py-2 bg-secondary-bg border border-forge-border rounded-lg text-sm text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-color focus:border-accent-color transition-colors"
+                      placeholder="Smith"
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <label htmlFor="email" className="block text-xs font-medium text-text-secondary mb-1">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    className="w-full px-3 py-2 bg-secondary-bg border border-forge-border rounded-lg text-sm text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-color focus:border-accent-color transition-colors"
+                    placeholder="john.smith@company.com"
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="company" className="block text-xs font-medium text-text-secondary mb-1">
+                    Company
+                  </label>
+                  <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    required
+                    className="w-full px-3 py-2 bg-secondary-bg border border-forge-border rounded-lg text-sm text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-color focus:border-accent-color transition-colors"
+                    placeholder="Your Company Ltd."
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="position" className="block text-xs font-medium text-text-secondary mb-1">
+                    Position Title
+                  </label>
+                  <input
+                    type="text"
+                    id="position"
+                    name="position"
+                    required
+                    className="w-full px-3 py-2 bg-secondary-bg border border-forge-border rounded-lg text-sm text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-color focus:border-accent-color transition-colors"
+                    placeholder="Data Manager"
+                  />
+                </div>
+                
+                <button 
+                  type="submit"
+                  className="btn-primary w-full py-3 inline-flex items-center justify-center space-x-2"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  <span>Let's Connect</span>
+                </button>
+              </form>
+              
+              <div className="mt-6 pt-4 border-t border-forge-border">
+                <div className="flex justify-center items-center space-x-2 text-xs text-text-secondary">
+                  <Shield className="w-3 h-3 text-success-color" />
+                  <span>Secure</span>
+                  <div className="w-1 h-1 bg-text-secondary rounded-full" />
+                  <Users className="w-3 h-3 text-accent-color" />
+                  <span>Personal consultation</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>
