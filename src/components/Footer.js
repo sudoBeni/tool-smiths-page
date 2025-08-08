@@ -11,21 +11,24 @@ const Footer = () => {
   const teamMembers = [
     { 
       name: 'Benjamin Amhof', 
-      role: 'AI & Machine Learning Specialist', 
+      role: 'BSc Student in AI & Machine Learning at HSLU', 
       github: 'https://github.com/sudoBeni',
-      photo: '/images/benjamin.jpg' // Will be provided later
+      linkedin: 'https://www.linkedin.com/in/benjamin-amhof/',
+      photo: '/images/benjamin.jpg'
     },
     { 
       name: 'Jan Wahli', 
-      role: 'Frontend Developer', 
+      role: 'BSc Student in AI & Machine Learning at HSLU', 
       github: 'https://github.com/jan-5',
-      photo: '/images/jan.jpg' // Will be provided later
+      linkedin: 'https://www.linkedin.com/in/jan-wahli/',
+      photo: '/images/jan.jpg'
     },
     { 
       name: 'Noel Jensen', 
-      role: 'Backend Architect', 
+      role: 'BSc Student in AI & Machine Learning at HSLU', 
       github: 'https://github.com/noeljen',
-      photo: '/images/noel.jpg' // Will be provided later
+      linkedin: 'https://www.linkedin.com/in/noel-jensen-/',
+      photo: '/images/noel.jpg'
     },
   ];
 
@@ -101,47 +104,69 @@ const Footer = () => {
           className="mb-16"
         >
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-text-primary uppercase tracking-wide mb-4">Meet The Team</h3>
+            <h3 className="text-3xl font-bold text-text-primary uppercase tracking-wide mb-4">Meet The Developers</h3>
             <p className="text-text-secondary text-lg">
-              The passionate developers behind this project
+              The passionate team behind this project
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {teamMembers.map((member, index) => (
-              <motion.div
-                key={member.name}
-                className="card text-center p-8"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ 
-                  y: -5,
-                  transition: { duration: 0.2 }
-                }}
-              >
-                <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden bg-forge-bg border-2 border-accent-color/20">
-                  {/* Placeholder for photo - will be replaced when images are provided */}
-                  <div className="w-full h-full bg-gradient-to-br from-accent-color/20 to-accent-secondary/20 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-accent-color">
-                      {member.name.split(' ').map(n => n.charAt(0)).join('')}
-                    </span>
-                  </div>
-                </div>
-                <h4 className="text-xl font-semibold text-text-primary mb-2">{member.name}</h4>
-                <p className="text-sm text-text-secondary uppercase tracking-wide mb-4">{member.role}</p>
-                <motion.a
-                  href={member.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-2 text-accent-color hover:text-accent-secondary transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Github className="w-4 h-4" />
-                  <span className="text-sm font-medium">GitHub</span>
-                </motion.a>
-              </motion.div>
+                             <motion.div
+                 key={member.name}
+                 className="card p-6"
+                 initial={{ opacity: 0, y: 20 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 transition={{ duration: 0.5, delay: index * 0.1 }}
+                 whileHover={{ 
+                   y: -5,
+                   transition: { duration: 0.2 }
+                 }}
+               >
+                 <div className="flex items-start space-x-4">
+                   {/* Profile Photo */}
+                   <div className="w-20 h-20 rounded-full overflow-hidden bg-forge-bg border-2 border-accent-color/20 flex-shrink-0">
+                     <img 
+                       src={member.photo} 
+                       alt={member.name}
+                       className="w-full h-full object-cover"
+                       onError={(e) => {
+                         // Fallback to initials if image fails to load
+                         e.target.style.display = 'none';
+                         e.target.nextSibling.style.display = 'flex';
+                       }}
+                     />
+                     <div className="w-full h-full bg-gradient-to-br from-accent-color/20 to-accent-secondary/20 flex items-center justify-center" style={{ display: 'none' }}>
+                       <span className="text-xl font-bold text-accent-color">
+                         {member.name.split(' ').map(n => n.charAt(0)).join('')}
+                       </span>
+                     </div>
+                   </div>
+                   
+                   {/* Text Content */}
+                   <div className="flex-1 min-w-0">
+                     <h4 className="text-xl font-semibold text-text-primary mb-2">{member.name}</h4>
+                     <p className="text-sm text-text-secondary mb-4">{member.role}</p>
+                     
+                     {/* Social Links */}
+                     <div className="flex">
+                       <motion.a
+                         href={member.linkedin}
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         className="inline-flex items-center space-x-2 text-accent-color hover:text-accent-secondary transition-colors"
+                         whileHover={{ scale: 1.05 }}
+                         whileTap={{ scale: 0.95 }}
+                       >
+                         <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                         </svg>
+                         <span className="text-sm font-medium">LinkedIn</span>
+                       </motion.a>
+                     </div>
+                   </div>
+                 </div>
+               </motion.div>
             ))}
           </div>
         </motion.div>

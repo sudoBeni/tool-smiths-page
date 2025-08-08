@@ -1029,6 +1029,7 @@ a:hover {
   .mobile-ai-agents .grid {
     max-width: 480px;
     gap: var(--spacing-3);
+    margin: 0 auto;
   }
   
   .mobile-agent-grid-card {

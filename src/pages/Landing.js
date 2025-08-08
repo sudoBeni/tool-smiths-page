@@ -771,7 +771,7 @@ const Landing = () => {
                 <span>See Demo</span>
               </a>
               <a href="#ai-agents" className="text-accent-color text-sm inline-flex items-center space-x-1" onClick={() => hapticTick(5)}>
-                <span>Meet the AI team</span>
+                <span>Meet the AI Agents</span>
                 <ArrowRight className="w-3 h-3" />
               </a>
             </div>
@@ -900,7 +900,7 @@ const Landing = () => {
           </motion.div>
 
           {/* Mobile-first grid: 3x3 on mobile, 4+ on larger screens */}
-          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-2 max-w-sm mx-auto mb-6">
+          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-2 max-w-sm md:max-w-2xl lg:max-w-4xl mx-auto mb-6">
             {agents.map((agent, index) => {
                   const Icon = agent.icon;
                   return (
@@ -944,7 +944,7 @@ const Landing = () => {
               className="btn-secondary px-6 py-3 inline-flex items-center space-x-2"
               onClick={() => {
                 hapticTick(10);
-                window.location.href = '/agents-deep-dive';
+                window.location.href = '/#/agents-deep-dive';
               }}
             >
               <Users className="w-4 h-4" />

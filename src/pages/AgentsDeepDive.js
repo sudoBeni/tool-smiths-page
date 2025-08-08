@@ -222,7 +222,7 @@ const AgentsDeepDive = () => {
       {/* Agent Grid */}
       <section className="section px-6 py-8" id="agents">
         <div className="max-w-4xl mx-auto">
-          <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {agents.map((agent, index) => {
               const Icon = agent.icon;
               const isExpanded = expandedAgent === agent.id;
@@ -230,109 +230,63 @@ const AgentsDeepDive = () => {
               return (
                 <motion.div
                   key={agent.id}
-                  className="forge rounded-xl overflow-hidden shadow-lg border border-forge-border/50"
+                  className="card text-center p-6"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.08, duration: 0.4 }}
-                  whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+                  whileHover={{ 
+                    y: -5,
+                    transition: { duration: 0.2 }
+                  }}
                 >
-                                {/* Agent Header */}
-              <div 
-                className="p-6 sm:p-8 cursor-pointer hover:bg-forge-bg/30 transition-colors duration-200"
-                onClick={() => {
-                  hapticTick(5);
-                  setExpandedAgent(isExpanded ? null : agent.id);
-                }}
-              >
-                    <div className="flex items-center space-x-4">
-                      {/* Enhanced Icon with Gradient Background */}
-                      <div className="relative">
-                        <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${agent.color} 
-                                       flex items-center justify-center shadow-xl flex-shrink-0
-                                       border-2 border-white/20`}>
-                          <Icon className="w-8 h-8 text-white drop-shadow-sm" />
-                        </div>
-                        
-                      </div>
-                      
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-2">
-                          <div>
-                            <h3 className="font-bold text-text-primary text-base mb-1">{agent.name}</h3>
-                            <div className="inline-flex items-center space-x-2">
-                              <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${agent.color}`}></div>
-                              <p className="text-accent-color text-sm font-semibold">{agent.role}</p>
-                            </div>
-                          </div>
-                          <motion.div
-                            animate={{ rotate: isExpanded ? 180 : 0 }}
-                            transition={{ duration: 0.3, ease: "easeInOut" }}
-                            className="ml-4"
-                          >
-                            <div className="w-10 h-10 rounded-full bg-forge-bg border border-forge-border 
-                                          flex items-center justify-center">
-                              <ArrowRight className="w-5 h-5 text-text-secondary" />
-                            </div>
-                          </motion.div>
-                        </div>
-                        <p className="text-text-secondary text-sm mt-3 leading-relaxed font-medium">
-                          {agent.description}
-                        </p>
-                      </div>
-                    </div>
+                                {/* Agent Icon */}
+                  <div className={`w-20 h-20 mx-auto mb-4 bg-gradient-to-br ${agent.color} rounded-xl flex items-center justify-center border-2 border-white/20 shadow-lg`}>
+                    <Icon className="w-10 h-10 text-white" />
                   </div>
+                  
+                  {/* Agent Info */}
+                  <h4 className="text-xl font-semibold text-text-primary mb-2">{agent.name}</h4>
+                  <p className="text-sm text-text-secondary mb-4">{agent.role}</p>
+                  <p className="text-xs text-text-secondary leading-relaxed mb-4">{agent.description}</p>
+                  
+                  {/* Expand Button */}
+                  <button
+                    className="mt-4 px-4 py-2 bg-gradient-to-r from-accent-color to-accent-secondary text-white text-sm font-semibold rounded-lg hover:shadow-lg transition-all duration-200 inline-flex items-center space-x-2"
+                    onClick={() => {
+                      hapticTick(5);
+                      setExpandedAgent(isExpanded ? null : agent.id);
+                    }}
+                  >
+                    <span>
+                      {isExpanded ? 'Show Less' : 'Learn More'}
+                    </span>
+                    <motion.div
+                      animate={{ rotate: isExpanded ? 180 : 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                    >
+                      <ArrowRight className="w-4 h-4" />
+                    </motion.div>
+                  </button>
 
                   {/* Expanded Details */}
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ 
-                      height: isExpanded ? 'auto' : 0,
-                      opacity: isExpanded ? 1 : 0
-                    }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                    className="overflow-hidden"
-                  >
-                                    <div className="px-6 pb-6 sm:px-8 sm:pb-8 border-t border-forge-border/30 bg-gradient-to-r from-forge-bg/20 to-transparent">
-                  <div className="pt-6 sm:pt-8">
-                        {/* Enhanced Header with Icon */}
-                        <div className="flex items-center space-x-3 mb-4">
-                          <div className="w-8 h-8 rounded-lg bg-accent-color/10 flex items-center justify-center">
-                            <CheckCircle2 className="w-5 h-5 text-accent-color" />
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="mt-4 pt-4 border-t border-forge-border/30"
+                    >
+                      <h5 className="text-sm font-semibold text-text-primary mb-3">Key Capabilities:</h5>
+                      <div className="space-y-2">
+                        {agent.details.map((detail, idx) => (
+                          <div key={idx} className="text-xs text-text-secondary leading-relaxed">
+                            • {detail}
                           </div>
-                          <h4 className="font-bold text-text-primary text-base">Key Capabilities</h4>
-                        </div>
-                        
-                        {/* Enhanced Capabilities List */}
-                        <div className="space-y-3">
-                          {agent.details.map((detail, idx) => (
-                            <motion.div 
-                              key={idx} 
-                              className="flex items-start space-x-3 p-3 rounded-lg bg-secondary-bg/50 border border-forge-border/30"
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: idx * 0.1 }}
-                            >
-                              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-accent-color to-accent-secondary 
-                                            flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <div className="w-2 h-2 bg-white rounded-full"></div>
-                              </div>
-                              <span className="text-text-secondary text-sm leading-relaxed font-medium">{detail}</span>
-                            </motion.div>
-                          ))}
-                        </div>
-                        
-                        {/* Status Badge */}
-                        <div className="mt-6 flex justify-center">
-                          <div className="inline-flex items-center space-x-2 px-4 py-2 bg-green-500/10 
-                                        border border-green-500/20 rounded-full">
-                            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                            <span className="text-green-400 text-xs font-semibold">Active & Ready</span>
-                          </div>
-                        </div>
+                        ))}
                       </div>
-                    </div>
-                  </motion.div>
+                    </motion.div>
+                  )}
                 </motion.div>
               );
             })}
@@ -342,7 +296,7 @@ const AgentsDeepDive = () => {
 
       {/* How They Work Together */}
       <section className="section bg-secondary-bg px-6 py-8">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <motion.div 
             className="text-center mb-8"
             initial={{ opacity: 0, y: 30 }}
@@ -356,7 +310,7 @@ const AgentsDeepDive = () => {
             </p>
           </motion.div>
 
-                        <div className="max-w-lg mx-auto space-y-4 sm:space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
                 title: 'Simple Queries',
@@ -391,40 +345,27 @@ const AgentsDeepDive = () => {
               return (
                 <motion.div
                   key={index}
-                  className="relative p-5 sm:p-7 forge rounded-xl shadow-lg border border-forge-border/50 overflow-hidden"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  className="card text-center p-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1, duration: 0.4 }}
-                  whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+                  whileHover={{ 
+                    y: -5,
+                    transition: { duration: 0.2 }
+                  }}
                 >
-                  {/* Background Gradient */}
-                  <div className={`absolute inset-0 bg-gradient-to-r ${workflow.color} opacity-5`}></div>
-                  
-                  <div className="relative flex items-center space-x-4">
-                    <div className="flex-shrink-0">
-                      <div className={`w-14 h-14 bg-gradient-to-br ${workflow.color} rounded-2xl flex items-center justify-center shadow-lg border-2 border-white/20`}>
-                        <Icon className="w-7 h-7 text-white drop-shadow-sm" />
-                      </div>
-                    </div>
-                    
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <h4 className="font-bold text-text-primary text-base">{workflow.title}</h4>
-                        <span className={`px-2 py-1 bg-gradient-to-r ${workflow.color} text-white text-xs font-semibold rounded-full`}>
-                          {workflow.badge}
-                        </span>
-                      </div>
-                      <p className="text-text-secondary text-sm leading-relaxed font-medium">{workflow.description}</p>
-                    </div>
+                  {/* Workflow Icon */}
+                  <div className={`w-20 h-20 mx-auto mb-4 bg-gradient-to-br ${workflow.color} rounded-xl flex items-center justify-center border-2 border-white/20 shadow-lg`}>
+                    <Icon className="w-10 h-10 text-white" />
                   </div>
                   
-                  {/* Workflow Step Indicator */}
-                  <div className="absolute top-3 right-3">
-                    <div className="w-8 h-8 rounded-full bg-accent-color/10 border border-accent-color/20 flex items-center justify-center">
-                      <span className="text-accent-color text-xs font-bold">{index + 1}</span>
-                    </div>
-                  </div>
+                  {/* Workflow Info */}
+                  <h4 className="text-xl font-semibold text-text-primary mb-2">{workflow.title}</h4>
+                  <span className={`inline-block px-3 py-1 bg-gradient-to-r ${workflow.color} text-white text-xs font-semibold rounded-full mb-4`}>
+                    {workflow.badge}
+                  </span>
+                  <p className="text-xs text-text-secondary leading-relaxed">{workflow.description}</p>
                 </motion.div>
               );
             })}
