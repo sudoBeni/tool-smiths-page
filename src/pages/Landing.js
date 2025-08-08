@@ -36,8 +36,7 @@ import {
   HardDrive
 } from 'lucide-react';
 import LoadingHammer from '../components/LoadingHammer';
-import { DeviceFrameset } from 'react-device-frameset';
-import 'react-device-frameset/styles/marvel-devices.min.css';
+// Removed device frameset for a cleaner, minimal window frame look
 import ChatPreview from '../components/ChatPreview';
 import { hapticTick } from '../utils/haptics';
 import MiniSpark from '../components/MiniSpark';
@@ -51,30 +50,30 @@ const WorkflowAnimation = () => {
   // New graph structure based on your mermaid diagram
   const graphNodes = [
     // Main Flow
-    { id: 'user', title: '👤 User Input', description: 'User submits query', icon: User, color: 'from-blue-500 to-cyan-500', position: { x: 50, y: 5 }, group: 'main' },
-    { id: 'cs', title: '🔧 Chat Service', description: 'Entry point for all requests', icon: Wrench, color: 'from-green-500 to-emerald-500', position: { x: 50, y: 20 }, group: 'main' },
-    { id: 'as', title: '📊 Admin Service', description: 'Administrative oversight', icon: BarChart, color: 'from-purple-500 to-violet-500', position: { x: 20, y: 35 }, group: 'main' },
-    { id: 'oa', title: '🎯 Orchestrator Agent', description: 'Coordinates all operations', icon: Target, color: 'from-yellow-500 to-orange-500', position: { x: 50, y: 35 }, group: 'main' },
-    { id: 'da', title: '⚖️ Decision Agent', description: 'Makes routing decisions', icon: Brain, color: 'from-indigo-500 to-blue-500', position: { x: 80, y: 50 }, group: 'main' },
-    { id: 'rfa', title: '✨ Response Formatter', description: 'Formats final response', icon: Settings, color: 'from-teal-500 to-cyan-500', position: { x: 80, y: 65 }, group: 'main' },
-    { id: 'response', title: '📤 Final Response', description: 'Delivered to user', icon: Send, color: 'from-pink-500 to-rose-500', position: { x: 50, y: 85 }, group: 'main' },
+    { id: 'user', title: 'User Input', description: 'User submits query', icon: User, color: 'from-blue-500 to-cyan-500', position: { x: 50, y: 5 }, group: 'main' },
+    { id: 'cs', title: 'Chat Service', description: 'Entry point for all requests', icon: Wrench, color: 'from-green-500 to-emerald-500', position: { x: 50, y: 20 }, group: 'main' },
+    { id: 'as', title: 'Admin Service', description: 'Administrative oversight', icon: BarChart, color: 'from-purple-500 to-violet-500', position: { x: 20, y: 35 }, group: 'main' },
+    { id: 'oa', title: 'Orchestrator Agent', description: 'Coordinates all operations', icon: Target, color: 'from-yellow-500 to-orange-500', position: { x: 50, y: 35 }, group: 'main' },
+    { id: 'da', title: 'Decision Agent', description: 'Makes routing decisions', icon: Brain, color: 'from-indigo-500 to-blue-500', position: { x: 80, y: 50 }, group: 'main' },
+    { id: 'rfa', title: 'Response Formatter', description: 'Formats final response', icon: Settings, color: 'from-teal-500 to-cyan-500', position: { x: 80, y: 65 }, group: 'main' },
+    { id: 'response', title: 'Final Response', description: 'Delivered to user', icon: Send, color: 'from-pink-500 to-rose-500', position: { x: 50, y: 85 }, group: 'main' },
     
     // Orchestrator Internal Processing (Subgraph)
-    { id: 'qa', title: '❓ Query Analysis', description: 'Analyzes user intent', icon: MessageSquare, color: 'from-amber-500 to-yellow-500', position: { x: 15, y: 50 }, group: 'orchestrator' },
-    { id: 'ts', title: '🛠️ Tool Selection', description: 'Selects appropriate tools', icon: Cog, color: 'from-amber-500 to-yellow-500', position: { x: 15, y: 65 }, group: 'orchestrator' },
-    { id: 'wf', title: '🔄 Workflow Execution', description: 'Executes the workflow', icon: RefreshCw, color: 'from-amber-500 to-yellow-500', position: { x: 15, y: 80 }, group: 'orchestrator' },
-    { id: 'ri', title: '🔗 Result Integration', description: 'Integrates all results', icon: GitBranch, color: 'from-amber-500 to-yellow-500', position: { x: 30, y: 80 }, group: 'orchestrator' },
+    { id: 'qa', title: 'Query Analysis', description: 'Analyzes user intent', icon: MessageSquare, color: 'from-amber-500 to-yellow-500', position: { x: 15, y: 50 }, group: 'orchestrator' },
+    { id: 'ts', title: 'Tool Selection', description: 'Selects appropriate tools', icon: Cog, color: 'from-amber-500 to-yellow-500', position: { x: 15, y: 65 }, group: 'orchestrator' },
+    { id: 'wf', title: 'Workflow Execution', description: 'Executes the workflow', icon: RefreshCw, color: 'from-amber-500 to-yellow-500', position: { x: 15, y: 80 }, group: 'orchestrator' },
+    { id: 'ri', title: 'Result Integration', description: 'Integrates all results', icon: GitBranch, color: 'from-amber-500 to-yellow-500', position: { x: 30, y: 80 }, group: 'orchestrator' },
     
     // Data Sources (Subgraph)
-    { id: 'db', title: '🗄️ Database', description: 'Internal data storage', icon: Database, color: 'from-blue-500 to-cyan-500', position: { x: 25, y: 50 }, group: 'data' },
-    { id: 'ws', title: '🌐 Web Search Service', description: 'External data retrieval', icon: Globe, color: 'from-green-500 to-emerald-500', position: { x: 40, y: 50 }, group: 'data' },
-    { id: 'ca', title: '📊 Chart Analysis', description: 'Data visualization', icon: BarChart3, color: 'from-purple-500 to-violet-500', position: { x: 60, y: 50 }, group: 'data' },
-    { id: 'ctx', title: '🧠 Context Processing', description: 'Context management', icon: Brain, color: 'from-teal-500 to-cyan-500', position: { x: 75, y: 35 }, group: 'data' },
+    { id: 'db', title: 'Database', description: 'Internal data storage', icon: Database, color: 'from-blue-500 to-cyan-500', position: { x: 25, y: 50 }, group: 'data' },
+    { id: 'ws', title: 'Web Search Service', description: 'External data retrieval', icon: Globe, color: 'from-green-500 to-emerald-500', position: { x: 40, y: 50 }, group: 'data' },
+    { id: 'ca', title: 'Chart Analysis', description: 'Data visualization', icon: BarChart3, color: 'from-purple-500 to-violet-500', position: { x: 60, y: 50 }, group: 'data' },
+    { id: 'ctx', title: 'Context Processing', description: 'Context management', icon: Brain, color: 'from-teal-500 to-cyan-500', position: { x: 75, y: 35 }, group: 'data' },
     
     // Response Processing Pipeline (Subgraph)
     { id: 'rf', title: 'Format Needed?', description: 'Decision point', icon: CheckCircle2, color: 'from-orange-500 to-red-500', position: { x: 85, y: 80 }, group: 'response' },
     { id: 'dr', title: 'Direct Response', description: 'No formatting needed', icon: ArrowRight, color: 'from-gray-500 to-gray-600', position: { x: 95, y: 70 }, group: 'response' },
-    { id: 'fr', title: '📝 Formatted Response', description: 'Formatted output', icon: FileText, color: 'from-teal-500 to-cyan-500', position: { x: 95, y: 90 }, group: 'response' }
+    { id: 'fr', title: 'Formatted Response', description: 'Formatted output', icon: FileText, color: 'from-teal-500 to-cyan-500', position: { x: 95, y: 90 }, group: 'response' }
   ];
 
   // Connections based on your mermaid diagram
@@ -790,10 +789,8 @@ const Landing = () => {
             How to chat with your data
           </motion.p>
 
-          <div className="max-w-3xl mx-auto mb-4">
-            <DeviceFrameset device="MacBook Pro" zoom={0.9} width={1200} height={750}>
-              <VideoShowcase title="" src="/pxp.mp4" poster="" />
-            </DeviceFrameset>
+          <div className="max-w-4xl mx-auto mb-4">
+            <VideoShowcase title="" src="/pxp.mp4" poster="" windowFrame />
           </div>
           
           {/* Quick highlights for mobile */}

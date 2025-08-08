@@ -43,7 +43,7 @@ const Footer = () => {
     {
       name: '',
       fullName: '',
-      logo: '/images/partners/logo_humber.webp',
+      logo: '/images/partners/logo_humber.png',
       logoSize: { width: 100, height: 60 }
     },
     {
@@ -77,8 +77,8 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {partners.map((partner, index) => (
               <motion.div
-                key={partner.name}
-                className="card text-center p-8"
+                 key={partner.name || index}
+                 className="card text-center p-6"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -87,7 +87,7 @@ const Footer = () => {
                   transition: { duration: 0.2 }
                 }}
               >
-                 <div className="mx-auto mb-4 flex justify-center w-full h-16 md:h-24">
+                 <div className="mx-auto mb-4 flex justify-center w-full h-14 md:h-16 lg:h-20">
                    <Logo
                      src={partner.logo}
                      alt={partner.name}
@@ -112,9 +112,9 @@ const Footer = () => {
           className="mb-16"
         >
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-text-primary uppercase tracking-wide mb-4">Meet The Developers</h3>
-            <p className="text-text-secondary text-lg">
-              The passionate team behind this project
+            <h3 className="text-3xl font-bold text-text-primary uppercase tracking-wide mb-2">Meet The Developers</h3>
+            <p className="text-text-secondary text-base">
+              The team crafting reliable AI for data
             </p>
           </div>
           
@@ -122,7 +122,7 @@ const Footer = () => {
             {teamMembers.map((member, index) => (
                              <motion.div
                  key={member.name}
-                 className="card p-6 developer-card"
+                 className="card p-5 developer-card"
                  initial={{ opacity: 0, y: 20 }}
                  whileInView={{ opacity: 1, y: 0 }}
                  transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -144,7 +144,7 @@ const Footer = () => {
                          e.target.nextSibling.style.display = 'flex';
                        }}
                      />
-                     <div className="w-full h-full bg-gradient-to-br from-accent-color/20 to-accent-secondary/20 flex items-center justify-center" style={{ display: 'none' }}>
+                      <div className="w-full h-full bg-gradient-to-br from-accent-color/20 to-accent-secondary/20 flex items-center justify-center" style={{ display: 'none' }}>
                        <span className="text-xl font-bold text-accent-color">
                          {member.name.split(' ').map(n => n.charAt(0)).join('')}
                        </span>
@@ -153,8 +153,8 @@ const Footer = () => {
                    
                    {/* Text Content */}
                    <div className="flex-1 min-w-0">
-                      <h4 className="text-lg font-semibold text-text-primary mb-2">{member.name}</h4>
-                      <p className="text-xs text-text-secondary mb-4">{member.role}</p>
+                      <h4 className="text-base font-semibold text-text-primary mb-1">{member.name}</h4>
+                      <p className="text-xs text-text-secondary mb-3">{member.role}</p>
                      
                      {/* Social Links */}
                       <div className="flex">

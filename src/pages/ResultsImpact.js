@@ -29,28 +29,28 @@ const ResultsImpact = () => {
       title: 'Sales Performance Dashboard',
       description: 'Real-time sales metrics with interactive charts and trend analysis',
       metrics: ['Revenue Growth', 'Customer Acquisition', 'Regional Performance'],
-      image: '📊',
+      image: '',
       color: '#10a37f'
     },
     {
       title: 'Customer Sentiment Analysis',
       description: 'AI-powered sentiment analysis with aspect-based opinion extraction',
       metrics: ['Sentiment Score', 'Aspect Analysis', 'Trend Patterns'],
-      image: '😊',
+      image: '',
       color: '#61dafb'
     },
     {
       title: 'Geographic Data Visualization',
       description: 'Interactive maps showing business locations and performance by region',
       metrics: ['Location Density', 'Regional Trends', 'Market Penetration'],
-      image: '🗺️',
+      image: '',
       color: '#f7df1e'
     },
     {
       title: 'Business Intelligence Reports',
       description: 'Comprehensive reports with actionable insights and recommendations',
       metrics: ['KPI Tracking', 'Forecasting', 'Competitive Analysis'],
-      image: '📈',
+      image: '',
       color: '#ff6b6b'
     }
   ];

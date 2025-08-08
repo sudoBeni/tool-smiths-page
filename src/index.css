@@ -89,6 +89,13 @@
   box-sizing: border-box;
 }
 
+/* Global image hygiene */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 html {
   scroll-behavior: smooth;
   font-size: 16px;
@@ -606,6 +613,34 @@ a:hover {
 }
 
 /* removed custom macbook css in favor of library device frame */
+/* Minimal window frame styling for video */
+.window-frame {
+  max-width: 100%;
+  border: 1px solid var(--forge-border);
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+}
+.window-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+}
+.window-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.2);
+}
+.window-dot-red { background: #ff5f57; }
+.window-dot-yellow { background: #ffbd2e; }
+.window-dot-green { background: #28c840; }
+.video-aspect-window {
+  border-radius: 0 0 12px 12px;
+  border: 1px solid var(--forge-border);
+  border-top: none;
+}
 
 /* Social link styling */
 .social-link {
@@ -1432,8 +1467,19 @@ a:hover {
 
 /* Footer partner logos sizing adjustments */
 .partner-logo { padding: var(--spacing-3); }
+.partner-logo img { max-height: 40px; width: auto; }
+@media (min-width: 768px) {
+  .partner-logo img { max-height: 48px; }
+}
 @media (min-width: 1024px) {
-  .partner-logo { padding: var(--spacing-4); }
+  .partner-logo { padding: var(--spacing-3); }
+  .partner-logo img { max-height: 56px; }
+}
+
+/* Developer avatars - keep tidy on desktop */
+.developer-avatar { width: 52px; height: 52px; }
+@media (min-width: 768px) {
+  .developer-avatar { width: 60px; height: 60px; }
 }
 
 /* Developer text sizing */

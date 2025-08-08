@@ -4,14 +4,8 @@ import { Logo } from './icons';
 const LogoExample = () => {
   const logos = [
     {
-      name: 'HSLU',
-      src: '/images/partners/logo_hslu.png',
-      width: 120,
-      height: 80
-    },
-    {
       name: 'Humber',
-      src: '/images/partners/logo_humber.webp',
+      src: '/images/partners/logo_humber.png',
       width: 100,
       height: 60
     },
@@ -20,7 +14,14 @@ const LogoExample = () => {
       src: '/images/partners/logo_pxp.png',
       width: 140,
       height: 70
+    },
+    {
+      name: 'HSLU',
+      src: '/images/partners/logo_hslu.png',
+      width: 120,
+      height: 80
     }
+    
   ];
 
   return (
