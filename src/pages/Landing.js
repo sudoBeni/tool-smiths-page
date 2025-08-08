@@ -359,14 +359,13 @@ const Landing = () => {
 
   // Technology Stack Data
   const technologies = [
-    { name: 'React', icon: Code, color: '#61dafb' },
-    { name: 'FastAPI', icon: Server, color: '#009688' },
-    { name: 'WebSocket', icon: Zap, color: '#ff6b35' },
+    { name: 'Agno AI Agent Framework', icon: Bot, color: '#ffcc02' },
+    { name: 'Azure OpenAI API', icon: Zap, color: '#ff6b35' },
     { name: 'SQLite', icon: Database, color: '#003b57' },
-    { name: 'Azure OpenAI', icon: Cloud, color: '#0078d4' },
-    { name: 'Agno Framework', icon: Bot, color: '#ffcc02' },
     { name: 'Docker', icon: Package, color: '#2496ed' },
-    { name: 'GitLab', icon: GitBranch, color: '#e24329' }
+    { name: 'GitLab', icon: GitBranch, color: '#e24329' },
+    { name: 'React', icon: Code, color: '#61dafb' },
+    { name: 'FastAPI', icon: Server, color: '#009688' }
   ];
 
   // Enhanced Agents Data with Complete Information
@@ -758,11 +757,11 @@ const Landing = () => {
               <span className="text-xs uppercase tracking-wide text-text-secondary">Data Forge</span>
             </div>
 
-            <h1 className="hero-title mobile-title mb-3">Chat with Your Data</h1>
+            <h1 className="hero-title mobile-title mb-3">Your Data speaks, we translate.</h1>
             <p className="hero-subtitle mobile-subtitle mb-6">AI agents transform complex database queries into simple conversations.</p>
 
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }} className="mb-6">
-              <LoadingHammer size={120} text="Heating the forge…" />
+              <LoadingHammer size={120} text="Forging your data into insights..." />
             </motion.div>
 
             <div className="flex flex-col gap-3 items-center">
@@ -786,7 +785,7 @@ const Landing = () => {
         <div className="container">
           <motion.h2 className="text-2xl font-bold mb-3 text-center" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>See it in action</motion.h2>
           <motion.p className="text-text-secondary text-center mb-6 text-sm" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
-            Watch how simple questions become instant insights
+            How to chat with your data
           </motion.p>
 
           <div className="max-w-sm mx-auto mb-4">
@@ -806,11 +805,11 @@ const Landing = () => {
             </div>
             <div className="flex items-center space-x-3 p-3 forge rounded-lg">
               <Bot className="w-4 h-4 text-accent-color flex-shrink-0" />
-              <span className="text-xs text-text-secondary">AI agents work together</span>
+              <span className="text-xs text-text-secondary">AI agents work together and access your database</span>
             </div>
             <div className="flex items-center space-x-3 p-3 forge rounded-lg">
               <BarChart3 className="w-4 h-4 text-accent-color flex-shrink-0" />
-              <span className="text-xs text-text-secondary">Get charts and insights</span>
+              <span className="text-xs text-text-secondary">Get insights and charts directly out of your database</span>
             </div>
           </motion.div>
         </div>
@@ -828,7 +827,7 @@ const Landing = () => {
           >
             <h2 className="text-2xl font-bold mb-2">Built with Modern Tech</h2>
             <p className="text-text-secondary text-sm max-w-xs mx-auto">
-              Enterprise-grade stack for reliable performance
+              Tech-Stack
             </p>
           </motion.div>
 
@@ -868,11 +867,11 @@ const Landing = () => {
           >
             <div className="flex items-center space-x-2 p-2 forge rounded">
               <Shield className="w-3 h-3 text-success-color flex-shrink-0" />
-              <span className="text-xs text-text-secondary">Enterprise security</span>
+              <span className="text-xs text-text-secondary">Reliable output thanks to multi-agent validation</span>
           </div>
             <div className="flex items-center space-x-2 p-2 forge rounded">
               <Zap className="w-3 h-3 text-accent-color flex-shrink-0" />
-              <span className="text-xs text-text-secondary">Real-time responses</span>
+              <span className="text-xs text-text-secondary">Flexible and scalable architecture</span>
             </div>
             <div className="flex items-center space-x-2 p-2 forge rounded">
               <Package className="w-3 h-3 text-accent-secondary flex-shrink-0" />
@@ -967,7 +966,7 @@ const Landing = () => {
           >
             <h2 className="text-2xl font-bold mb-3">See Them in Action</h2>
             <p className="text-text-secondary text-sm max-w-md mx-auto">
-              Watch how your query flows through our intelligent agent system in real-time
+              Our collaborate agents work together to answer your questions
             </p>
           </motion.div>
 
@@ -1119,15 +1118,7 @@ const Landing = () => {
                 </button>
               </form>
               
-              <div className="mt-6 pt-4 border-t border-forge-border">
-                <div className="flex justify-center items-center space-x-2 text-xs text-text-secondary">
-                  <Shield className="w-3 h-3 text-success-color" />
-                  <span>Secure</span>
-                  <div className="w-1 h-1 bg-text-secondary rounded-full" />
-                  <Users className="w-3 h-3 text-accent-color" />
-                  <span>Personal consultation</span>
-                  </div>
-                      </div>
+
                   </div>
                 </motion.div>
         </div>

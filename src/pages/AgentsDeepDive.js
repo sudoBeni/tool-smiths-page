@@ -252,7 +252,7 @@ const AgentsDeepDive = () => {
                   
                   {/* Expand Button */}
                   <button
-                    className="mt-4 px-4 py-2 bg-gradient-to-r from-accent-color to-accent-secondary text-white text-sm font-semibold rounded-lg hover:shadow-lg transition-all duration-200 inline-flex items-center space-x-2"
+                    className="mt-4 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-sm font-semibold rounded-xl hover:from-orange-600 hover:to-orange-700 hover:shadow-xl hover:shadow-orange-500/25 hover:-translate-y-0.5 transition-all duration-300 ease-out inline-flex items-center space-x-2 border border-orange-400/20"
                     onClick={() => {
                       hapticTick(5);
                       setExpandedAgent(isExpanded ? null : agent.id);

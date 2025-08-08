@@ -128,7 +128,7 @@ const Home = () => {
     },
     {
       icon: Shield,
-      title: 'Enterprise Security',
+      title: 'Reliable Responses',
       description: 'Built with security-first principles for enterprise environments.',
       color: 'from-red-500 to-orange-500'
     }
@@ -399,10 +399,10 @@ const Home = () => {
                 <p className="text-text-secondary text-sm mb-4">{member.expertise}</p>
                 <div className="flex justify-center space-x-3">
                   <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-color transition-colors">
-                    <Linkedin className="w-5 h-5" />
+                    <Linkedin className="w-3 h-3 opacity-70" />
                   </a>
                   <a href={member.github} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-color transition-colors">
-                    <Github className="w-5 h-5" />
+                    <Github className="w-3 h-3 opacity-70" />
                   </a>
                 </div>
               </motion.div>
